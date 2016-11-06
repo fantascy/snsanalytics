@@ -1,0 +1,69 @@
+{% if not view.ctx.has_login %}
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{% include 'sns/layout/html_head.html' %}		
+
+
+<body>
+	{% include 'common/ga.html' %}
+    
+    <div id="homebgimage_notlogin">
+		
+		{% load googletags %}
+		{% include 'sns/layout/nologin_header.html' %}
+		
+		<div class="ContentCenter_Div" style="display: block;">
+		<div class="layoutcenter_bg">
+		{% endif %}
+		{% block content %} {% endblock %}
+		
+		{% if not view.ctx.has_login %}
+		</div>
+		<div class="layoutcenter_bottom">
+           <img height="21" width="900" src="{{MEDIA_URL}}sns/images/layoutcenter_BottomImg.gif"/>
+       </div>
+			
+		</div>
+		
+		{% include 'sns/layout/footer.html' %}
+	</div>
+	
+	
+	<!-- Olark.com live chat widget. -->
+	<!-- Comment away for now, because of no support resource.
+	<script type="text/javascript">
+		var hblProto = document.location.protocol == 'https:' ? "https:" : "http:";
+		document.write(unescape('%3Cscript src=\'' + hblProto + '//static.olark.com/js/wc.js\' type=\'text/javascript\'%3E%3C/script%3E'));
+	</script>
+	<a href="http://olark.com/#4927-543-10-4085" id="hbl_code">Olark Livehelp</a>      
+	<script type="text/javascript"> wc_init();</script>
+	-->
+
+	<!-- Start of uservoice.com feedback widget. Please keep it closest possible to the body enclosing tag. -->
+	<!--
+	<script type="text/javascript">
+		var uservoiceJsHost = ("https:" == document.location.protocol) ? "https://uservoice.com" : "http://cdn.uservoice.com";
+		document.write(unescape("%3Cscript src='" + uservoiceJsHost + "/javascripts/widgets/tab.js' type='text/javascript'%3E%3C/script%3E"))
+	</script>
+	<script type="text/javascript">
+		UserVoice.Tab.show({ 
+		  /* required */
+		  key: 'snsanalytics',
+		  host: 'snsanalytics.uservoice.com', 
+		  forum: '29501', 
+		  /* optional */
+		  alignment: 'right',
+		  background_color:'#3e64c2', 
+		  text_color: 'white',
+		  hover_color: '#0085cc',
+		  lang: 'en'
+		})
+	</script>
+	-->
+	
+	{% include "common/quantcast.html" %}
+</body>
+</html>
+{% endif %}

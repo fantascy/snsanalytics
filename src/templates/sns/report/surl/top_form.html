@@ -1,0 +1,13 @@
+<div class="cb2Double">
+
+    <div class="fieldLabel">Short URL :</div>
+    <div class="fieldInput">{{form.surl}}</div>
+    <a  title="Search"  id="search_button" onclick="searchSurl()">
+        <img src="{{MEDIA_URL}}sns/images/search.png" border="0" class="cursorPointer" vspace="7">
+    </a>
+    
+    <div id="surl_search_error" class="cb2Double" style="font-size:120%;color:red;display:none">
+    	The Short URL or keyword does not exist! Please input a correct one.
+	</div>
+    <div id="search_result"> </div>
+</div>

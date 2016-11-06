@@ -1,0 +1,19 @@
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <form method="POST" action="{{urlHash}}">
+	    {{form.url}}
+	    {{form.urlHash}}
+	    {{form.username}}
+	    {{form.country}}
+	    {{form.referrer}}
+	    {{form.type}}
+        {{form.cid}}
+        {{form.mid}}
+	</form>
+	<!-- Form is submitted in iframe -->
+	<iframe name="track_iframe" style="display:none;" src="{{ga_url}}"></iframe>
+</body>
+</html>

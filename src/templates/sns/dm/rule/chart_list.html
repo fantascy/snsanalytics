@@ -1,0 +1,23 @@
+{% extends 'sns/layout/content.html' %}
+{% block content %}
+
+<div class="cb2Double" {% if hideform %} style="display: none" {% endif %}>
+  <div class="fieldLabel">Show stats charts for</div>
+  <div class="fieldInput">{{form.type}}</div>
+</div>
+
+<div id="info_count" class="cb1Report">
+</div>
+
+<div id="info_detail" class="cb1Report">
+</div>
+
+<input id="infoType" type="hidden" value="{{infoType}}"/>
+<script type="text/javascript">
+    document.getElementById('infoType').value = "{{infoType}}";
+</script>
+
+<input id="id" type="hidden" value="{{id}}"/>
+    
+    
+{% endblock %}

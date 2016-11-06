@@ -1,0 +1,17 @@
+#!/usr/bin/env python
+
+
+from client.channel import removetweets
+from common.content.trove import domainqualifier
+import argparse
+
+
+parser = argparse.ArgumentParser(description='SNS Analytics command line', add_help=True)
+subparsers = parser.add_subparsers(help='command list')
+removetweets.add_subparser(subparsers)
+domainqualifier.add_subparser(subparsers)
+all_args = parser.parse_known_args()
+args = all_args[0]
+
+args.func(args)
+

@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	{% include 'cake/layout/htmlhead.html' %}		
+	
+	<body>
+		{% include 'common/ga.html' %}		
+
+		<div id="main-container">
+			{% block main %} {% endblock %}
+		</div>
+		
+		{% block footer %} {% endblock %}
+
+		<div id="fb-root"></div>
+		<script>
+			fbInit();
+		</script>
+			
+		<input type="hidden" id="jquery-data" />
+		<script type="text/javascript"> Cufon.now(); </script>
+	</body>
+
+</html>

@@ -1,0 +1,28 @@
+{% extends 'sns/layout/list.html' %}
+{% load snsstringfiltertags %}
+{% load snsexecutingtags %}
+{% block table_header %}
+    <tr>
+        <th colspan="4">
+            <div class="listHeader">
+                <div class="listHeaderCell postingTime">Execution time</div>
+                <div class="listHeaderCell postingTotal">success</div>
+                <div class="listHeaderCell postingTotal">failed</div>
+                <div class="listHeaderCell postingTotal">State</div>
+                <div class="listHeaderCellLast postingRuleActions">Campaign</div>
+            </div>
+        </th>
+    </tr>
+{%endblock%}
+{% block item %}
+    <tr class="listTr{% cycle 'Odd' 'Even' %}">
+        <td class="listCell postingTime">
+            {{object.executingTime|toUserTz|date:view.dateFormat}}
+        </td>
+        <td class="listCell postingTotal">{{object.success}}</td>
+        <td class="listCell postingTotal">{{object.failed}}</td>
+        <td class="listCell postingTotal"> {{object.state|executingState}}</td>
+        <td class="listCellLast postingRuleActions">{{object.parent.name}}</td>
+    </tr>
+{% endblock %}
+   

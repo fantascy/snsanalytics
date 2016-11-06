@@ -1,0 +1,117 @@
+{% load snsstringfiltertags %}
+
+{% if home %}
+<div style="text-align: center; height:24px; padding:1px; overflow: hidden; font-size:12px"><label style="font-weight:bold">Total clicks</label> : {{total|numberDisplay}}</div>
+{% else %}
+
+<div style="text-align: center; height:40px; padding:10px; overflow: hidden; font-size:12px"><label style="font-weight:bold">Total clicks</label> : {{total|numberDisplay}}</div>
+   	{% if channel_pie_chart_info %}
+   		<input id='channel_pie_chart_info' value='{{channel_pie_chart_info}}' type='hidden'/>	
+    	<div class="cb2Left" style="height:230px;">
+        	<canvas id="channelPieChart" width="330" height="200">[No canvas support]</canvas>
+        	<div class="clearFloat"></div>
+        	<div class="caption" style="background-color:#eef7fb;padding-bottom=5px;">Click-throughs by Account</div>
+    	</div>
+		<script type="text/javascript">
+				//var chart_info_pie_channel = eval('{{channel_pie_chart_info}}'.replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/u'/g,"'").replace(/SubstituteChartInfo/g,"u'"));
+		        var chart_info_pie_channel = eval(decodeURIComponent(escape('{{channel_pie_chart_info}}'.replace(/&#39;/g,"'").replace(/&quot;/g,'"'))));
+		        var data = chart_info_pie_channel[0];
+		        var pie_channel = new RGraph.Pie("channelPieChart", eval(data));		        
+		        //pie_channel.Set('chart.colors', ['#000080','#FFFF00','#008000','#8B4513','#800080','#FF0000','#808080','#FFA500','#A52A2A','#008B8B','#9400D3']);
+		        pie_channel.Set('chart.colors', ['#8080FF','#F0E68C','#90EE90','#DEB887','#B0E0E6','#FFB6C1','#D2B48C','#B0C4DE','#D8BFD8','#FFD700','#66CDAA']);
+		        pie_channel.Set('chart.labels.sticks', true);        
+		        pie_channel.Set('chart.labels', eval(chart_info_pie_channel[1]));
+		        pie_channel.Set('chart.tooltips', eval(chart_info_pie_channel[2]));
+		        pie_channel.Set('chart.tooltips.effect', 'fade');
+		        pie_channel.Set('chart.text.size', 8); 
+		        pie_channel.Draw();
+		</script>	
+    {% else %}
+    	{% if feed_pie_chart_info %}
+	        <div class="cb2Left" style="height:230px;overflow: hidden;">
+	    		<div class="cb2Double" style="height: 195px;">
+	    		<div style="margin-top: 115px;text-align: center;width: 310px">No clicks</div>
+	    		</div>
+	        	<div class="caption" style="background-color:#eef7fb;padding-bottom=5px;">Click-throughs by Account</div>
+	    	</div>    
+	    {% else %}
+	    	<div class="cb2Left" style="background-color:#eef7fb;">
+	        	<div style="text-align: center;width: 310px">No clicks</div>
+	        	<div class="clearFloat"></div>
+	        	<div class="caption" style="background-color:#eef7fb;">Click-throughs by Account</div>
+	    	</div>
+	    {% endif %}
+    {% endif %}             
+    
+    {% if feed_pie_chart_info %}	
+    	<div class="cb2Right" style="height:230px;">
+        	<canvas id="feedPieChart" width="330" height="200">[No canvas support]</canvas>
+        	<div class="clearFloat"></div>
+        	<div class="caption" style="background-color:#eef7fb;padding-bottom=5px;">Click-throughs by Feed</div>
+    	</div>
+		<script type="text/javascript">
+				//var chart_info_pie_feed = eval('{{feed_pie_chart_info}}'.replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/u'/g,"'").replace(/SubstituteChartInfo/g,"u'"));
+				var chart_info_pie_feed = eval(decodeURIComponent(escape('{{feed_pie_chart_info}}'.replace(/&#39;/g,"'").replace(/&quot;/g,'"'))));
+				var data = chart_info_pie_feed[0];
+		        var pie_feed = new RGraph.Pie("feedPieChart", eval(data));		        
+		        //pie_feed.Set('chart.colors', ['#000080','#FFFF00','#008000','#8B4513','#800080','#FF0000','#808080','#FFA500','#A52A2A','#008B8B','#9400D3']);
+		        pie_feed.Set('chart.colors', ['#8080FF','#F0E68C','#90EE90','#DEB887','#B0E0E6','#FFB6C1','#D2B48C','#B0C4DE','#D8BFD8','#FFD700','#66CDAA']);		        
+		        pie_feed.Set('chart.labels.sticks', true);        
+		        pie_feed.Set('chart.labels', eval(chart_info_pie_feed[1]));
+		        pie_feed.Set('chart.tooltips', eval(chart_info_pie_feed[2]));
+		        pie_feed.Set('chart.tooltips.effect', 'fade');
+		        pie_feed.Set('chart.text.size', 8); 
+		        pie_feed.Draw();
+		</script>	
+    {% else %}
+    	{% if channel_pie_chart_info %}
+	        <div class="cb2Right" style="height:230px;overflow: hidden;">
+	    		<div class="cb2Double" style="height: 195px;">
+	    		<div style="margin-top: 115px;text-align: center;width: 310px">No clicks</div>
+	    		</div>
+	        	<div class="caption" style="background-color:#eef7fb;padding-bottom=5px;">Click-throughs by Feed</div>
+	    	</div>    
+    	{% else %}
+	    	<div class="cb2Right" style="background-color:#eef7fb;">
+	        	<div style="text-align: center;width: 310px">No clicks</div>
+	        	<div class="clearFloat"></div>
+	        	<div class="caption" style="background-color:#eef7fb;">Click-throughs by Feed</div>
+	    	</div>
+	    {% endif %}
+    {% endif %}        
+{% endif %}	
+		<canvas id="myLine" width="670" height="310">[No canvas support]</canvas>
+		<script type="text/javascript">
+				var chart_info_line_user = eval('{{chart_info}}'.replace(/&#39;/g,"'").replace(/&quot;/g,'"'));
+		        var data = chart_info_line_user[0];
+		        var line = new RGraph.Line("myLine", eval(data));
+		        //line.Set('chart.background.grid', false);
+		        line.Set('chart.background.barcolor1', 'white');
+		        line.Set('chart.background.barcolor2', 'white');
+		        line.Set('chart.colors', ['#FF9900']);
+		        //var tooltips='{{tooltips}}'.replace(/&#39;/g,"'");
+		        var tooltips=chart_info_line_user[2]
+		        line.Set('chart.tooltips',eval(tooltips));
+		        line.Set('chart.tooltips.effect', 'fade');
+		        line.Set('chart.filled', false);
+		        line.Set('chart.linewidth', 2);
+		        line.Set('chart.hmargin', 10);
+		        line.Set('chart.tickmarks', 'filledcircle');
+		        line.Set('chart.ticksize', chart_info_line_user[7]);
+		        line.Set('chart.scale.decimals', 0);
+		        //var x_labels='{{x_labels}}'.replace(/&#39;/g,"'");
+		        var x_labels=chart_info_line_user[1]
+		        line.Set('chart.labels', eval(x_labels));
+		        line.Set('chart.ymin', 0);
+		        var y_max=chart_info_line_user[6];
+		        if(y_max<10){
+			        y_max=10;
+			        line.Set('chart.ymax', y_max);
+			    }
+		        //line.Set('chart.ymax', y_max);
+		        line.Set('chart.ylabels.count', getYLabelsCount(y_max));
+		        line.Set('chart.gutter', 40);
+		        line.Set('chart.title.xaxis', chart_info_line_user[8]);
+		        line.Set('chart.text.size', 7);
+		        line.Draw();
+		</script>		

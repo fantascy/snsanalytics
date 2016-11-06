@@ -1,0 +1,63 @@
+{% extends 'sns/layout/list.html' %}
+{% load snsstringfiltertags %}
+{% load snspostingruletags %}
+
+{% block list_header %}
+<div class="buttonCreatesection">
+	<div class="buttonCreate">
+    	<a class="img-cursor-pointer" rel="ajaxform"  href="/#/mgmt/topic/create/?ret_url={{ret_url}}"> Add</a>
+	</div>
+</div>
+{%endblock%}
+
+{% block table_header %}
+    <tr>
+        <th colspan="4">
+            <div class="listHeader">
+                <div class="listHeaderCell webSiteDomain">Name</div>
+                <div class="listHeaderCell webSiteInclude">Content Sources</div>
+                <div class="listHeaderCell webSiteExclude">Schedule Interval</div>
+                <div class="listHeaderCellLast webSiteAction">Actions</div>
+            </div>
+        </th>
+    </tr>
+{%endblock%}
+{% block item %}
+    <tr id="list_tr_id_{{object.id}}" class="listTr{% cycle 'Odd' 'Even' %}">
+        <td class="listCellText webSiteDomain">
+             {{object.name}}
+        </td>
+        <td class="listCellText webSiteInclude">
+            {{object.feedSources|feedSources}}
+        </td>
+        <td class="listCellText webSiteExclude">
+         	{{object|scheduleInfo}}
+         </td>
+        <td class="listCellLast webSiteAction">
+        	<a class="action-button cursorPointer" onclick="delete_obj('{{object.id}}','{{ret_url}}','/mgmt/topic/')" title="Delete">
+            <img src="{{MEDIA_URL}}sns/images/delete.png" border="0"  class="cursorPointer" alt="Delete"/>
+	        </a>
+	        <a class="action-button cursorPointer" href="/#/mgmt/topic/update/?id={{object.id}}" title="Update">
+	            <img src="{{MEDIA_URL}}sns/images/edit.png" border="0"  class="cursorPointer" alt="Update"/>
+	        </a>
+	        {% ifequal object.state 0 %}
+			<a class="action-button" onclick="topicCampActivation('{{object.id}}')" title="Activate">
+				<img id="img_activate_{{object.id}}" src="{{MEDIA_URL}}sns/images/play.png" border="0" class="cursorPointer" alt="Activate">
+			</a>
+            <a class="action-button" onclick="topicCampActivation('{{object.id}}')" title="De-activate">
+				<img id="img_deactivate_{{object.id}}" src="{{MEDIA_URL}}sns/images/pause.png" border="0" class="cursorPointer" style="display:none;" alt="De-activate">		
+			</a>{% endifequal %}
+            {% ifequal object.state 1 %}
+			<a class="action-button" onclick="topicCampActivation('{{object.id}}')" title="Activate">
+				<img id="img_activate_{{object.id}}" src="{{MEDIA_URL}}sns/images/play.png" border="0" class="cursorPointer" style="display:none;" alt="Activate">
+					
+			</a>
+            <a class="action-button" onclick="topicCampActivation('{{object.id}}')" title="De-activate">
+				<img id="img_deactivate_{{object.id}}" src="{{MEDIA_URL}}sns/images/pause.png" border="0" class="cursorPointer" alt="De-activate">
+			</a>
+			{% endifequal %}
+	        
+        </td>
+    </tr>
+{% endblock %}
+   

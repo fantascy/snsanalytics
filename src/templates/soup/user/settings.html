@@ -1,0 +1,44 @@
+{% extends 'soup/layout/contentlayout.html' %}
+{% load souptags %}
+
+{% block content %} 
+<div class="block-2"> 
+	<div class="separator-1"><span>Account Settings</span></div>
+</div>
+
+<div id="user-settings">
+	<div class="ui-widget-content">
+		<div class="block-2 title">Connect Accounts</div>
+	
+		<div id="facebook-settings" class="yui3-u-1-2">
+			<div class="block-2">
+				<span class="icon-text-16 icon-16-facebook">Facebook</span>
+			</div>
+			<div class="block-2">
+				Logged in as <a href="{{view.user.fbChannel.url}}" target="_blank">{{view.user.fbChannel.name}}</a>
+			</div>
+			<div class="block-2">
+				<a href="javascript:soupSignOut('{{view.fbCookieKey}}');">Logout</a>
+			</div>
+		</div>
+		
+		<div id="twitter-settings" class="yui3-u-1-2">
+			<div class="block-2">
+				<span class="icon-text-16 icon-16-twitter">Twitter</span>
+			</div>
+			<span> 
+				{% if view.user.tChannel%}
+				{% include 'soup/user/t_disconnect.html' %}	
+				{% else %}
+				{% include 'soup/user/t_connect.html' %}	
+				{% endif %}
+			</span>
+		</div>
+		<div class="ui-helper-clearfix"></div>
+	</div>
+</div>
+{% endblock %}
+
+{% block content-discovery-side %} 
+	{% include 'soup/layout/side_column_common_1.html' %}		
+{% endblock %}

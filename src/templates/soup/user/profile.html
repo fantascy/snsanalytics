@@ -1,0 +1,52 @@
+{% extends 'soup/layout/profilelayout.html' %}
+{% load commonstringtags %}
+{% load souptags %}
+
+
+{% block content %} 
+	<div class="block-2"> 
+		<div class="separator-1"><span>Profile</span></div>
+	</div>
+
+	<div id="profile" class="block-2">
+		<a href="{{view.user.url}}"><img id="profile-thumbnail" src="{{view.user.avatarUrl}}"/></a>
+		
+		<div id="profile-details">
+			<a id="profile-title" class="title-12" href="{{view.user.url}}">{{view.user.name}}</a>
+			<div class="sub-description gray-text">
+				<span>{{view.user.getCounter.postCount|pluralHandler:"post"}}, </span> 
+				<span>{{view.user.getCounter.ratingCount|pluralHandler:"rating"}}, </span> 
+				<span>{{view.user.getCounter.commentCount|pluralHandler:"comment"}}</span> 
+				
+			</div>
+			<div class="description">
+				{% if view.user.fbChannel %}
+					<a class="explicit hover-underline" href="{{view.user.fbChannel.url}}" target="_blank">on Facebook</a>
+				{% endif %}
+				{% if view.user.tChannel %}
+					{% if view.user.fbChannel %} | {% endif %}
+					<a class="explicit hover-underline " href="{{view.user.tChannel.url}}" target="_blank">on Twitter</a>
+				{% endif %}
+				<!-- | {{view.user.bio|displayBio}}  -->
+				</div>
+		</div>
+		<div class="ui-helper-clearfix"></div>
+	</div>
+	
+	<div id="topic-menu-2" class="topic-menu">
+		<div id="rank-type-selector" class="topic-filter">
+			{% for atypeKey, atypeValue in view.articleTypeMap.items %}
+			<input onclick="chooseProfileRank('{{view.user.key.id}}','{{atypeKey}}')" type="radio" id="{{atypeKey}}" name="radio" {% ifequal atypeKey view.articleType %}checked="checked"{% endifequal %} /><label for="{{atypeKey}}">{{atypeValue}}</label>
+			{% endfor %}
+		</div>
+		<div class="ui-helper-clearfix"></div>
+	</div>
+
+	<div class="separator-1"><span>{{view.articleType|articleListTypeStr}}</span></div>
+	{% include 'soup/topic/thumbnail_list.html' %}		
+{% endblock %}
+
+
+{% block content-discovery-side %} 
+	{% include 'soup/layout/side_column_common_1.html' %}		
+{% endblock %}

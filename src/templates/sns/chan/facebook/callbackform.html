@@ -1,0 +1,27 @@
+{% extends 'sns/layout/content.html' %}
+{% block title %}<div class="ajax_contentTitle">Facebook Account Confirmation</div>{% endblock %}
+{% block content %}
+<div class="content">
+    <div class="cb1">
+        <div class="fieldInput"><img src="{{form.initial.avatarUrl}}" class="iconBig"/></div>
+        <div class="fieldLabel">Authentication of your Facebook account <strong>{{form.initial.name}}</strong> is succeeded.</div>
+        <div class="fieldLabel">If you don't want to add keywords filter to this account, you can <a rel="ajaxform" href="#/chan/facebook/">click here</a> to continue.</div>
+    </div>
+
+    <form method="POST" action="/chan/facebook/update/">
+        <div class="cb1">
+        	<div class="clearFloat"></div>
+            <div class="fieldLabel">If you want this Facebook account to post only contents matching certain keywords(separated by comma), </div>
+            <div class="fieldLabel">please specify the keywords, then click the save button.</div>
+            <div class="clearFloat"></div>
+            <div class="fieldInput"> {{form.keywords}} </div>
+            <div class="clearFloat"></div>
+            <div class="fieldInput"> <input type="button" onclick="ajaxFormSubmit('/chan/facebook/', this);" value="save"> </div>
+            <div class="clearFloat"></div>
+            <!-- hidden inputs -->
+            {{form.id}}
+            {{form.callback}}
+        </div>
+    </form>
+</div>
+{% endblock %}

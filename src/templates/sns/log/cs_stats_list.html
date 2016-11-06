@@ -1,0 +1,89 @@
+{% extends 'sns/log/channel_stats_list_base.html' %}
+{% load snsstringfiltertags %}
+{% load snschanneltags %}
+
+
+{% block buttons %}
+	<div class="buttonCreate">
+		<a class="img-cursor-pointer" href="/log/trovemention/export/">Mentions - 1D</a>
+	</div>
+	<div class="buttonCreate">
+		<a class="img-cursor-pointer" href="/log/trovemention/export/?days=7">Mentions - 1W</a>
+	</div>
+	<div class="buttonCreate">
+		<a class="img-cursor-pointer" href="/log/csstats/export_all/">Export</a>
+	</div>
+{% endblock %}
+
+
+{% block table_header %}
+<tr class="listHeader">
+	<td class="listHeaderCell list-col-csstats-name">Source</td>
+	
+	<td class="listHeaderCell list-col-csstats-posts cursorPointer 
+	{% ifequal orderBy 'posts' %}
+		{% ifequal orderType 'desc' %}
+			list-sort-desc" onclick="window.location.href='{{view.path}}?orderby=posts&type=asc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% else %}
+			list-sort-asc" onclick="window.location.href='{{view.path}}?orderby=posts&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% endifequal %}
+	{% else %}
+		list-sort-both" onclick="window.location.href='{{view.path}}?orderby=posts&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+	{% endifequal %}>Posts</td>
+	
+	<td class="listHeaderCell list-col-csstats-clicks cursorPointer 
+	{% ifequal orderBy 'clicks' %}
+		{% ifequal orderType 'desc' %}
+			list-sort-desc" onclick="window.location.href='{{view.path}}?orderby=clicks&type=asc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% else %}
+			list-sort-asc" onclick="window.location.href='{{view.path}}?orderby=clicks&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% endifequal %}
+	{% else %}
+		list-sort-both" onclick="window.location.href='{{view.path}}?orderby=clicks&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+	{% endifequal %}>Clicks</td>
+	
+	<td class="listHeaderCell list-col-csstats-totalposts cursorPointer 
+	{% ifequal orderBy 'totalposts' %}
+		{% ifequal orderType 'desc' %}
+			list-sort-desc" onclick="window.location.href='{{view.path}}?orderby=totalposts&type=asc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% else %}
+			list-sort-asc" onclick="window.location.href='{{view.path}}?orderby=totalposts&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% endifequal %}
+	{% else %}
+		list-sort-both" onclick="window.location.href='{{view.path}}?orderby=totalposts&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+	{% endifequal %}>Total Posts</td>
+	
+	<td class="listHeaderCellLast list-col-csstats-totalclicks cursorPointer 
+	{% ifequal orderBy 'totalclicks' %}
+		{% ifequal orderType 'desc' %}
+			list-sort-desc" onclick="window.location.href='{{view.path}}?orderby=totalclicks&type=asc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% else %}
+			list-sort-asc" onclick="window.location.href='{{view.path}}?orderby=totalclicks&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% endifequal %}
+	{% else %}
+		list-sort-both" onclick="window.location.href='{{view.path}}?orderby=totalclicks&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+	{% endifequal %}>Total Clicks</td>
+</tr>
+{%endblock%}
+
+
+{% block item %}
+<tr class="listTr{% cycle 'Odd' 'Even' %}">
+	<td class="listCell list-col-csstats-name">
+		{% comment %}<img class="iconMedium" src="{{object.key.name|avatarUrl}}" />{% endcomment %}
+		<a href="http://{{object.keyNameStrip}}" target="_blank">{{object.keyNameStrip}}</a>
+	</td>
+	<td class="listCell list-col-csstats-posts">
+		<a href="{{view.chart_path}}?id={{ object.id }}&attr=postCounts" title="View chart">{{object.posts}}</a>
+	</td>
+	<td class="listCell list-col-csstats-clicks">
+		<a href="{{view.chart_path}}?id={{ object.id }}&attr=clickCounts" title="View chart">{{object.clicks}}</a>
+	</td>
+	<td class="listCell list-col-csstats-totalposts">
+		{{object.totalPosts}}
+	</td>
+	<td class="listCellLast list-col-csstats-totalclicks">
+		{{object.totalClicks}}
+	</td>
+</tr>
+{% endblock %}

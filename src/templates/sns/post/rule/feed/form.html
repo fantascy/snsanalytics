@@ -1,0 +1,217 @@
+{% extends 'sns/post/rule/form.html' %}
+
+{% block articles_channels %}
+		<script>
+			var twitter = document.getElementById('is_twitter_campaign');
+			var facebook = document.getElementById('is_facebook_campaign');
+			if(twitter==null){
+				facebook.checked=true;
+				choosePostTypeCampaign(facebook);
+			}
+			if(facebook==null){
+				twitter.checked=true;
+				choosePostTypeCampaign(twitter);
+			}
+		</script>
+
+		<!-- hidden input -->
+		<input id="twitter_count" type="hidden" value="{{twitter_count}}"/>
+		<input id="facebook_count" type="hidden" value="{{facebook_count}}"/>
+		
+				 	<div class="cb2">
+					    {{form.contents.errors}}
+				        <div class="clearFloat"></div>				
+				                
+						<div> <label for="id_contents">Please select one or more feeds:<span class="required">*</span></label> </div>
+				        
+				        <div class="clearFloat"></div>
+				        <div class="fieldInput"> {{form.contents}} </div>
+				        <div class="clearFloat"></div>
+				    </div>
+				     <div class="clearFloat"></div>
+				    				    
+	    <div class="cb2">
+	    	{{form.channels.errors}}
+	    	{{form.fbDestinations.errors}}
+	    	{{form.hideTwitter.errors}}
+	    	{{form.hideFacebook.errors}}
+			<div><label for="id_type_campaign" style="text-align:left;float:left;vertical-align:bottom;">Post to:<span class="required">*</span></label></div>
+		    <!-- <div id="id_type_campaign" class="fieldInput"><input id="is_twitter_campaign" onchange="choosePostTypeCampaign(this)" type="checkbox" {% ifequal form.initial.hideTwitter 'True' %}{% else %}{% ifequal form.data.hideTwitter 'True' %}{% else %}checked="checked"{% endifequal %}{% endifequal %}>Twitter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="is_facebook_campaign" onchange="choosePostTypeCampaign(this)" type="checkbox" {% if form.hideFacebook %}{% else %}checked="checked"{% endif %}>Facebook</div> -->
+			<div id="id_type_campaign" class="fieldInput">
+				{% ifnotequal twitter_count 0 %}
+			    	{{form.hideTwitter}}Twitter&nbsp;&nbsp;&nbsp;&nbsp;
+			   	{% else %}
+			    	{% if campaign_update %}
+			    		{{form.hideTwitter}}Twitter&nbsp;&nbsp;&nbsp;&nbsp;
+			    	{% endif %}
+			   	{% endifnotequal %}
+				{% ifnotequal facebook_count 0 %}
+			    	{{form.hideFacebook}}Facebook
+			    {% else %}
+			    	{% if campaign_update %}
+			    		{{form.hideFacebook}}Facebook
+			    	{% endif %}
+			    {% endifnotequal %}	
+			</div>
+	    </div>
+	    <div id='channel_info_campaign' {% ifequal form.initial.hideTwitter 'on' %}{% else %}{% ifequal form.data.hideTwitter 'on' %}{% else %}style="display:none"{% endifequal %}{% endifequal %} class="cb2">	
+	    	<div id='channel_info_campaign_error' style='display:none' class="required">You must select at least one Twitter account!</div>        
+			<div class="clearFloat"></div>
+			<div>Twitter Accounts:<span class="required" >*</span></div>
+	        <div class="fieldInput"> {{form.channels}} </div>
+	     </div>
+	        
+	     <div id='fchannel_info_campaign' {% ifequal form.initial.hideFacebook 'on' %}{% else %}{% ifequal form.data.hideFacebook 'on' %}{% else %}style="display:none"{% endifequal %}{% endifequal %} class="cb2">	        
+			<div id='fchannel_info_campaign_error' style='display:none' class="required">You must select at least one Facebook wall!</div> 
+			<div class="clearFloat"></div>
+			<div>Facebook Walls:<span class="required" >*</span></div>
+	        <div class="fieldInput"> {{form.fbDestinations}} </div>
+	     </div>
+	     
+	     		<!-- hidden inputs -->
+	     		{{form.id.errors}}	    
+	     		{% if form.id %}
+	     			{{form.id}}	    
+	     		{% endif %}   
+				    
+{% endblock %}
+
+				{% block schedule %}
+				<div class="cb1">
+				    <div class="cb1Title">Schedule Info</div>
+				    
+					{{form.scheduleInterval.errors}}
+					<div class="cb2RuleSchedule">
+				        <div class="fieldLabel" style="width: 118px;text-align:right;" id="interval_id"> <label for="id_scheduleInterval">Schedule Interval<span class="required">*</span></label></div>
+				        <div class="fieldInput"> {{form.scheduleInterval}} </div>
+				    </div>
+				    <div class="clearFloat"></div>
+				    
+					<div class="cb2RuleSchedule">
+					    {{form.scheduleStart.errors}}
+				        <div class="clearFloat"></div>
+				        <div class="fieldLabel" style="width: 118px;text-align:right;"> <label for="id_scheduleStart">Schedule Start Time&nbsp;&nbsp;</label></div>
+				        <div class="fieldInput"> {{form.scheduleStart}} </div>
+				    </div>
+					<div class="cb2RuleSchedule">
+					    {{form.scheduleEnd.errors}}
+				        <div class="clearFloat"></div>
+				        <div class="fieldLabel" style="width: 118px;text-align:right;"> <label for="id_scheduleEnd">Schedule End Time&nbsp;&nbsp;</label></div>
+				        <div class="fieldInput"> {{form.scheduleEnd}} </div>
+				    </div>
+				    <div class="clearFloat"></div>
+				</div>
+				
+	    		<div id='randomize_info' class="cb2Double">
+					<div>
+						{{form.randomize}} Distribute all posts of one campaign execution randomly, within this time window:
+						&nbsp;&nbsp;<span id='randomize_time_count_info'  style='display:none'><select id='randomize_time_count' name='randomize_time_count' onchange='toggleRandomizeSelect(this)'></select></span>
+					</div>
+					<div class="clearFloat"></div>
+				</div>
+				{% endblock %}
+				
+				{% block advance %}
+				<div class="cb1">
+				    <div class="cb1Title">Advanced</div>
+					{{form.maxMessagePerFeed.errors}}
+				    <div class="cb2Double">
+				        <div>Every time when this campaign is executed, post no more than {{form.maxMessagePerFeed}} new article(s) from each feed.</div>
+				        <div class="clearFloat"></div>
+				    </div>
+				    			
+				    {{form.keywords.errors}}	    
+				    <div class="cb2Double">
+				        <div>If you specify any keyword below, we will post only articles that match one of your provided keywords.</div>
+				        <div class="clearFloat"></div>
+				        <div>{{form.keywords}}</div>
+				        <div class="clearFloat"></div>
+				    </div>
+
+				    <div class="cb2Double">
+			        	<div> Always prepend this text {{form.msgPrefix}} to every post. Examples: 'BrandA', '#BrandB'.</div>
+			        	<div class="clearFloat"></div>
+			    	</div>
+			    
+			   	 	<div class="cb2Double">
+			        	<div> Always append this text {{form.msgSuffix}} to every post. Examples: 'Obama', '#sns'.</div>
+			        	<div class="clearFloat"></div>
+			    	</div>
+	    	    
+	    	    	<div class="cb2Double">
+			        	<div>{{form.prefixTitle}} Truncate prefix of each feed entry title as identified by one of the following selected delimter(s):</div>
+			        	<div id="prefix_title_detail" style='display:none'>
+			        		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			        		<input id="prefix_title_parenthesis" type="checkbox" onclick="prefixesCheck(this)"/><strong>()</strong>&nbsp;&nbsp;
+			        		<input id="prefix_title_bracket" type="checkbox" onclick="prefixesCheck(this)"/><strong>[]</strong>&nbsp;&nbsp;
+			        		<input id="prefix_title_brace" type="checkbox" onclick="prefixesCheck(this)"/><strong>{}</strong>&nbsp;&nbsp;
+			        		<input id="prefix_title_hyphen" type="checkbox" onclick="prefixesCheck(this)"/><strong>-</strong>&nbsp;&nbsp;
+			        		<input id="prefix_title_colon" type="checkbox" onclick="prefixesCheck(this)"/><strong>:</strong>&nbsp;&nbsp;
+			        		<input id="prefix_title_underscore" type="checkbox" onclick="prefixesCheck(this)"/><strong>_</strong>
+			        		<input id="prefix_title_input_check" type="checkbox" onclick="addPrefixesInput(this)"/>
+			        		<label id="prefix_title_input_label">You specify one character</label>
+			        		<span id="prefix_title_input_info"  style='display:none'>
+			        			<input id="prefix_title_input" type="text" maxlength="1" size="5"/>
+			        			<label id='prefix_title_input_error' style='display:none' class="required">You can only define a single symbol here!</label>
+			        			<label id='prefix_title_input_error_duplicate' style='display:none' class="required">You have defined a duplicate symbol!</label>  
+			        		</span>
+			        	</div>
+			        	<div class="clearFloat"></div>
+			    	</div>
+			    	
+			   	 	<div class="cb2Double">
+			        	<div>{{form.suffixTitle}} Truncate suffix of each feed entry title as identified by one of the following selected delimter(s):</div>
+			        	<div id="suffix_title_detail" style='display:none'>
+			        		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			        		<input id="suffix_title_parenthesis" type="checkbox" onclick="suffixesCheck(this)"/><strong>()</strong>&nbsp;&nbsp;
+			        		<input id="suffix_title_bracket" type="checkbox" onclick="suffixesCheck(this)"/><strong>[]</strong>&nbsp;&nbsp;
+			        		<input id="suffix_title_brace" type="checkbox" onclick="suffixesCheck(this)"/><strong>{}</strong>&nbsp;&nbsp;
+			        		<input id="suffix_title_hyphen" type="checkbox" onclick="suffixesCheck(this)"/><strong>-</strong>&nbsp;&nbsp;
+			        		<input id="suffix_title_colon" type="checkbox" onclick="suffixesCheck(this)"/><strong>:</strong>&nbsp;&nbsp;
+			        		<input id="suffix_title_underscore" type="checkbox" onclick="suffixesCheck(this)"/><strong>_</strong>
+			        		<input id="suffix_title_input_check" type="checkbox" onclick="addSuffixesInput(this)"/>
+			        		<label id="suffix_title_input_label">You specify one character</label>
+			        		<span id="suffix_title_input_info" style='display:none'>
+				        		<input id="suffix_title_input" type="text" maxlength="1" size="5"/>
+				        		<label id='suffix_title_input_error' style='display:none' class="required">You can only define a single symbol here!</label> 
+				        		<label id='suffix_title_input_error_duplicate' style='display:none' class="required">You have defined a duplicate symbol!</label> 
+			        		</span>
+			        	</div>
+			    	</div>
+			    	
+			    	<!-- hidden input -->    	
+			    	{{form.prefixDelimter}}
+			    	{{form.suffixDelimter}}    
+			    	<input id="prefix_title_input_hidden" type="text" style='display:none'/>
+			    	<input id="suffix_title_input_hidden" type="text" style='display:none'/>
+				    
+				    <!-- <div class="cb2">
+				    {{form.disableChannelFilter.errors}}
+	                     <div> {{form.disableChannelFilter}} Disable marketing channel keywords filtering.</div>
+	                <div class="clearFloat"></div>
+	                </div> -->
+	                
+	                {{form.titleOnly.errors}}
+	                <div class="cb2Double">
+				        <div>{{form.titleOnly}} Post only feed entry titles, not links.</div>
+				        <div class="clearFloat"></div>
+				    </div>
+				    
+				    {{form.gaOn.errors}}
+				    <div class="cb2Double">
+				        <div>{{form.gaOn}} Enable Google Analytics integration </div>
+				        <div class="clearFloat"></div>
+				    </div>
+				    				    
+				     <div id='analytics_info'>
+				     {% include 'sns/post/rule/google_analytics.html' %}
+				     </div>
+				    
+				</div>
+				{% endblock %}
+				
+				{% block facebook %}
+				{% include 'sns/post/rule/facebook_feed_advance.html' %}
+				{% endblock %}
+
+				

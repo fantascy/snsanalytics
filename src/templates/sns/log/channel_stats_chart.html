@@ -1,0 +1,72 @@
+{% load snschanneltags %}
+
+<div id="system-stats">
+{% block title %}<div class="ajax_contentTitle">Twitter Accounts</div>{% endblock %}
+
+<div class="clearFloat"></div>
+
+<div class="selector-left">
+{% ifequal view.chartType view.comparisonType %}
+<input type="hidden" id="data-post" value="{{counts.0|safe}}" />
+<input type="hidden" id="data-click" value="{{counts.1|safe}}" />
+<input type="hidden" id="data-follower" value="{{counts.2|safe}}" />
+<input type="hidden" id="data-klout" value="{{counts.3|safe}}" />
+<input type="hidden" id="data-search-rank" value="{{counts.4|safe}}" />
+<input type="hidden" id="data-retweet" value="{{counts.5|safe}}" />
+<input type="hidden" id="data-mention" value="{{counts.6|safe}}" />
+<input type="hidden" id="tip-post" value="{{tips.0|safe}}" />
+<input type="hidden" id="tip-click" value="{{tips.1|safe}}" />
+<input type="hidden" id="tip-follower" value="{{tips.2|safe}}" />
+<input type="hidden" id="tip-klout" value="{{tips.3|safe}}" />
+<input type="hidden" id="tip-search-rank" value="{{tips.4|safe}}" />
+<input type="hidden" id="tip-retweet" value="{{tips.5|safe}}" />
+<input type="hidden" id="tip-mention" value="{{tips.6|safe}}" />
+<input type="hidden" id="labels" value="{{labels|safe}}" />
+{% endifequal %}
+<img src="{{channel.avatarUrl|displayNoneAvatar}}" class="iconMedium"/>
+<a target="_blank" href="http://www.twitter.com/{{channel.name}}">{{channel.name}}</a>
+<span>{{user.mail}}</span>
+</div>
+
+<div class="selector">
+	Select a chart: {{form.type}}
+</div>
+
+<input id="id" type="hidden" value={{ id }} />
+
+<div class="clearFloat"></div>
+
+{% ifequal view.chartType view.comparisonType %}
+<input type="checkbox" id="check-post" checked="checked" onchange="javascript:refreshChannelStatsChart()"/>Posts
+<input type="checkbox" id="check-click" onchange="javascript:refreshChannelStatsChart()"/>Clicks
+<input type="checkbox" id="check-follower" onchange="javascript:refreshChannelStatsChart()"/>Followers
+<input type="checkbox" id="check-klout" checked="checked" onchange="javascript:refreshChannelStatsChart()"/>Klout Scores
+<input type="checkbox" id="check-search-rank" checked="checked" onchange="javascript:refreshChannelStatsChart()"/>Search Ranks
+<input type="checkbox" id="check-retweet" checked="checked" onchange="javascript:refreshChannelStatsChart()"/>Retweets
+<input type="checkbox" id="check-mention" checked="checked" onchange="javascript:refreshChannelStatsChart()"/>Mentions
+{% endifequal %}
+
+<canvas id="myLine" width="670" height="350">[No canvas support]</canvas>
+
+<script type="text/javascript">
+	{% ifequal view.chartType view.comparisonType %}
+		refreshChannelStatsChart();
+	{% else %}
+		var line = new RGraph.Line("myLine", eval("{{counts|safe}}"));
+		line.Set('chart.linewidth', 2);
+		line.Set('chart.hmargin', 5);
+		line.Set('chart.tooltips', eval("{{tips|safe}}"));
+		line.Set('chart.colors', ['#FF9900','#8EC1DA']);
+		var labels = eval("{{labels|safe}}");
+		for (var i = 0; i < labels.length; i++) {
+			if ((i % 3 != 0) && (i != labels.length - 1))
+				labels[i] = '';
+		}
+		line.Set('chart.labels',  labels);
+		line.Set('chart.tickmarks', 'filledcircle');
+		line.Set('chart.ticksize', 5);
+		line.Set('chart.gutter', 50);
+		line.Draw();
+	{% endifequal %}
+</script>
+</div>

@@ -1,0 +1,36 @@
+{% extends 'sns/layout/list.html' %}
+
+{% block list_header %}
+<div class="buttonCreatesection">
+	<div class="buttonCreate">
+    	<a class="img-cursor-pointer" rel="facebox" href="/usr/blacklist/add/" > Add Black Account</a>
+	</div>
+</div>
+
+{%endblock%}
+
+{% block table_header %}
+<tr class="listHeader">
+    <td class="listHeaderCell channelLogin">Id</div>
+    <td class="listHeaderCell channelKeywords">Login</td>
+	<td class="listHeaderCellLast channelActions">Action</div>
+</tr>
+{%endblock%}
+
+{%block  item %}
+<tr id="list_tr_id_{{object}}" class="listTr{% cycle 'Odd' 'Even' %}">
+    <td class="listCell textAlignLeft channelLogin">
+        <span >
+            {{object.id}}
+        </span>
+    </td>
+    <td class="listCell textAlignLeft channelKeywords">
+        <span>{{object.name}}</span>
+    </td>
+    <td class="listCellLast channelActions">   
+         <a class="action-button" class="cursorPointer"  onclick="delete_user_blacklist('{{object}}')" title="Delete">
+            <img src="{{MEDIA_URL}}sns/images/delete.png" border="0" class="cursorPointer" alt="Delete"/>
+        </a> 
+    </td>
+</tr>
+{%endblock%}

@@ -1,0 +1,31 @@
+{% extends 'sns/layout/list.html' %}
+
+{% block list_header %}
+        <div id="datepicker" class="reporting_viewtime">
+            <ul id="dateBuckets">
+                <div class="dateBucketsLeft"> 
+                {% for key, display in timeRanges %}
+                <li id="{{key}}_ranking"  style={% ifequal timeRange key %}"background: #8EC1DA; color:#FFFFFF"{% else %}""{% endifequal %}>
+                   <a  onclick="chooseRankingType('{{key}}',true,1000,'')" class="cursorPointer">{{display}}</a> 
+                </li>             
+                {% endfor %}
+                </div>
+            </ul>
+        </div>
+        
+        <input id="timeRangeRanking" type="hidden" value="{{timeRange}}" class="retro loadRanking"/>
+        <script type="text/javascript">
+            document.getElementById('timeRangeRanking').value = "{{timeRange}}";
+        </script>
+        
+        <input id="his_detail_url" type="hidden" >
+        
+{% endblock %}
+
+
+{% block all_table %}
+<div class="clearFloat"></div>
+<div id="his_detail_home"></div>    
+{% endblock %}
+
+

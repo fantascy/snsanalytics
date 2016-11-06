@@ -1,0 +1,71 @@
+{% extends 'sns/layout/popup_form.html' %}
+{% block form %}
+{% ifequal home_tweet 'True' %}
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+		jQuery(".retro",$('#tweet_reply_facebox')[0]).each(function() {
+
+		var subject = jQuery(this);
+
+		if ( subject.is(".formsubmit") ) {
+			makeFormAjaxSubmit(subject);
+		}
+	});
+});
+</script> 
+{% else %}	
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+        $('title').data('reloadOnSuccess',false);
+		jQuery(".retro",$('#tweet_reply_facebox')[0]).each(function() {
+
+		var subject = jQuery(this);
+
+		if ( subject.is(".formsubmit") ) {
+			makeFormAjaxSubmit(subject);
+		}
+	});
+});
+</script> 
+{% endifequal %}		
+    <div id="postMessageForm" class="cb1">
+        {{ form.url.errors }}
+        <div class="clearFloat"></div>
+        <div class="fieldLabel"> <label for="id_url">URL</label></div>
+        <div class="fieldInput"> {{form.url}} </div>
+        <div class="clearFloat"></div>
+    
+        {{ form.msg.errors }}
+        <div class="fieldLabel"> <label for="id_msg">Message<span class="required">*</span></label></div>
+        <div class="fieldInput"> {{form.msg}} </div>
+        <div class="fieldLabel fieldLabelCounter">
+            <div class="msgLengthCounter retro counter" rel_msg="id_msg" rel_url="id_url" rel_fb="id_fb">{{form.initial.left_length}}</div>
+            <div class="clearFloat"></div>
+            <div class="textAlignCenter">left</div>
+        </div>
+        <div class="clearFloat"></div>
+        
+        <div class="fieldLabel"></div>
+        <div class="clearFloat"></div>
+        
+        {{ form.channels.errors }}
+        <div class="fieldLabel"><label for="id_channels">Twitter Accounts<span class="required">*</span></label></div>
+        <div class="fieldInput">{{form.channels}}</div>
+        <!-- hidden input -->
+		{{form.uid}}
+		{{form.avatarUrl}}
+		{{form.type}}
+		
+		<div style="display:none">
+			{{form.fbName}}
+			{{form.fbDescription}}
+			{{form.fbPicture}}
+		</div>
+		
+    </div>	
+	
+{% endblock %}
+
+{% block buttonName %}
+Post
+{% endblock %}

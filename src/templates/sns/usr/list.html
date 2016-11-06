@@ -1,0 +1,98 @@
+{% extends 'sns/usr/list_common.html' %}
+
+{% load snsstringfiltertags %}
+{% load snsusertags %}
+
+{% block list_header %}
+<div class="buttonCreatesection">
+	<div class="buttonCreate">
+	{% ifequal type 0 %}
+		<a class="img-cursor-pointer" onclick="javascript:window.location.href = '/#/usr/?type=2'">Show only CMP users</a>
+	{% else %}
+		<a class="img-cursor-pointer" onclick="javascript:window.location.href = '/#/usr/'">Show all users</a>
+	{% endifequal %}
+	</div>
+	<div id="button-clear-proxy" class="buttonCreate" {% if useProxy %}{% else %}style="display:none"{% endif %}>
+		<a class="img-cursor-pointer"  onclick="changeCurrentUser('')">Clear Proxy User</a>
+	</div>
+	
+	<div class="buttonCreate">
+		<a class="img-cursor-pointer" href="/usr/export_cmp?keyword={{keyword}}&ret_url={{ret_url}}">Export CMP</a>
+	</div>
+	
+	<div class="buttonCreate">
+		<a class="img-cursor-pointer" href="/usr/export_all?keyword={{keyword}}&ret_url={{ret_url}}">Export All</a>
+	</div>
+</div>
+<div class="clearFloat"></div>
+<div class="buttonCreatesection">
+<div class="searchfunction">
+   <input type="text" value="{{keyword}}" id="query" class="retro searchInput" name="user keyword" onkeydown="enterPress(event);"/>
+   <input class="s cursorPointer" type="submit" value="Search"  id="search_button" onclick="searchList('{{post_path}}')"/>
+</div>
+</div>
+{%endblock%}
+
+{%block table_header %}
+<tr class="listHeader">
+    <td class="listHeaderCell list-col-user">Gmail</td>
+    <td class="listHeaderCell list-col-user">Uid</td>
+    <td class="listHeaderCell list-col-user">Name</td>
+    <td class="listHeaderCell list-col-user_state">State</td>
+    <td class="listHeaderCellLast list-col-user">Is CMP User</td>
+</tr>
+{%endblock%}
+{%block item %}
+<tr class="listTr{% cycle 'Odd' 'Even' %}">
+    <td class="listCell textAlignLeft list-col-user">
+        <span class="js-link"  onclick="changeCurrentUser('{{object.mail}}')">{{object.mail}}</span>
+        <div class="clearFloat"></div>
+        <span id="tag_{{object.id}}">
+        {{object.tags|diplay_empty_as_empty}}
+        </span>
+    </td>
+    <td class="listCell textAlignLeft list-col-user">
+        <span>{{object.key.id}}</span>
+    </td>
+    <td class="listCell textAlignLeft list-col-user">
+        <span>{{object.name}}</span>
+    </td>
+    <td class="listCell list-col-user_state">
+    
+		<select class="list-select-menu" id="state_email_{{object.mail}}" onchange="setUserState(this, '{{object.mail}}')"> 
+			<option value="4" {% ifequal object|userState 'admin' %}selected="selected"{% endifequal %}>Admin</option> 
+			<option value="3" {% ifequal object|userState 'unlimited' %}selected="selected"{% endifequal %}>Unlimited</option> 
+			<option value="2" {% ifequal object|userState 'standard' %}selected="selected"{% endifequal %}>Standard</option> 
+			<option value="1" {% ifequal object|userState 'unapproved' %}selected="selected"{% endifequal %}>Unapproved</option> 
+		</select> 
+    	{% comment %}
+        <div class="list-side-buttons">
+        	<span class="cursorPointer"  onclick="upUserState('{{object.mail}}')"><img src="/sns/images/arrow-single-up-red.png" title="up" /></span>
+        	<span class="cursorPointer"  onclick="downUserState('{{object.mail}}')"><img src="/sns/images/arrow-single-down-green.png" title="down" /></span>
+        </div>
+        {% endcomment %}
+    </td>
+    <td class="listCellLast list-col-user">
+        	<span class="cursorPointer"  onclick="toggleUserCmpStatus('{{object.mail}}')"><img class="check-icon" {% if object.isContent %}src="/sns/images/icon-checked.gif"{% else %}src="/sns/images/icon-unchecked.gif"{% endif %} title="click to change" /></span>
+        	<a class="action-button" href="/usr/tag/?id={{object.id}}" title="Update" rel="facebox">
+	            <img src="{{MEDIA_URL}}sns/images/edit.png" border="0"  class="cursorPointer" alt="Update"/>
+	        </a>
+	        <a class="action-button" href="/usr/export/?id={{object.id}}" title="Export">
+	            <img src="{{MEDIA_URL}}sns/images/export.png" border="0"  class="cursorPointer" alt="Export"/>
+	        </a>
+    </td>
+</tr>
+{% endblock %}
+
+{% block list_footer %}
+<script type="text/javascript">
+	$('.check-icon').click(
+		function () {
+			if ($(this).attr('src') == '/sns/images/icon-checked.gif')
+				$(this).attr('src', '/sns/images/icon-unchecked.gif');
+			else
+				$(this).attr('src', '/sns/images/icon-checked.gif');
+		}
+	);
+</script>
+{% endblock %}

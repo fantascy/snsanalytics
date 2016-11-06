@@ -1,0 +1,30 @@
+{% load snsstringfiltertags %}
+
+        <div id="reportChartUrlDetail">
+            <div class="cb2Double">
+            	{% if urlMapping.msg %}
+	                <div class="fieldLabel">Message</div>
+	                <div class="fieldDetail">
+	                    {{urlMapping.msg|getMsg}}&nbsp;
+	                </div>
+	                <div class="clearFloat"></div>
+                {% endif %}
+                <div class="fieldLabel">URL</div>
+                <div class="fieldDetail">
+                    <a target="_blank" href="{{urlMapping.url}}">{{urlMapping.url}}</a>
+                </div>
+                <div class="clearFloat"></div> 
+                {% ifequal post.type 0 %}
+                  <div class="fieldLabel">Feed</div>
+                  <div class="fieldDetail">
+                    <a target="_blank" href="{{post.content.url}}">{{post.content.url}}</a>
+                  </div>
+                {% endifequal %}
+                <div class="clearFloat"></div>
+                <div class="fieldLabel">Life Time Clicks</div>
+                <div class="fieldDetail">
+                	{{urlMapping.life|numberDisplay}}
+                </div>                              
+            </div>
+        </div>
+  

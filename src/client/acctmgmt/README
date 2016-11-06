@@ -1,0 +1,25 @@
+LOAD A NEW CSV FILE INTO GOOGLE DATA STORE
+===========================================
+python sns/yahoo/batch/load.py FILE
+
+
+DUMP GOOGLE DATA STORE INTO A CSV FILE
+=======================================
+python sns/yahoo/batch/dump.py 
+
+
+
+HOW TO RUN:
+
+step 1) Download selenium Server
+The server can be downloaded from http://seleniumhq.org/download/
+
+This tool is tested with  selenium-server-standalone-2.17.0.jar 
+
+step 2) start selenium server
+>java -jar  selenium-server-standalone-2.17.0.jar 
+
+step 3) run the script:
+>python yahoologin/yahoologin.py account.csv
+
+this should open a firefox browser and login/logout the test file.

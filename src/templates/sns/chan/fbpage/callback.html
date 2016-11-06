@@ -1,0 +1,21 @@
+{% extends 'sns/layout/content.html' %}
+{% block title %}<div class="ajax_contentTitle">Facebook Pages Confirmation</div>{% endblock %}
+{% block content %}
+<div class="content">
+    <div class="cb1">
+        <div class="fieldLabel">You've successfully authorized to SNS Analytics the management access of the following pages administered by {{account}}:</div>
+    </div>
+    <div class="clearFloat"></div>
+    
+    {% for page in page_list %}
+    <div class="cb1">
+    <img src="{{page.avatarUrl}}" class="iconMedium"/>
+    <strong>{{page.name}}</strong>
+    </div>
+    {% endfor %}
+    
+    <div class="cb1">
+      <div class="fieldInput"> <input type="button" value="OK" onclick="redirectTo('/chan/fbpage/')"> </div>
+    </div>
+</div>
+{% endblock %}

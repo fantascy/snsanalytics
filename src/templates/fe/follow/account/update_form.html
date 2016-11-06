@@ -1,0 +1,9 @@
+{% extends 'fe/follow/account/form.html' %}
+
+{% block buttons %}
+<div class="cb1">
+	<div class="fieldInput"> <input type="button" onclick="ajaxFormSubmit('{{ret_url}}', this);" value="save"> </div>
+	<div class="fieldInput"> <input type="button" value="cancel" onclick="ajaxUpdate('ajax_content','{{ret_url}}',null,'GET');"> </div>
+</div>
+{% endblock %}
+				

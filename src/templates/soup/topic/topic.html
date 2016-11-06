@@ -1,0 +1,65 @@
+{% extends 'soup/layout/topiclayout.html' %}
+{% load souptags %}
+
+
+{% block content-discovery-top %} 
+{% endblock %}
+
+
+{% block content %} 
+	<div id="topic-filter">
+		<div id="rank-type-selector" class="radio-button-group">
+			<a class="radio-button radio-button-first {% ifequal view.rank 0 %}select-button-active{% else %}select-button-default{% endifequal %}" 
+				href="/{{view.topic.keyNameStrip}}/hot/{{view.mediaType}}"><span class="radio-button-text">HOT</span></a>
+			{% comment %} <!-- DB_OPT skip the top feature. --> 
+			<a class="radio-button {% ifequal view.rank 2 %}select-button-active{% else %}select-button-default{% endifequal %}" 
+				href="/{{view.topic.keyNameStrip}}/top/{{view.mediaType}}/{%if view.timeRange %}{{view.timeRange}}{% else %}week{% endif %}"><span class="radio-button-text">TOP</span></a>
+			{% endcomment %}
+			<a class="radio-button radio-button-last {% ifequal view.rank 1 %}select-button-active{% else %}select-button-default{% endifequal %}" 
+				href="/{{view.topic.keyNameStrip}}/new/{{view.mediaType}}"><span class="radio-button-text">NEW</span></a>
+		</div>
+		<span id="secondary-selectors">
+			<div id="time-range-selector" class="radio-button-group">
+				{% ifequal view.rank  2 %} 
+				{% for key, display in view.const.TIME_RANGE_CHOICES %}
+				<a class="radio-button {% if forloop.first %}radio-button-first{% endif %} {% if forloop.last %}radio-button-last{% endif %}
+						{% ifequal view.timeRange key %}select-button-active{% else %}select-button-default{% endifequal %}"
+					href="/{{view.topic.keyNameStrip}}/top/{{view.mediaType}}/{{key}}">
+					<span class="radio-button-text">{{display}}</span></a>				
+				{% endfor %}
+				{% endifequal %}
+			</div>
+			{% comment %}
+			<div id="media-type-selector" class="radio-button-group">
+				{% for key, display in view.const.MEDIA_TYPE_CHOICES %}
+				<a class="radio-button {% if forloop.first %}radio-button-first{% endif %} {% if forloop.last %}radio-button-last{% endif %}
+						{% ifequal view.mediaType key %}select-button-active{% else %}select-button-default{% endifequal %}"
+					href="/{{view.topic.keyNameStrip}}/{{view.rank|rankType}}/{{key}}
+						{% ifequal view.rank 2%}/{%if view.timeRange %}{{view.timeRange}}{% else %}week{% endif %}{% endifequal %}">
+						<span class="radio-button-text">{{display}}</span></a>
+				{% endfor %}
+			</div>
+			{% endcomment %}
+		</span>
+	</div>
+
+	<div class="separator-1"><span>{{view.rank|rankType}} {{view.mediaType|displayMediaTypeName}}</span></div>
+	{% ifequal view.rank 1 %}
+	{% include 'soup/topic/refresh.html' %}
+	{% endifequal %}
+	<div id="topic-article-list">
+		{% ifequal view.mediaType view.const.MEDIA_TYPE_ALL_STR %}
+			{% include 'soup/topic/thumbnail_list.html' %}
+		{% else %}{% ifequal view.mediaType view.const.MEDIA_TYPE_IMAGE_STR %}		
+			{% include 'soup/topic/media_list.html' %}
+		{% else %}{% ifequal view.mediaType view.const.MEDIA_TYPE_VIDEO_STR %}		
+			{% include 'soup/topic/media_list.html' %}
+		{% endifequal %}{% endifequal %}{% endifequal %}  
+	</div>
+	
+	<input id="current_topic" type="hidden" value="{{view.topic.keyNameStrip}}"/>
+{% endblock %}
+
+{% block content-discovery-side %} 
+	{% include 'soup/layout/side_column_common_1.html' %}		
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'sns/layout/popup_form.html' %}
+{% block form %}
+<div id="addChannel" class="cb1">
+    {{ form.login.errors }}
+    <div class="fieldLabel"> <label>login</label><span class="required">*</span></div>
+    <div class="fieldInput"> {{form.login}} </div>
+    <div class="clearFloat"></div>
+
+    {{ form.passwd.errors }}
+    <div class="fieldLabel"> <label>password</label><span class="required">*</span></div>
+    <div class="fieldInput"> {{form.passwd}} </div>
+    <div class="clearFloat"></div>
+    
+    <div><label for="id_keywords">If you want this Twitter account to post only contents matching certain keywords, </label></div>
+    <div><label for="id_keywords">please specify the keywords(separated by comma). </label></div>
+    <div class="fieldInput"> {{form.keywords}} </div>
+
+</div>
+{% endblock %}

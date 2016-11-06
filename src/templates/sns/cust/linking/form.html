@@ -1,0 +1,45 @@
+{% extends 'sns/layout/popup_form.html' %}
+{% block form %}
+<div id="addLink" class="cb1">
+    {{ form.url.errors }}
+    <div class="clearFloat"></div>
+    <div class="fieldLabel"> <label for="id_url">Link<span class="required">*</span></label></div>
+    <div class="fieldInput"> 
+    	{{form.url}} 
+    	<span id='verify_link'>
+    		<a class="cursorPointer" href="javascript:void(0);" onclick="verifyLink()" title="Verify">
+            	<img src="{{MEDIA_URL}}sns/images/link_question.png" border="0" class="cursorPointer img" alt="Verify"/>
+        	</a>
+        </span>
+        <span id='checked_link' style='display:none'>
+    		<a class="cursorPointer" href="javascript:void(0);" onclick="" title="Passed link">
+            	<img src="{{MEDIA_URL}}sns/images/link_check.png" border="0" class="cursorPointer img" alt="Passed link"/>
+        	</a>
+        </span>
+        <span id='verify_error_msg' style='display:none' class='errorlist'>
+        </span>    	
+    </div>
+	<div class="clearFloat"></div>
+
+    {{ form.title.errors }}
+    <div id='title_div' style='display:none'>
+	    <div class="fieldLabel"> <label for="id_msg">Title</label></div>
+	    <div class="fieldInput"> {{form.title}} </div>
+	</div>
+    <div class="clearFloat"></div>
+    
+    <div class="fieldLabel"> <label for="id_type">Custom Campaign<span class="required">*</span></label></div>
+    <div class="fieldInput"> {{form.rules}} 
+    </div>
+
+    <!-- hidden inputs -->
+</div>
+{% endblock %}
+
+{% block buttons %}
+    <div class="spriteSave">
+	   <a href="javascript:void(0);" onclick="ajaxFormSubmitLink(jQuery(this))">{% block buttonName %}Save{% endblock %}</a>
+	</div>
+	<div class="spriteCancel"><a href="javascript:void(0);" class="external_close">Cancel</a></div>
+{% endblock %}
+

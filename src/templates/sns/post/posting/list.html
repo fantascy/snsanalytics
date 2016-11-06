@@ -1,0 +1,27 @@
+{% extends 'sns/layout/list.html' %}
+{% load snsstringfiltertags %}
+{% block table_header %}
+    <tr>
+        <th colspan="4">
+            <div class="listHeader">
+                <div class="listHeaderCell postingTime">Execution time</div>
+                <div class="listHeaderCell postingTotal">Total</div>
+                <div class="listHeaderCell postingFailure">Failure</div>
+                <div class="listHeaderCellLast postingParent">Campaign</div>
+            </div>
+        </th>
+    </tr>
+{%endblock%}
+{% block item %}
+    <tr class="listTr{% cycle 'Odd' 'Even' %}">
+        <td class="listCell postingTime">
+            {{object.executionTime|toUserTz|date:view.dateFormat}}
+        </td>
+        <td class="listCell postingTotal">
+            <a rel="ajaxform" href="#/post/post/{{object.id}}">{{object.total|numberDisplay}}</a>
+        </td>
+        <td class="listCell postingFailure"> {{object.failure|numberDisplay}}</td>
+        <td class="listCellLast textAlignLeft postingParent">{{object.rule.name}}</td>
+    </tr>
+{% endblock %}
+   

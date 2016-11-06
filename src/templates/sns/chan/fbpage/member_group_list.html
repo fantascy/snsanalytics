@@ -1,0 +1,92 @@
+{% extends 'sns/layout/list.html' %}
+{% load snschanneltags %}
+{% load snsstringfiltertags %}
+
+{% block list_header %}
+<script>
+var mouseEnter_conversation_controlFlag = true;
+jQuery(document).ready(function($) {
+
+
+      var maxHeight = parseInt($('#conversation_submenu').css('max-height'));
+      if ($('#conversation_submenu').height() > maxHeight){
+             $('#conversation_submenu').height(maxHeight);
+      }
+      
+      $('#conversation_submenu_controler').bind('mouseenter',function(){
+         if(mouseEnter_conversation_controlFlag){
+            mouseEnter_conversation_controlFlag = false;
+            $('#conversation_submenu').slideDown('fast',function(){
+               mouseEnter_conversation_controlFlag = true;
+               document.getElementById('menu_state').value='on';
+            });
+         }        
+      });
+      $('#conversation_submenu_controler').bind('mouseleave',function(){
+         $('#conversation_submenu').slideUp('fast',function(){
+            document.getElementById('menu_state').value='off';
+         });
+      });
+});
+</script>
+<div class='buttonCreate cursorPointer'>
+<a href="javascript:refreshGroup('{{id}}')">
+{{button}}
+</a>
+</div>
+<div class="clearFloat"></div>
+          <div class="accountTitle">  
+          	<div id="conversation_submenu_controler" class="accountNameCurrent">
+          		<div class="accountName" >
+          			<img src="{{avatarUrl|displayNoneAvatar}}" class="iconMedium"/>&nbsp;{{login}}
+            		<!-- another kind of dropmenu<a href="" onclick="conversationDropMenu();return false;" class="more">&nbsp;</a> -->
+            		<a href="javascript:void(0);" class="more" title="More accounts">&nbsp;</a>
+            	</div>	    
+            	<div id="conversation_submenu" class="accountNameListMenu" style="display: none;min-width: 168px;">{{submenu|safe}}</div>             
+            </div> 
+            <div class='showHidden'>
+			{{form.showHidden}} Show hidden groups
+			</div>
+           </div>    
+    <input id="id" type="hidden" value="{{id}}"/>
+    <input id="avatarUrl" type="hidden" value="{{avatarUrl}}"/>
+    <input id="his_detail_url" type="hidden" >
+    <input id="menu_state" type="hidden" >
+    
+{% endblock %}
+
+{% block table_header %}
+<tr class="listHeader">
+    <td class="listHeaderCell fbGroupName">Name</div>
+	<td class="listHeaderCellLast fbGroupAction">Action</div>
+</tr>
+{%endblock%}
+
+{%block  item %}
+<tr id="list_tr_id_{{object.groupid}}" class="listTr{% cycle 'Odd' 'Even' %}">
+    <td class="listCell textAlignLeft fbGroupName">
+    	<img id="channel_list_avatar_{{object.id}}" src="{{object.avatarUrl}}" class="iconMedium"/>
+        &nbsp; <a target="_blank" href="{{object.url}}" id ="channel_list_name_{{object.id}}">  {{object.name}} </a>
+    </td>
+	<td class="listCellLast fbGroupAction">
+	    <a class="action-button cursorPointer" onclick="channel_group_sync('{{object.id}}')" title="Sync">
+            <img src="{{MEDIA_URL}}sns/images/refresh.png" alt="Sync" border="0"  />
+        </a>
+        {% if object.excluded %}
+		<a class="action-button" href="javascript:changeGroupStatus('{{object.groupid}}','{{object.name|htmlEscape|urlencode}}','{{chid}}')" title="Show">
+			<img id="add_{{object.groupid}}" src="{{MEDIA_URL}}sns/images/add.png" border="0" class="cursorPointer" alt="Include">
+		</a>
+        <a class="action-button" href="javascript:changeGroupStatus('{{object.groupid}}','{{object.name|htmlEscape|urlencode}}','{{chid}}')" title="Hide">
+			<img id="minus_{{object.groupid}}" src="{{MEDIA_URL}}sns/images/minus.png" border="0" class="cursorPointer" style="display:none;" alt="Exclude">		
+		</a>
+		{% else %}
+		<a class="action-button" href="javascript:changeGroupStatus('{{object.groupid}}','{{object.name|htmlEscape|urlencode}}','{{chid}}')" title="Show">
+			<img id="add_{{object.groupid}}" src="{{MEDIA_URL}}sns/images/add.png" border="0" class="cursorPointer" style="display:none;" alt="Include">
+		</a>
+        <a class="action-button" href="javascript:changeGroupStatus('{{object.groupid}}','{{object.name|htmlEscape|urlencode}}','{{chid}}')" title="Hide">
+			<img id="minus_{{object.groupid}}" src="{{MEDIA_URL}}sns/images/minus.png" border="0" class="cursorPointer"  alt="Exclude">		
+		</a>
+		{% endif %}
+	</td>
+</tr>
+{%endblock%}

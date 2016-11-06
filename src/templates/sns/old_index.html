@@ -1,0 +1,55 @@
+{% extends 'sns/layout/layout.html' %}
+{% load googletags %}
+
+
+{% block main %}
+	<div class="HomeCenter_Bg">
+		<div class="HomeCenter_TopBlock">
+			<div class="HomeCenter_TopBlockBg">
+		        <div class="HomeCenter_TopBlock_Right">
+		            <div class="Home_TopBlockFont">Enabling social media marketing
+		            </div>
+		            <div class="clearFloat"></div>
+		            <div class="home-top-right-block">
+		                <ul>
+		                    <li>Auto-publish blog & media updates to multiple Facebook and Twitter accounts</li>
+		                    <li>Manage conversations across social networks from a single site</li>
+		                    <li>Create and manage social media &quot;campaigns&quot; for maximum exposure and reach</li>
+		                    <li>Track the ROI of your social media efforts with real-time reporting</li>
+		                    {% comment %}
+		                    <li>Monitor and measure influence for your brands on social media</li>
+		                    {% endcomment %}
+		                    <li>Integrate social media and website analytics into a single, comprehensive view</li>
+		                </ul>
+		                <fb:like send="true" href="http://www.facebook.com/snsanalytics"></fb:like>
+		            </div>
+		        </div>
+		    </div>
+	    </div>
+
+		<div class="home_bottomdiv">
+	        <div class="home_BottomImg">
+	            <div class="AddAccounts">
+	                <div class="AddAccounts_font">Aggregate Social Profiles</div>
+	                <div class="home_addAccountsfont">Add your Twitter & Facebook accounts to access all of your social profiles from a single site.</div>
+	            </div>
+	            <div class="addmessage">
+	                <div class="AddMessage_font">Add Social Contents</div>
+	                <div class="home_addMessagefont">Identify RSS feeds from blog/media sites to auto-publish content into your social media accounts.</div>
+	            </div>
+	            <div class="DefineRule">
+	                <div class="DefineRule_font">Define Social Campaigns</div>
+	                <div class="home_addAccountsfont">Develop automated publishing schedules, determining which posts are published where & when.</div>
+	            </div>
+	            <div class="Tracksuccess">
+	                <div class="Tracksuccess_font">Track success in real-time</div>
+	                <div class="home_tracksuccessfont">Track click-throughs & analyze the ROI of your social campaigns, all in real-time.</div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
+	<div class="Center_TopImg">
+        <img src="sns/images/Center_BottomImg.gif"/>
+    </div>
+{% endblock %}

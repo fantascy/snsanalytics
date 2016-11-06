@@ -1,0 +1,7 @@
+{% extends 'soup/layout/contentlayout.html' %}
+
+{% block more_og_tags %} 
+	{% ifequal view.ogEnabled 'True' %}
+	{% endifequal %}
+{% endblock %}
+

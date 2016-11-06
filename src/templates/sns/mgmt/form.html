@@ -1,0 +1,114 @@
+{% extends 'sns/layout/content.html' %}
+{% load snspostingruletags %}
+{% block content %}
+<div class="content">
+	<form method="POST" action="{{action}}">
+	    <table>
+	    {% block form %}
+		<div class="cb1">
+
+		    <div class="cb2Double">
+			    {{ form.name.errors }}
+			    <div class="clearFloat"></div>
+				<div class="fieldLabel">Name:<span class="required">*</span></div>
+				<div class="fieldInput">{{form.name}}</div>
+			    <div class="clearFloat"></div>
+		    </div>
+		    <div class="clearFloat"></div>
+		    
+		    <div class="cb2">
+			    {{form.feedSources.errors}}
+		        <div class="clearFloat"></div>				
+				<div> <label for="id_contents">Please select one or more feeds:<span class="required">*</span></label> </div>
+		        <div class="clearFloat"></div>
+		        <div class="fieldInput"> {{form.feedSources}} </div>
+		        <div class="clearFloat"></div>
+		    </div>
+		    
+		    <div class="cb2Double">
+	    		Rank: {{form.priority}}
+	    	</div>
+	    	
+	    	<div class="cb2Double">
+	    		Channel Filter Type: {{form.filterType}}
+	    	</div>
+		    
+		    <div class="cb2Double" id="filter-keywords">
+	    		Filter: {{form.filters}}
+	    	</div>
+	    	
+	    	
+			
+	    	<div class="cb2Double" id="user-included">
+	    		Included User Tags: {{form.includedTags}}
+	    	</div>
+	    	
+	    	
+	    	<div class="cb2Double" id="user-excluded">
+	    		Excluded User Tags: {{form.excludedTags}}
+	    	</div>
+		    
+		    <div class="cb2RuleSchedule">
+		        <div class="fieldLabel" style="width: 118px;text-align:right;" id="interval_id"> <label for="id_scheduleInterval">Schedule Interval:<span class="required">*</span></label></div>
+		        <div class="fieldInput"> {{form.scheduleInterval}} </div>
+		    </div>
+		    <div class="clearFloat"></div>
+		    
+		    {{form.maxMessagePerFeed.errors}}
+		    <div class="cb2Double">
+		        <div>Every time when this campaign is executed, post no more than {{form.maxMessagePerFeed}} new article(s) from each feed.</div>
+		        <div class="clearFloat"></div>
+		    </div>
+		    
+		    <div id='randomize_info' class="cb2Double">
+				<div>
+					{{form.randomize}} Distribute all posts of one campaign execution randomly, within this time window:
+					&nbsp;&nbsp;
+					<span id='randomize_time_count_info'  style='display:none'>
+					{{form.randomizeTimeWindow}}minutes
+					</span>
+				</div>
+				<div class="clearFloat"></div>
+			</div>
+		    
+	    	
+	    	<div class="cb2Double">
+				<div>{{form.gaOn}} Enable Google Analytics integration</div>
+				<div class="clearFloat"></div>
+			</div>
+	    	
+	    	<div id='analytics_info'>
+		    <div class="cb2DoubleCampaign campaignarea">
+				<div class="campaignrowhelp"><a href="http://www.google.com/support/googleanalytics/bin/answer.py?answer=55518" target="_blank">Learn more</a></div>
+			   	<div class="campaignrow" style="text-align: right"><strong><label style="width:120px;">Campaign:</label><span class="required">*</span></strong>{{form.gaUseCampaignName}} (use the campaign name as default)</div>
+			   	<div class="campaignrow" id="campaign_info"><strong></strong>{{form.gaCampaign}} (use custom campaign name )</div>
+			   	<div class="campaignrow" style="text-align: right"><strong><label style="width:120px;">Source:</label> <span class="required">*</span></strong>{{form.gaSource}}</div>
+			   	<div class="campaignrow" style="text-align: right"><strong><label style="width:120px;">Medium:</label> <span class="required">*</span></strong>{{form.gaMedium}}</div>
+			   	<div class="campaignrow" style="text-align: right"><strong><label style="width:120px;">Term:</label> <span class="required">&nbsp;&nbsp;</span></strong>{{form.gaTerm}}</div> 
+			   	<div class="campaignrow" style="text-align: right"><strong><label style="width:120px;">Content:</label><span class="required">&nbsp;&nbsp;</span> </strong>{{form.gaContent}} (use to differentiate ads versions)</div>
+			</div>
+		    </div>
+	    			   
+		</div>
+		
+
+		<div class="cb1">
+            <div class="fieldInput"> <input type="button" value="save" onclick="ajaxFormSubmit('{{ret_url}}', this);"> </div>
+            <div class="fieldInput"> <input type="button" value="cancel" onclick="ajaxUpdate('ajax_content','{{ret_url}}',null,'GET');"> </div>
+		</div>
+
+        <!-- hidden inputs -->
+        {% if form.id %}
+        {{form.id}}
+         {% endif %}
+        {{form.prefixDelimter}}
+		{{form.suffixDelimter}} 
+        {{form.ret_url}}
+        {{form.current_page}}
+		{% endblock %}
+        </div>
+    </table>
+	</form>
+	
+</div>
+{% endblock %}

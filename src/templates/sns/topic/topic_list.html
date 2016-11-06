@@ -1,0 +1,70 @@
+{% extends 'sns/layout/list.html' %}
+{% load snschanneltags %}
+{% load snsstringfiltertags %}
+
+{% block title %}<div class="ajax_contentTitle">Topics</div>{% endblock %}
+
+{% block list_header %}
+<div class="buttonCreatesection">
+	<div class="buttonCreate">
+	<a class="img-cursor-pointer" href="/#/sns/topic/cache/">Refresh Cache</a>
+	</div>
+	<div class="buttonCreate">
+		<a class="img-cursor-pointer" href="/log/topicstats/export/">Export Stats</a>
+	</div>
+	<div class="buttonCreate">
+	<a class="img-cursor-pointer" href="/sns/topic/exportlevel/">Export Level 1/2</a>
+	</div>
+	<div class="buttonCreate">
+	<a class="img-cursor-pointer" href="/sns/topic/export/">Export</a>
+	</div>
+	<div class="buttonCreate">
+	<a class="img-cursor-pointer" href="/#/sns/topic/upload/">Import</a>
+	</div>
+	<div class="buttonCreate">
+	<a class="img-cursor-pointer" href="/#/sns/topic/validate/">Validate</a>
+	</div>
+	{% comment %}
+	<div class="buttonCreate">
+	<a class="img-cursor-pointer" href="/sns/topic/create/" rel="facebox">Add</a>
+	</div>
+	{% endcomment %}
+</div>
+<div class="clearFloat"></div>
+
+
+<div class="buttonCreatesection">
+	<div class="searchfunction">
+		<input type="text" value="{{keyword}}" id="query" class="retro searchInput" name="campaign keyword" onkeydown="enterPress(event);"/>
+    	<input class="s cursorPointer" type="submit" value="Search" id="search_button" onclick="searchList('{{post_path}}')"/>
+    </div>
+</div>
+<div class="clearFloat"></div>
+{%endblock%}
+
+{% block table_header %}
+<tr class="listHeader">
+    <td class="listHeaderCell topicName">Name</td>
+    <td class="listHeaderCell topicRelated">Parent Topics</td>
+    <td class="listHeaderCell topicParent">Ancestor Topics</td>
+    <td class="listHeaderCellLast topicFile">Tags</td>
+</tr>
+{%endblock%}
+
+{%block  item %}
+<tr id="list_tr_id_{{object.id}}" class="listTr{% cycle 'Odd' 'Even' %}">
+    <td class="listCell topicName">
+    {% comment %} <img src="{{object.image}}" class="iconMedium"/> {% endcomment %} 
+    {{object.name}}
+    </td>
+    <td class="listCell topicRelated">
+    {{object.parentTopics|topicName|displayNone}}
+    </td>
+    <td class="listCell topicParent">
+    {{object.ancestorTopics|topicName|displayNone}}
+    </td>
+    <td class="listCellLast topicFile">
+    {{object.tags|displayList|displayNone}}
+    </td>
+ </tr>
+{%endblock%}

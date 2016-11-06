@@ -1,0 +1,40 @@
+{% extends 'fe/layout/list.html' %}
+{% load snsstringfiltertags %}
+{% load snschanneltags %}
+{% load fecampaigntags %}
+
+{% block table_header %}
+    <tr>
+        <th colspan="5">
+            <div class="listHeader">
+                <div class="listHeaderCell textAlignCenter acctFollowNameAndRuleSource"> Twitter Handle</div>
+                <div class="listHeaderCell acctFollowRuleTargetAll">Login User ID</div>
+                <div class="listHeaderCellLast textAlignCenter acctFollowRuleActions">Suspended Time</div>
+            </div>
+        </th>
+    </tr>
+{% endblock%}
+
+{%block item%}
+    <tr id="list_tr_id_{{object.id}}" class="listTr{% cycle 'Odd' 'Even' %}">
+        <td class="listCell textAlignLeft acctFollowNameAndRuleSource">
+            <img src="{{object.src_channel.avatarUrl|displayNoneAvatar}}" class="iconSmall"/> 
+            <a target="_blank" href="https://twitter.com/{{object.src_channel.name}}">{{object.src_channel.name}}</a>
+        </td>
+        <td class="listCell acctFollowRuleTargetAll"> 
+			{{object.uid}}
+			{% comment %}
+	    	<a class="js-link" onclick="changeCurrentUser('{{object.parent.mail}}')">
+	       		{{object.uid}}
+	        </a>
+			{% endcomment %}
+        </td>
+        
+        <td class="listCellLast acctFollowRuleActions">
+          {{object.modifiedTime|toUserTz|date:view.dateFormat}}
+        </td>
+        
+    </tr>
+
+    
+{% endblock %}

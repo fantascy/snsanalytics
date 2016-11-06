@@ -1,0 +1,31 @@
+{% extends 'cake/layout/layout.html' %}
+{% load caketags %}
+{% load souptags %}
+
+{% block main %}
+	<input id="current-article-global-url" type="hidden" value="{{view.globalUrl.url}}" />
+	<input id="current-article-url" type="hidden" value="{{view.fullUrl}}" />
+	{% block toolbar %}{% include 'cake/layout/sidebar.html' %}{% endblock %}
+	{% block frame %}
+	<div id="frame-container">
+	{% if view.counter.mediaType|isImage %}
+		<img src="{{view.globalUrl.getFullImage}}"></img>
+	{% else %}{% if view.counter.mediaType|isVideo %}
+		<object style="height: 390px; width: 640px">
+			<param name="movie" value="{{view.globalUrl.videoSrc|videoUrlConvert|autoPlay}}">
+			<param name="wmode" value="transparent"> 
+			<param name="allowFullScreen" value="true">
+			<param name="allowScriptAccess" value="always">
+			<embed wmode="transparent" src="{{view.globalUrl.videoSrc|videoUrlConvert|autoPlay}}" 
+				type="application/x-shockwave-flash" allowfullscreen="true" 
+				allowScriptAccess="always" width="640" height="390">
+		</object>
+	{% else %}
+		<iframe src="{{view.globalUrl.url}}" frameborder="0"> </iframe>
+	{% endif %}{% endif %}
+	</div>
+	{% endblock %} 
+	<div class="ui-helper-clearfix"></div>
+	<script type="text/javascript"> countClick('{{view.counter.id}}', '{{view.counter.keyNameStrip|safe}}', '{{view.surl}}', '{{view.referrer}}'); </script>
+	<script type="text/javascript"> setCookie('currentTopic','{{view.currentTopic.keyNameStrip}}') </script>
+{% endblock %}

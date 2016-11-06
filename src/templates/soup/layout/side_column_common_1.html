@@ -1,0 +1,172 @@
+{% load souptags %}
+
+{% if view.ctx.ads_on %}
+<div class="side-column-block">
+	<script type="text/javascript"><!--
+	google_ad_client = "ca-pub-8188638549070379";
+	/* ANS 300x250-01 */
+	google_ad_slot = "1786094551";
+	google_ad_width = 300;
+	google_ad_height = 250;
+	//-->
+	</script>
+	<script type="text/javascript"
+	src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+	</script>
+</div>
+{% endif %}
+
+<div class="side-column-block">
+	<div class="separator-1"><span>{{view.sideColumnFacebookPage.og_title}}</span></div>
+	<div id="fb-page-promotion"> 
+		<a class="thumbnail-container" href="{{view.sideColumnFacebookPage.og_url}}">
+			<img src="{{view.sideColumnFacebookPage.og_image}}"></img>
+		</a> 
+		<div class="text-container">
+			{{view.sideColumnFacebookPage.og_description}}
+		</div>
+		<fb:like href="{{view.sideColumnFacebookPage.og_url}}" width="290" show_faces="true" stream="false" header="false"></fb:like>
+	</div>
+</div>
+
+{% if view.sideColumnTwitterAccount %}
+<div class="side-column-block">
+	<a href="http://twitter.com/{{view.sideColumnTwitterAccount}}" class="twitter-follow-button">Follow @{{view.sideColumnTwitterAccount}}</a>
+</div>
+{% endif %}
+
+{% include 'soup/layout/googlecustomsearch.html' %}		
+
+{% if view.friendsCount %}
+<div id="friends-list" class="side-column-block">
+	<div class="separator-1"><span>Friends on Allnewsoup</span></div>
+	<div class="block-2 soup-friends-title"> 	
+		<span class="soup-friends-text"><a href="/profile/friends/">{{ view.friendsCount }} people</a></span>
+	</div>
+	<div id="friends-avatars">
+	{% for friend in view.friends %}
+		<div>
+			<a href="/profile/{{ friend.key.id }}" title="{{ friend.name }}"><img src="{{ friend.avatarUrl }}" /></a>
+		</div>
+	{% endfor %}
+	</div>
+	<div class="ui-helper-clearfix"></div>
+</div>
+{% endif %}
+
+{% if view.fbFriendInvites %}
+<div id="fb-friend-invite" class="side-column-block">
+	<div class="separator-1"><span>Invite friends to taste Allnewsoup</span></div>
+	{% for friend in view.fbFriendInvites %}
+	<div id="friend-invite-{{friend.0}}" class="block-2 fb-friend-invite-one {% ifnotequal forloop.counter0|friendCount 0 %} ui-helper-hidden{% endifnotequal %}">
+		<a class="explicit hover-underline" href="http://facebook.com/profile.php?id={{friend.1}}" target="_blank">{{friend.2}}</a>
+		<span class="button" onclick="javascript:fbFriendInvite('{{friend.0}}','{{friend.1}}','{{friend.2}}');">Invite</span>
+		<div class="ui-helper-clearfix"> </div>
+		<div class="separator-2"></div>
+	</div>
+	{% endfor %}
+	<input id="friend-invite-count" type="hidden" value="3"/>
+	<div class="block-2 fb-friend-invite-send">
+		<span class="send-description">Invite more friends:</span>
+		<span class="send-button"><fb:send href="http://www.allnewsoup.com/?ref=invite" font="arial"></fb:send></span>
+		<div class="ui-helper-clearfix"> </div>
+	</div>
+</div>
+{% endif %}
+
+{% if view.isArticleView %}
+{% ifequal view.counter.mediaType view.const.MEDIA_TYPE_VIDEO %}
+<div id="hot-video-recommendations-block" "class="side-column-block">
+	<div class="separator-1"><span>Hot {{view.const.MEDIA_TYPE_VIDEO_STR|displayMediaTypeName}}</span></div>
+	<div id="top-articles-today" class="inner-block-1">
+		{% for object in view.recommendations %}
+		<div class="yui3-u-1-3 article-recommendation">
+			<a class="thumbnail-container" href="/soup/{{object.globalUrl.titleKey}}">
+				<img src="{{object.getThumbnail}}"></img>
+			</a> 
+			<div class="text-container">
+				<a class="title" href="/soup/{{object.globalUrl.titleKey}}">
+					{{object.globalUrl.title|safe}} 
+				</a> 
+				<div class="sub-description">
+					<span class="inner-block-1-first">
+					{% if object.counter.deleted %}
+						<span class="gray-text">by Anonymous</span>
+					{% else %}
+						<span class="gray-text">by</span>
+						<a class="explicit hover-underline" href="/profile/{{object.authorId}}">{{object.authorName}}</a> 
+					{% endif %}
+					</span>
+					<span class="inner-block-1">
+						<span class="gray-text">{{object.counter.createdTime|timeAgo}}</span>
+					</span>
+				</div>
+			</div>
+		</div>
+	 	{% if not forloop.last %}<div class="separator-2"></div>{% endif %}
+		{% empty %}
+		<script type="text/javascript">	hide("#hot-video-recommendations-block"); </script>
+		{% endfor %}
+	</div>
+</div>
+{% endifequal %}
+{% endif %}
+
+{% if view.topArticlesTodayOn %}
+<div id="top-articles-today-block" class="side-column-block">
+	<div class="separator-1"><span>Top {{view.topArticlesTodayMediaType|displayMediaTypeName}} today</span></div>
+	<div id="top-articles-today" class="inner-block-1">
+		{% for object in view.topArticlesToday %}
+		<div class="yui3-u-1-3 article-recommendation">
+			<a class="thumbnail-container" href="/soup/{{object.globalUrl.titleKey}}">
+				<img src="{{object.thumbnailUrl}}"></img>
+			</a> 
+			<div class="text-container">
+				<a class="title" href="/soup/{{object.globalUrl.titleKey}}">
+					{{object.globalUrl.title|safe}} 
+				</a> 
+				{% comment %}
+				<a class="explicit" href="http://{{view.ctx.long_domain}}/soup/{{object.globalUrl.titleKey}}#comments">
+					<span class="icon-text-16 icon-16-comment"><fb:comments-count href="http://{{view.ctx.long_domain}}/soup/{{object.globalUrl.titleKey}}"></fb:comments-count></span>
+				</a>
+				{% endcomment %}
+				<div class="sub-description">
+					<span class="inner-block-1-first">
+					{% if object.counter.deleted %}
+						<span class="gray-text">by Anonymous</span>
+					{% else %}
+						<span class="gray-text">by</span>
+						<a class="explicit hover-underline" href="/profile/{{object.authorId}}">{{object.authorName}}</a> 
+					{% endif %}
+					</span>
+					<span class="inner-block-1">
+						<span class="gray-text">{{object.counter.createdTime|timeAgo}}</span>
+					</span>
+				</div>
+			</div>
+		</div>
+	 	{% if not forloop.last %}<div class="separator-2"></div>{% endif %}
+		{% empty %}
+		<script type="text/javascript">	hide("#top-articles-today-block"); </script>
+		{% endfor %}
+	</div>
+</div>
+{% endif %}
+
+{% comment %}
+<div class="side-column-block">
+	<div class="separator-1"><span>Recommended by your Facebook circle</span></div>
+	<fb:recommendations site="" width="{{view.sideColumnWidth}}" height="300" header="false" font="arial" border_color="#FFFFFF"></fb:recommendations>
+</div>
+{% endcomment %}
+
+{% if view.sideAdsOn %}
+<div class="side-column-block">
+	<div class="trending-topics place-holder">
+		Trending Topics
+	</div><div class="side-ads-2 place-holder">
+		Side Ads 2
+	</div>
+</div>
+{% endif %}
+

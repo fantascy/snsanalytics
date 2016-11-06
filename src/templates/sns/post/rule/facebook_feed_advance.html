@@ -1,0 +1,14 @@
+<div class="cb1" id="f_info" {% ifequal form.initial.hideFacebook 'on' %}{% ifequal form.initial.titleOnly 'on' %}style="display:none"{% else %}{% ifequal form.data.titleOnly 'on' %}style="display:none"{% endifequal %}{% endifequal %}{% else %}{% ifequal form.data.hideFacebook 'on' %}{% ifequal form.initial.titleOnly 'on' %}style="display:none"{% else %}{% ifequal form.data.titleOnly 'on' %}style="display:none"{% endifequal %}{% endifequal %}{% else %}style="display:none"{% endifequal %}{% endifequal %}>
+    <div class="cb1Title">Facebook Specific</div>
+    
+   <div class="facebookarea">
+   		{{form.fbPostStyle.errors}}
+   		<!--    		<div class="campaignrow" id="feed_facebook_post_type"><strong>Post Type: </strong>
+   			{{form.fbPostStyle}}
+   		</div> -->
+   		<div class="campaignrow" id="feed_facebook_post_type">
+   			<div>{{form.fbPostStyle}} Show feed entry links as attachment with rich info on Facebook post</div>
+			<div class="clearFloat"></div>   			
+   		</div> 
+   </div>   
+</div>

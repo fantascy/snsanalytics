@@ -1,0 +1,23 @@
+backends:
+- name: prod
+  class: B8
+  instances: 1
+  options: dynamic, public
+- name: b1
+  class: B1
+  instances: 1
+  options: dynamic, public
+- name: b2
+  class: B2
+  instances: 1
+  options: dynamic, public
+- name: b4
+  class: B4
+  instances: 1
+  options: dynamic, public
+- name: b8
+  class: B8
+  instances: 1
+  options: dynamic, public
+
+  

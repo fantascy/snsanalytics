@@ -1,0 +1,39 @@
+{% load snsstringfiltertags %}
+{% load fecampaigntags %}
+
+    <div class="cb1">
+        <div class="cb1Title">Basic Info</div>
+        <div class="cb2Double">
+          <div class="fieldLabel">Name</div><div class="fieldDetail">{{object.name}}</div>
+        </div>
+        
+        <div class="cb2Double">
+          <div class="fieldLabel">Target accounts: </div>
+          <div class="fieldDetail">
+          {% for targetLogin in object.targetLogins %}
+          <span class="cursorPointer" onclick="openNewWindow('http://twitter.com/'+'{{targetLogin}}')">{{targetLogin}}&nbsp;&nbsp;</span>
+          {% endfor %}
+          </div>
+        </div>
+    </div>
+    <div class="clearFloat"/>
+
+    <div class="cb1">
+        <div class="cb1Title">Advanced</div>
+        
+        <div class="cb2Double">
+          <div class="fieldLabel">Status</div><div class="fieldDetail">{{params.status|followRuleInfo}}</div>
+        </div>
+        <div class="clearFloat"></div>
+        
+        {% ifequal params.status 2 %}
+        <div class="cb2Double">
+          <div class="fieldLabel">Current Follower: </div><div class="fieldDetail">{{params.currentCount}}</div>
+        </div>
+        <div class="cb2Double">
+          <div class="fieldLabel">Remaining Growth</div><div class="fieldDetail">{{params.usableCount}}</div>
+        </div>
+        <div class="clearFloat"></div>
+        {% endifequal %}
+        
+    </div>

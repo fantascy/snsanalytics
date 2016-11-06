@@ -1,0 +1,54 @@
+{% extends 'sns/layout/content.html' %}
+{% load snspostingruletags %}
+{% block content %}
+<div class="content">
+	<form method="POST" action="{{action}}">
+	    <table>
+	    {% block form %}
+		<div class="cb1">
+
+		    <div class="cb2Double">
+			    {{ form.name.errors }}
+			    <div class="clearFloat"></div>
+				<div class="fieldLabel feedBuilderLabel"> Feed Name <span class="required">*</span> :</div>
+				<div class="fieldInput"> {{form.name}} </div>
+			    <div class="clearFloat"></div>
+		    </div>
+		    <div class="clearFloat"></div>
+		    
+			{% if form.id %}
+			{% else %}
+			<div class="cb2">
+			
+			    {{form.location.errors}}
+		        <div class="clearFloat"></div>
+		        
+		        <div class="fieldLabel feedBuilderLabel"> Please select location: <span class="required">*</span> </div>
+		        
+		        <div class="clearFloat"></div>
+		        <div class="fieldInput"> {{form.location}} </div>
+		        <div class="clearFloat"></div>
+		        
+		    </div>
+		    {% endif %}
+		    <div class="clearFloat"></div>
+		    
+		</div>
+		
+
+		<div class="cb1">
+            <div class="fieldInput"> <input type="button" value="save" onclick="ajaxFormSubmit('{{ret_url}}', this);"> </div>
+            <div class="fieldInput"> <input type="button" value="cancel" onclick="ajaxUpdate('ajax_content','{{ret_url}}',null,'GET');"> </div>
+		</div>
+
+        <!-- hidden inputs -->
+        {{form.id}}
+        {{form.ret_url}}
+        {{form.current_page}}
+		{% endblock %}
+        </div>
+    </table>
+	</form>
+	
+</div>
+{% endblock %}

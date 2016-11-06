@@ -1,0 +1,63 @@
+{% extends 'sns/layout/list.html' %}
+
+{% block list_header %}
+<div class="buttonCreatesection">
+<div class="buttonCreate">
+    <a class="img-cursor-pointer" href="/log/blacklist/fullname/add" rel="facebox"> Add a full name Pattern Value</a>
+</div>
+</div>
+<div class="clearFloat"></div>
+
+<div class="buttonCreatesection">
+<div class="buttonCreate">
+    <a class="img-cursor-pointer" href="/log/blacklist/keyword/add" rel="facebox"> Add a keyword Pattern Value</a>
+</div>
+</div>
+<div class="clearFloat"></div>
+
+<div class="buttonCreatesection">
+<div class="buttonCreate">
+    <a class="img-cursor-pointer" href="/log/blacklist/iplist/add" rel="facebox"> Add a IP list Pattern Value</a>
+</div>
+</div>
+<div class="clearFloat"></div>
+
+<div class="buttonCreatesection">
+<div class="buttonCreate">
+    <a class="img-cursor-pointer" href="/log/blacklist/user/add" rel="facebox"> Add a User Account</a>
+</div>
+</div>
+<div class="clearFloat"></div>
+
+<div class="buttonCreatesection">
+<div class="buttonCreate">
+    <a class="img-cursor-pointer" href="/log/blacklist/demo/add" rel="facebox"> Add a Demo Account</a>
+</div>
+</div>
+<div class="clearFloat"></div>
+
+
+        <div id="datepicker" class="reporting_viewtime">
+            <ul id="dateBuckets">
+                {% for key, display in botTypes %}
+                <li id="{{key}}"  style={% ifequal botType key %}"background: #8EC1DA; color:#FFFFFF"{% else %}""{% endifequal %}>
+                   <a  onclick="chooseBotType('{{key}}',true)" class="cursorPointer">{{display}}</a> 
+                </li>             
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <input id="infoType" type="hidden" value="{{botType}}" class="retro loadBotType"/>
+        <script type="text/javascript">
+            document.getElementById('infoType').value = "{{botType}}";
+        </script>
+        
+  
+{% endblock %}
+
+
+{% block all_table %}
+<div class="clearFloat"></div>
+<div id="his_detail" > 
+</div>    
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'sns/layout/list.html' %}
+
+{% block list_header %}
+
+
+{%endblock%}
+{%block table_header %}
+<tr class="listHeader">
+    <td class="listHeaderCell agentName">Name</td>
+    <td class="listHeaderCell agentIp">IP</td>
+    <td class="listHeaderCell agentTime">Modified Date</td>
+    <td class="listHeaderCellLast agentActions">Actions</td>
+</tr>
+{%endblock%}
+{%block item %}
+<tr id='bot_agent_list_{{object.keyNameStrip|urlencode}}' class="listTr{% cycle 'Odd' 'Even' %}">
+    <td class="listCell textAlignLeft agentName">
+        <span title="{{object.key_name}}">{{object.keyNameStrip}}</span>
+    </td>
+    <td class="listCell textAlignLeft agentIp">
+        <span title="{{object.ip}}">{{object.ip}}</span>
+    </td>
+    <td class="listCell textAlignLeft agentTime">
+        <span title="{{object}}">{{object.modifiedTime}}</span>
+    </td>
+    <td class="listCellLast agentActions">
+        <a href="update?type=fullname&name={{object.keyNameStrip|urlencode}}" title="Update">
+            Name &nbsp;&nbsp;  
+        </a>
+        <a href="update?type=iplist&name={{object.keyNameStrip|urlencode}}" title="Update">
+            IP &nbsp;&nbsp;
+        </a>
+        <a class="action-button cursorPointer" href="javascript:void(0);" onclick="delete_agent_list('{{object.keyNameStrip|urlencode}}')" title="Delete">
+            <img src="{{MEDIA_URL}}sns/images/delete.png" border="0"  class="cursorPointer" alt="Delete"/>
+        </a>
+    </td>
+</tr>
+{% endblock %}

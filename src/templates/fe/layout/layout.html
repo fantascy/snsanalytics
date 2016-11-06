@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>{{ view.pageTitle }}</title>
+	
+	<!--[if lt IE 7.]>
+	<![endif]-->
+	
+	<!--[if IE]>
+	<![endif]-->
+
+	<meta name="alexaVerifyID" content="m7-NjkiNEfs4ssI3nq68de0ik2A" />
+	<meta name="keywords" content="killer" /> 
+	
+	 
+	
+	<script type="text/javascript">
+	    var SHORT_URL_LENGTH = {{ view.shortUrlLength }};
+	</script>	
+	{% if view.ctx.debug %}
+		<link rel="icon" href="fe/images/favicon.ico" type="image/x-icon"> 
+		<link rel="Shortcut Icon" href="fe/images/favicon.ico" type="image/x-icon">
+		<link href="/sns/css/sns.css" rel="stylesheet" type="text/css" />
+		<link href="/fe/css/fe.css" rel="stylesheet" type="text/css" />
+		<link href="/common/css/facebox.css" rel="stylesheet" type="text/css" />
+		<link href="/common/css/jquery-ui-latest.custom.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript">
+			function getImagePath(name)
+			{
+				return "/fe/images/"+name;
+			}
+		</script>	
+		<script src="/common/js/jquery-latest.min.js" type="text/javascript"></script>
+		<script src="/common/js/jquery-ui-latest.custom.min.js" language="javascript"></script>
+		<script src="/common/js/jquery.history.js" language="javascript"></script>
+		<script src="/common/js/ajaxupload.js" language="javascript"></script>
+		<script src="/common/js/swfobject.js" language="javascript"></script>
+		<script src="/common/js/json2.js" language="javascript"></script>
+		<script src="/common/js/common.js" type="text/javascript"></script>
+		<script src="/common/js/facebox.js" language="javascript"></script>
+		<script src="/sns/js/sns.js" language="javascript"></script>
+		<script src="/fe/js/fe.js" language="javascript"></script>
+	{% else %}
+		<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}fe-combined-{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}.css" />
+		<script type="text/javascript">
+			function getImagePath(name)
+			{
+				return "{{ MEDIA_URL }}fe/images/"+name;
+			}
+		</script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}fe-combined-{{ LANGUAGE_CODE }}.js"></script>
+	{% endif %}
+	<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+   	<script type="text/javascript">
+     		google.load('swfobject', '2.2');
+   	</script>
+	
+	<script language="javascript" type="text/javascript" src="/common/widgets/datetime/WdatePicker.js"></script>
+	<script type="text/javascript">	
+		
+	jQuery(document).ready(function($) {
+		
+		$('a[rel*=facebox]').facebox();
+
+		$.history.init(function(url) {
+        	page_load(url);
+        });
+
+		$('a[rel*=ajaxform]').each(function(){
+			$(this).click(function(){
+
+				var his = location.href;
+
+				if(his.indexOf('#') > -1){
+					var link = his.substring(his.indexOf('#'));
+					if($(this).attr('href') == link){
+						page_load(his);
+					}
+				}
+				location.href = $(this).attr('href');
+				//$.history.load(href);
+				return false;
+			});
+		});
+
+	});
+	</script>
+
+  	{% if view.headScripts %}
+	{% for headScript in view.headScripts %}
+		<link href="/{{ view.viewName }}/{{ headScript }}" rel="stylesheet" type="text/css" />
+    {% endfor %}
+  	{% endif %}
+  	<link rel = "Shortcut Icon" href="/fe/images/favicon.ico">
+</head>
+
+<body>
+    <!-- Google Analytics Asynchronous Tracking code snippet. Keep closest to the body top. -->
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        try {
+            var pageTracker = _gat._getTracker("{{view.gaTrackingCode}}");
+            pageTracker._trackPageview();
+        } catch(err) {}
+    </script>
+    
+    <div 
+		{% ifequal view.viewName 'Home' %}
+			{% if view.ctx.has_login and view.ctx.get_user.isApproved %}
+				id="layoutbgimage">
+			{% else %}
+				id="homebgimage">
+			{% endif %}	
+		{% else %}
+				id="homebgimage">
+		{% endifequal%}
+		
+
+		{% if view.ctx.has_login %}
+		    {% include 'fe/layout/header.html' %}		
+		{% else %}
+		{% endif %}
+		
+		
+		
+		<div class="ContentCenter_Div">
+		
+			{% block main %} {% endblock %}
+		</div>
+	</div>
+	
+	
+	<!-- Olark.com live chat widget. -->
+	<!-- Comment away for now, because of no support resource.
+	<script type="text/javascript">
+		var hblProto = document.location.protocol == 'https:' ? "https:" : "http:";
+		document.write(unescape('%3Cscript src=\'' + hblProto + '//static.olark.com/js/wc.js\' type=\'text/javascript\'%3E%3C/script%3E'));
+	</script>
+	<a href="http://olark.com/#4927-543-10-4085" id="hbl_code">Olark Livehelp</a>      
+	<script type="text/javascript"> wc_init();</script>
+	-->
+
+	<!-- Start of uservoice.com feedback widget. Please keep it closest possible to the body enclosing tag. -->
+	
+	<!-- Start Quantcast tag -->
+	<!-- End Quantcast tag -->
+</body>
+</html>
+

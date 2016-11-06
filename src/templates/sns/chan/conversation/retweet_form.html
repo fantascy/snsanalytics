@@ -1,0 +1,45 @@
+{% extends 'sns/layout/popup_form.html' %}
+
+{% block form %} 			
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+        $('title').data('reloadOnSuccess',false);
+		jQuery(".retro",$('#tweet_reply_facebox')[0]).each(function() {
+
+		var subject = jQuery(this);
+
+		if ( subject.is(".formsubmit") ) {
+			makeFormAjaxSubmit(subject);
+		}
+	});
+});
+</script>
+    <div id="postMessageForm" class="cb1">  
+    	{{form.msg.errors}}
+    	<div class="clearFloat"></div>
+        <div class="fieldLabel"> <label for="id_msg">Retweet</label></div>
+        <div class="fieldInput"> {{form.initial.msg}}{{form.data.msg}} </div>
+        <div class="clearFloat"></div>
+        
+        {{ form.channels.errors }}
+        <div class="fieldLabel"><label for="id_channels">Twitter Accounts<span class="required">*</span></label></div>
+        <div class="fieldInput">{{form.channels}}</div>
+        
+        <!-- hidden input -->
+        {{form.uid.errors}}
+		{{form.avatarUrl.errors}}
+		{{form.type.errors}}
+		{{form.id.errors}}
+		{{form.uid}}
+		{{form.avatarUrl}}
+		{{form.type}}
+		{{form.id}}
+		{{form.msg}}
+		{{form.channel}}
+    </div>	
+	
+{% endblock %}
+
+{% block buttonName %}
+Retweet
+{% endblock %}

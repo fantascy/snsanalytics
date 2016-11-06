@@ -1,0 +1,13 @@
+{% ifequal attr 'begin_hour' %}
+	Total <input type="text" size="5" value="{{hours}}" id="hours"/> hours, starting from <input type="text" size="5" value="{{begin_hour}}" id="begin-hour"/>:00 US/Pacific time.
+	<div class="clearFloat"></div>
+	<div class="spriteSave">
+	   <a href="javascript:void(0);" onclick="updateFollowConfigTime('{{attr}}')">Save</a>
+	</div>
+{% else %}
+	Config.{{attr}}: <input type="text" value="{{value}}" id="follow-config-value"/>
+	<div class="clearFloat"></div>
+	<div class="spriteSave">
+	   <a href="javascript:void(0);" onclick="updateFollowConfig('{{attr}}')">Save</a>
+	</div>
+{% endifequal %}

@@ -1,0 +1,62 @@
+{% extends 'sns/layout/content.html' %}
+{% load snspostingruletags %}
+{% block content %}
+<div class="content">
+    
+	<form method="POST" action="{{action}}">
+			<!-- hidden input -->
+	            <div id='schedule_interval_json' style='display:none'>{{schedule_interval_json}}</div>
+	            <input type='hidden' value='{{schedule_interval_order}}' id='schedule_interval_order'/>
+	            <input type='hidden' value='{{randomize_time_count_value}}' id='randomize_time_count_value'/>
+	<table>
+        <div class="ruleForm">
+	    {% block form %}
+				<div class="cb1">
+				    <div class="cb1Title">Basic Info</div>
+
+				    <div class="cb2Double">
+					    {{ form.name.errors }}
+					    <div class="clearFloat"></div>
+						<div>{{form.name.label_tag}} {{form.name}} </div>
+					    <div class="clearFloat"></div>
+				    </div>
+				    <div class="clearFloat"></div>
+				
+					{% block articles_channels %}
+				    {% endblock %}
+				    
+				</div>
+				
+				{% block schedule %}
+				{% endblock %}
+				
+				{% block advance %}
+				{% endblock %}
+
+                {% block twitter %} 
+                 {% include 'sns/post/rule/twitter_advance.html' %} 
+                 {% endblock %} 
+                 
+               {% block facebook %} 
+                {% endblock %} 
+
+
+				<div class="cb1">
+	                <div class="fieldInput"> <input type="button" onclick="ajaxFormSubmitCampaign('{{ret_url}}', this);" value="save"> </div>
+	                <div class="fieldInput"> <input type="button" value="cancel" onclick="ajaxUpdate('ajax_content','{{ret_url}}',null,'GET');"> </div>
+				</div>
+
+	            <!-- hidden inputs -->
+	            {% if form.id %}
+	     			{{form.id}}	    
+	     		{% endif %}
+	            {{form.ret_url}}
+	            {{form.current_page}}
+	            <!-- <input type='hidden' value='{{schedule_interval_json}}' id='schedule_interval_json'/> -->
+		{% endblock %}
+        </div>
+        </table>
+	</form>
+	
+</div>
+{% endblock %}

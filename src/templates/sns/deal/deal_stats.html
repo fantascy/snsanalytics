@@ -1,0 +1,55 @@
+{% extends 'sns/layout/list.html' %}
+{% load snschanneltags %}
+{% load snsstringfiltertags %}
+
+{% block list_header %}
+	<div class="buttonCreatesection"> Location: {{form.location}} </div>
+	<div class="buttonCreatesection"> Category: {{form.cat}} </div>
+	<div class="buttonCreatesection"> Sorted: {{form.orderBy}} </div>
+	<div class="buttonCreatesection"> Page Size: {{form.pagination}} </div>
+	
+	<div class="clearFloat"></div>
+
+	<div class="buttonCreatesection">
+		<div class="searchfunction">
+		   <input type="text" value="{{keyword}}" id="query" class="retro searchInput"  onkeydown="enterPress(event);"/>
+		   <input class="s cursorPointer" type="submit" value="Search" id="search_button" onclick="searchList('/deal/stats/')"/>
+		</div>
+	</div>
+	
+	<input id="post_path" type="hidden" value="{{post_path}}"/>
+{%endblock%}
+
+{%block table_header %}
+<tr class="listHeader">
+    <td class="listHeaderCell dstats-loc-cat">Location - Category</td>
+    <td class="listHeaderCell dstats-clicks">Clicks</td>
+    <td class="listHeaderCell dstats-clicks30d">Clicks 30D</td>
+    <td class="listHeaderCell dstats-followers">Followers</td>
+    <td class="listHeaderCell dstats-deals">Deals</td>
+    <td class="listHeaderCellLast dstats-deals30d">Deals 30D</td>
+</tr>
+{%endblock%}
+
+{%block item%}
+<tr id="list_tr_id_{{object.chid}}" class="listTr{% cycle 'Odd' 'Even' %}">
+    <td  class="listCell dstats-loc-cat">
+    	{{object.location}}_{{object.category}} {%if object.has_channel %}<a href="http://twitter.com/{{object.first_channel}}" class="cursorPointer"  target="_blank">{{object.first_channel}}</a>{%endif%}
+    </td>
+    <td  class="listCell dstats-clicks">
+    	{{object.clicks}}
+    </td>
+    <td  class="listCell dstats-clicks30d">
+        {{object.totalClicks}}
+    </td>
+    <td  class="listCell dstats-followers">
+    	{{object.followers}}
+    </td>
+    <td  class="listCell dstats-deals">
+        {{object.deals}}/{{object.currentDeals}}
+    </td>
+    <td class="listCellLast dstats-deals30d">
+        {{object.totalDeals}}
+    </td>
+</tr>
+{% endblock %}

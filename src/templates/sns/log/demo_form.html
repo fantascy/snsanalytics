@@ -1,0 +1,17 @@
+{% extends 'sns/layout/popup.html' %}
+
+{% block form %} 
+<div class="demoform">
+    Demo {{form.demos}}
+</div>
+{% endblock %}
+
+{% block outbuttons %}
+<div class="bigfaceboxControls">
+    <div class="spriteSave">
+	   <a class="cursorPointer" onclick="loadDemoUser()">Use Demo</a>
+	</div>
+	<div class="spriteCancel"><a class="cursorPointer external_close" onclick="clearProxyUser()">Revert Back</a></div>
+	<div class="clearFloat"></div>
+</div>
+{% endblock %}

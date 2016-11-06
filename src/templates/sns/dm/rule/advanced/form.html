@@ -1,0 +1,70 @@
+{% extends 'sns/layout/content.html' %}
+{% load snspostingruletags %}
+{% block content %}
+<div class="content">
+	<form method="POST" action="{{action}}">
+	    <table>
+        <div class="ruleForm">
+	    {% block form %}
+		<div class="cb1">
+		    <div class="cb1Title">Basic Info</div>
+
+		    <div class="cb2Double">
+			    {{ form.name.errors }}
+			    <div class="clearFloat"></div>
+				<div>{{form.name.label_tag}} {{form.name}} </div>
+			    <div class="clearFloat"></div>
+		    </div>
+		    <div class="clearFloat"></div>
+		    		
+			{% include 'sns/dm/rule/category.html' %}
+		    
+		</div>
+		
+	    <div class="cb1">
+		    <div class="cb1Title">Schedule Info</div>
+	
+			<div class="cb2">
+		        <div class="fieldLabel"> <label for="id_scheduleType">Send Order</label></div>
+		        <div class="fieldInput"> {{form.sendOrder}} </div>
+		    </div>
+		    <div class="clearFloat"></div>
+		    
+		    <div class="cb2">
+		        <div class="fieldLabel"> <label for="id_scheduleType">Run Interval</label></div>
+		        <div class="fieldInput"> {{form.scheduleInterval}} </div>
+		    </div>
+		    <div class="clearFloat"></div>
+		    		    
+	    </div>
+
+	<div class="cb1">
+	    <div class="cb1Title">Advanced</div>
+		
+	    <div class="cb2Double">
+			<div>{{form.gaOn}} Enable Google Analytics integration</div>
+			<div class="clearFloat"></div>
+		</div>
+		
+		<div id='analytics_info'>
+	    {% include 'sns/post/rule/google_analytics.html' %}
+	    </div>
+    </div>
+
+
+		<div class="cb1">
+            <div class="fieldInput"> <input type="button" value="save" onclick="ajaxFormSubmit('{{ret_url}}', this);"> </div>
+            <div class="fieldInput"> <input type="button" value="cancel" onclick="ajaxUpdate('ajax_content','{{ret_url}}',null,'GET');"> </div>
+		</div>
+
+        <!-- hidden inputs -->
+        {{form.id}}
+        {{form.ret_url}}
+        {{form.current_page}}
+		{% endblock %}
+        </div>
+    </table>
+	</form>
+	
+</div>
+{% endblock %}

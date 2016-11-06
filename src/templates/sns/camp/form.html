@@ -1,0 +1,120 @@
+{% extends 'sns/layout/content.html' %}
+{% load snspostingruletags %}
+{% block content %}
+<div class="content">
+    <table>
+	<form method="POST" action="">
+        <div class="ruleForm">
+	    {% block form %}
+				<div class="cb1">
+				    <div class="cb1Title">Campaign Info</div>
+
+				    <div class="cb2Double">
+					    {{ form.name.errors }}
+					    <div class="clearFloat"></div>
+						<div>{{form.name.label_tag}} {{form.name}} </div>
+					    <div class="clearFloat"></div>
+				    </div>
+				    <div class="clearFloat"></div>
+				    
+				    <div class="cb2Double">
+	        			<div> <label for="id_scheduleType">Schedule Type<span class="required">*</span></label></div>
+	        			<div class="fieldInput"> {{form.scheduleType}} </div>
+	   				</div>
+	    			
+					<div class="cb2Double" id="interval_id" {% ifnotequal  form.initial.scheduleType 2 %} style="display:none" {% endifnotequal %}>
+	        			<div> <label for="id_scheduleInterval">Schedule Interval<span class="required">*</span></label></div>
+	        			<div class="fieldInput"> {{form.scheduleInterval}} </div>
+	    				</div>
+	    			<div class="clearFloat"></div>
+	    
+					<div class="cb2Double" id="start_id" {% ifnotequal  form.initial.scheduleType 1 %} style="display:none" {% endifnotequal %}>
+		    			{{form.scheduleStart.errors}}
+	       				<div class="clearFloat"></div>
+	        			<div> <label for="id_scheduleStart">Schedule Start Time</label></div>
+	        			<div class="fieldInput"> {{form.scheduleStart}} </div>
+	    			</div>
+	    
+					<div class="cb2Double" id="end_id" {% ifnotequal  form.initial.scheduleType 2 %} style="display:none" {% endifnotequal %}>
+		    		{{form.scheduleEnd.errors}}
+	        			<div class="clearFloat"></div>
+	        			<div> <label for="id_scheduleEnd">Schedule End Time</label></div>
+	        			<div class="fieldInput"> {{form.scheduleEnd}} </div>
+	   		    	</div>
+				    
+				    <div class="cb2Double">
+					    {{form.event.errors}}
+				        <div class="clearFloat"></div>
+				        <div> <label for="id_channels">Please select one event:<span class="required">*</span></label> </div>
+				        <div class="clearFloat"></div>
+				        <div class="fieldInput"> {{form.event}} </div>
+				    </div>
+				    <div class="clearFloat"></div>
+				    
+					<div class="cb2Double">
+					    {{form.param.errors}}
+				        <div class="clearFloat"></div>
+				        <div> <label for="id_channels">Please select a mail template:<span class="required">*</span></label> </div>
+				        <div class="clearFloat"></div>
+				        <div class="fieldInput"> {{form.param}} </div>
+				    </div>
+				    <div class="clearFloat"></div>
+				    
+				    <div class="cb2Double">
+					    {{form.sender.errors}}
+				        <div class="clearFloat"></div>
+				        <div> <label for="id_channels">Please select the sender:<span class="required">*</span></label> </div>
+				        <div class="clearFloat"></div>
+				        <div class="fieldInput"> {{form.sender}} </div>
+				    </div>
+				    <div class="clearFloat"></div>
+				    
+				 	<div class="cb2Double">
+					    {{form.toLists.errors}}
+				        <div class="clearFloat"></div>
+				        <div> <label for="id_channels">Please select the mail to:<span class="required">*</span></label> </div>
+				        <div class="clearFloat"></div>
+				        <div class="fieldInput"> {{form.toLists}} </div>
+				    </div>
+				    <div class="clearFloat"></div>
+				    
+				    <div class="cb2Double">
+					    {{form.toBlacklists.errors}}
+				        <div class="clearFloat"></div>
+				        <div> <label for="id_channels">Please select the exclude:</label> </div>
+				        <div class="clearFloat"></div>
+				        <div class="fieldInput"> {{form.toBlacklists}} </div>
+				    </div>
+				    <div class="clearFloat"></div>
+				</div>
+				<div class="cb1">
+	    			<div class="cb1Title">Advanced</div>
+	    		<div class="clearFloat"></div>
+	    		
+	    		<div class="cb2Double">
+					<div>{{form.gaOn}} Enable Google Analytics integration</div>
+					<div class="clearFloat"></div>
+				</div>
+				
+		
+				<div id='analytics_info'>
+	    			{% include 'sns/post/rule/google_analytics.html' %}
+	    		</div>
+			</div>
+
+
+				<div class="cb1">
+	                <div class="fieldInput"> <input type="button" onclick="ajaxFormSubmit('{{ret_url}}', this);" value="save"> </div>
+	                <div class="fieldInput"> <input type="button" value="cancel" onclick="javascript:history.back(-1);"> </div>
+				</div>
+
+	            <!-- hidden inputs -->
+	            {{form.id}}
+	            {{form.ret_url}}
+		{% endblock %}
+        </div>
+	</form>
+	</table>
+</div>
+{% endblock %}
+

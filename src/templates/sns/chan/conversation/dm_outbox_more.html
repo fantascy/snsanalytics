@@ -1,0 +1,36 @@
+{% extends 'sns/chan/conversation/table.html' %}
+{% load snschanneltags %}
+{% block all_body %}
+<table id="channel_table_id_{{div_number}}" class="view_msgtable" border="0" cellspacing="0" cellpadding="0">
+ {% for object in object_list %}
+    <tr id="channel_tr_id_{{object.id}}"  class="listTr{% cycle 'Odd' 'Even' %}">
+
+		<td class="listCell textAlignLeft DMRT">
+			<img class="iconMedium" src="{{object.sender.profile_image_url}}"/><a target="_blank" href="http://www.twitter.com/{{object.sender.screen_name}}">&nbsp;{{object.sender.screen_name}}</a>
+		</td>
+    	<td class="listCell textAlignLeft DMdetail">
+        	<div class="msgcontent">{{object.text|urlize|twitterUrlize|safe}}</div>
+        	<div class="msgdate">{{object.created_at|friendTime}}</div>
+        </td>
+    	<td class="listCellLast DMActions">
+    		<a class="action-button cursorPointer" href="javascript:void(0);" onclick="delete_dm_more('{{object.id}}','{{avatarUrl}}','{{uid}}','{{type}}','{{div_number}}')" title="Delete">
+            	<img src="{{MEDIA_URL}}sns/images/delete.png" alt="Delete" border="0"  />
+        	</a>
+        </td>
+           	
+    </tr>  
+  {% endfor %}
+  
+
+     {% if max_id %}
+        <tr id="conversation_more_tr_{{div_number}}" class="Channel_Tr">
+            <td colspan="5">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="javascript:changeConversationListPage('{{ max_id }}','{{div_number}}')" class="cursorPointer paginationButton">more&gt;&gt;</a> 				
+            </td>
+        </tr>
+     {% endif %}
+</table>
+<div id="his_detail_{{div_number}}" > 
+</div>
+{% endblock %}

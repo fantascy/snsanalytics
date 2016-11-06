@@ -1,0 +1,30 @@
+<div class="cb2Double">
+    <ul id="dateBuckets">
+    <div class="dateBucketsLeft">
+        {% for key, display in infoTypes %}
+        <li id="{{key}}"  class="cursorPointer" style={% ifequal infoType key %}"background: #8EC1DA; color:#FFFFFF"{% else %}""{% endifequal %}>
+         <a onclick="updateDMChart('{{key}}')" >{{display}}</a>
+        </li>
+        {% endfor %}
+    </div>
+    </ul>
+    <div class="clearFloat"></div>
+</div>
+{% ifequal hasChart "True" %}
+	<script type="text/javascript">
+	 		swfobject.embedSWF(
+	 	  		"{{MEDIA_URL}}common/flash/OFC.swf", "dm_clickchart", "690", "390",
+	 	  		"9.0.0","{{MEDIA_URL}}common/flash/expressInstall.swf",
+	 	  		{"data-file":"/dm/chartpath/rule/chartdata/?info={{info}}"},
+	 	  		{"wmode":"opaque"}
+	 	  	);
+	</script>
+	
+	<div class="cb2Double" id="dm_clickchart">    
+	</div>
+{% else %}
+	<div class="cb2Double" style="text-align:center"> 
+		No data.   
+	</div>
+{% endifequal %}
+

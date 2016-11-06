@@ -1,0 +1,36 @@
+{% extends 'sns/layout/content.html' %}
+{% block title %}<div class="ajax_contentTitle">Add Facebook Account Confirmation</div>{% endblock %}
+{% block content %}
+<div class="content">
+    <div class="cb1">
+        <div class="fieldInput"><img src="{{avatarUrl}}" class="iconBig"/></div>
+        <div class="fieldLabel">Authentication of your Facebook account <strong><a target='_blank' href='{{profileUrl}}'>{{login}}</a></strong> is succeeded.</div>
+        <div class="fieldLabel">Please help make a post about SNS Analytics. Our appreciation!</div>
+    </div>    
+    <form method="POST" action="/chan/facebook/account/confirm">
+    	<div class="cb1">
+	        <div class="fieldLabel">
+	        	<textarea id="tweet" name="tweet" style="font-size:12px;width:300px;height:80px;">{{tweet_msg}}</textarea>
+	        </div>
+	        <div class="fieldLabel fieldLabelCounter">
+		    	<div class="msgLengthCounter retro twitterCallbackCounter" id="id_info" rel_tweet="tweet">{{left_length}}</div>
+		        <div class="clearFloat"></div>
+		    	<div class="textAlignCenter">left</div>
+			</div>
+	        <div class="clearFloat"></div>		
+    	</div>
+
+        <div class="cb1">
+            <div>Please help click the 'like' button on the top right corner of this page if you haven't liked our Facebook page yet.</div>
+			<input id='id' name='id' type='hidden' value='{{id}}'/>
+            <div class="clearFloat"></div>			
+        </div>
+        <input id='is_facebook_post' name='is_facebook_post' type='hidden' value='facebook'/>       
+
+        <div class="cb1">
+            <div class="fieldInput"> <input type="button" onclick="ajaxFormFacebookCallbackSubmit(this);" value="Done"> </div>
+            <div class="clearFloat"></div>			
+        </div>
+    </form>
+</div>
+{% endblock %}

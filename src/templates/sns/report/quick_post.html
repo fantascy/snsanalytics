@@ -1,0 +1,25 @@
+{% extends 'sns/layout/list.html' %}
+{% load snsstringfiltertags %}
+{% block table_header %}
+    <tr>
+        <th colspan="4">
+            <div class="listHeader">
+                <div class="listHeaderCell directPostingTime">Execution time</div>
+                <div class="listHeaderCell directPostingTotal">Total</div>
+                <div class="listHeaderCellLast directPostingFailure">Failure</div>
+            </div>
+        </th>
+    </tr>
+{%endblock%}
+{% block item %}
+    <tr class="listTr{% cycle 'Odd' 'Even' %}">
+        <td class="listCell directPostingTime">
+            {{object.executionTime|toUserTz|date:view.dateFormat}}
+        </td>
+        <td class="listCell directPostingTotal">
+            <a rel="ajaxform" href="#/post/post/{{object.id}}">{{object.total|numberDisplay}}</a>
+        </td>
+        <td class="listCellLast directPostingFailure"> {{object.failure|numberDisplay}}</td>
+    </tr>
+{% endblock %}
+   

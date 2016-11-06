@@ -1,0 +1,45 @@
+
+<div class="cb2Double">
+    {% ifnotequal barChart "False" %}
+        {% block report_bar_chart%}
+			{% ifnotequal barChart "False" %}
+		       	<canvas id="barChart" width="650" height="350">[No canvas support]</canvas>
+				<script type="text/javascript">
+					var chart_info_user_bar = eval('{{barChart}}'.replace(/&#39;/g,"'").replace(/&quot;/g,'"'));
+			        var data = chart_info_user_bar[0];				        
+			        var bar = new RGraph.Bar("barChart", eval(data));	
+			        bar.Set('chart.colors', ['#8080FF']);	
+			        bar.Set('chart.text.angle', 30);    
+			        //bar.Set('chart.background.grid', false);       	        
+			        bar.Set('chart.tooltips.event', 'onmousemove');  				        
+			        bar.Set('chart.labels.sticks', true);        
+			        bar.Set('chart.labels', eval(chart_info_user_bar[1]));
+			        bar.Set('chart.title', chart_info[5]);
+			        bar.Set('chart.text.size', 8); 
+			        if(eval(chart_info_user_bar[1]).length<=2){
+			        	bar.Set('chart.hmargin', 100);
+			        }
+			        else{
+			        	bar.Set('chart.hmargin', 10);
+			        } 
+			        bar.Set('chart.tooltips', eval(chart_info_user_bar[2]));
+			        bar.Set('chart.tooltips.effect', 'fade');
+			        bar.Set('chart.ylabels.count', getYLabelsCount(chart_info_user_bar[3]));
+			        bar.Set('chart.scale.decimals', 0);
+			        bar.Draw();
+				</script>				       	
+			{% endifnotequal %}
+		{% endblock %}
+        {% ifequal infoType "referrer" %}
+        <div class="clearFloat">
+             Direct clicks include all other human clicks that are not from a browser. &nbsp; 
+            <a href="javascript:showReferrerDetail()" class="cursorPointer" id="referrer_info">More>></a>
+        </div>
+        <div id="referrer_detail" style = "display:none">
+        {% include 'sns/report/referrer_detail.html'%}
+        </div>
+        {% endifequal %}  
+   {% else %}
+   		<div class="fieldDetail">There are no click data in this category.</div>
+   {% endifnotequal %} 
+</div>

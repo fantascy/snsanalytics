@@ -1,0 +1,43 @@
+queue:
+- name: default
+  rate: 10/s
+  bucket_size : 5
+  retry_parameters:
+    task_retry_limit: 0
+- name: msgcampaign
+  rate: 10/s
+  bucket_size : 1
+  retry_parameters:
+    task_retry_limit: 0
+- name: feedcampaign
+  rate: 10/s
+  bucket_size : 10
+  retry_parameters:
+    task_retry_limit: 0
+- name: post
+  rate: 10/s
+  bucket_size : 10
+  retry_parameters:
+    task_retry_limit: 0
+- name: dealbuilder
+  rate: 10/s
+  bucket_size : 5
+  retry_parameters:
+    task_retry_limit: 0
+- name: feedbuilder
+  rate: 1/s
+  bucket_size : 1
+  retry_parameters:
+    task_retry_limit: 0
+- name: hot
+  rate: 1/s
+  bucket_size : 1
+  retry_parameters:
+    task_retry_limit: 0
+- name: cmpcounterupdater
+  rate: 10/s
+  bucket_size : 10
+  retry_parameters:
+    task_retry_limit: 0
+
+  

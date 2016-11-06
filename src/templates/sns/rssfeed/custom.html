@@ -1,0 +1,42 @@
+{% extends 'sns/layout/list.html' %}
+{% load snschanneltags %}
+
+{% block title %}<div class="ajax_contentTitle">CMP Feeds - {{name}}</div>{% endblock %}
+
+{% block list_header %}
+<div class="buttonCreatesection">
+	<div class="buttonCreate">
+	<a class="img-cursor-pointer" href="/#/rssfeed/custom/upload/?fsid={{fsid}}">Import</a>
+	</div>
+</div>
+<div class="clearFloat"></div>
+<div class="buttonCreatesection">
+	<div> Feed Source: {{form.fsid}} </div>
+</div>
+<div class="clearFloat"></div>
+<div class="buttonCreatesection">
+	<div class="searchfunction">
+		<input type="text" value="{{keyword}}" id="query" class="retro searchInput" name="campaign keyword" onkeydown="enterPress(event);"/>
+    	<input class="s cursorPointer" type="submit" value="Search" id="search_button" onclick="searchList('{{post_path}}')"/>
+    </div>
+</div>
+<div class="clearFloat"></div>
+{%endblock%}
+
+{% block table_header %}
+<tr class="listHeader">
+    <td class="listHeaderCell customKeyword">Keyword</td>
+    <td class="listHeaderCellLast customUrl">Feed</td>
+</tr>
+{%endblock%}
+
+{%block  item %}
+<tr id="list_tr_id_{{object.id}}" class="listTr{% cycle 'Odd' 'Even' %}">
+    <td class="listCell customKeyword">
+    {{object.0}}
+    </td>
+    <td class="listCellLast customUrl">
+    {{object.1}}
+    </td>
+ </tr>
+{%endblock%}

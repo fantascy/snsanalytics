@@ -1,0 +1,12 @@
+{% extends 'sns/layout/popup_form.html' %}
+
+{% block form %} 
+{{mail}} : {{form.tags}}
+<input id="user_id" type="hidden" value="{{id}}"/>
+{% endblock %}
+
+{% block buttons %}
+    <div class="spriteSave">
+	   <a href="javascript:void(0);" onclick="setUserTag('{{id}}')">Save</a>
+	</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'sns/chan/conversation/table.html' %}
+{% load snschanneltags %}
+
+{% block table_header %}
+<div class="clearFloat"></div>
+	<tr class="listHeader">
+		<td class="listHeaderCell followPic">Friend</td>
+    	<td class="listHeaderCell followdetail">Profile</td>
+    	<td class="listHeaderCellLast followActions">Actions</td>
+	</tr>
+{% endblock %}
+
+{% block table_count %}
+		<td class="listCell textAlignLeft followPic">
+			<img class="iconMedium" src="{{object.profile_image_url}}"/><div class="name"><a target="_blank" href="http://www.twitter.com/{{object.screen_name}}">&nbsp;{{object.screen_name}}</div>
+		</td>
+    	<td class="listCell textAlignLeft followdetail">
+    	    {% ifnotequal object.location "" %}
+        		<div class="local">{{object.name}} | {{object.location}} </div>
+        	{% else %}
+        		<div class="local">{{object.name}}</div>
+        	{% endifnotequal %}
+        	<div class="intro">{{object.description|urlize|twitterUrlize|safe}}</div>
+        	<!-- <div class="intro">{{object.status.text}} <em>{{object.status.created_at|friendTime}}</em></div> -->
+		</td>
+    	<td class="listCellLast retro followActions">
+    		<a class="action-button facebox_friends" href="javascript:void(0);" onclick="tweet_reply_facebox('{{object.id}}','{{uid}}','{{avatarUrl}}','{{type}}','{{object.screen_name}}','');return false;" title="Reply">
+            	<img src="{{MEDIA_URL}}sns/images/dm_message.png" alt="Reply" border="0"  />
+        	</a>
+    		<a class="action-button cursorPointer" href="javascript:void(0);" onclick="unfollower_friend('{{object.id}}','{{object.screen_name}}','{{avatarUrl}}','{{uid}}','{{type}}')" title="Unfollow">
+            	<img src="{{MEDIA_URL}}sns/images/unfollowme.png" alt="Unfollow" border="0"  />
+        	</a>
+        </td>
+{% endblock %}

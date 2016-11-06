@@ -1,0 +1,93 @@
+{% extends 'sns/layout/list.html' %}
+{% load snspostingruletags %}
+
+{% block list_header %}
+<div class="buttonCreatesection">
+	<div class="buttonCreate">
+    	<a class="img-cursor-pointer" rel="ajaxform" href="#/email/campaign/create/?ret_url={{ret_url}}"> Add a campaign</a>
+	</div>
+</div>
+<div class="clearFloat"></div>
+<div class="buttonCreatesection">
+	<script type="text/javascript">
+	$(document).ready(function($){
+		document.getElementById('id_sortBy_type').value = '{{sortBy}}';
+		document.getElementById('id_direct_type').value = '{{directType}}';
+		document.getElementById('id_paginate_num').value = '{{paginate_by}}';	
+	});
+	</script>
+    <div class="sortbyfunction">
+  		Sorted by {{form.type}}
+		{{form.order}}
+		&nbsp;&nbsp;&nbsp;Page Size {{form.paginate}}
+    </div>
+    <input id="post_path" type="hidden" value="{{post_path}}"/>
+</div>
+<div class="clearFloat"></div>
+{% endblock %}
+
+{% block table_header %}
+    <tr>
+        <th colspan="4">
+            <div class="listHeader">
+                <div class="listHeaderCell postingRuleName">Name</div>
+                <div class="listHeaderCell postingRuleState">Status</div>
+                <div class="listHeaderCell postingRuleSchedule">Scheduled</div>
+                <div class="listHeaderCellLast postingRuleActions">Actions</div>
+            </div>
+        </th>
+    </tr>
+{% endblock%}
+
+{%block item%}
+    <tr id="list_tr_id_{{object.id}}" class="listTr{% cycle 'Odd' 'Even' %}">
+        <td class="listCell textAlignLeft postingRuleName">
+            <a href="javascript:toggleDetail('{{object.className}}', '{{object.key}}')" title="Show detail">
+                <img id="img_show_{{object.key}}" src="{{MEDIA_URL}}sns/images/arrow_down.png" border="0" class="cursorPointer" alt="Show detail"/>
+            </a>
+            <a href="javascript:toggleDetail('{{object.className}}', '{{object.key}}')" title="Hide detail">
+                <img id="img_hide_{{object.key}}" src="{{MEDIA_URL}}sns/images/arrow_up.png" border="0" class="cursorPointer" style="display:none;" alt="Hide detail"/>
+            </a>
+            {{object.name}}
+        </td>
+        <td class="listCell postingRuleState" id="status_{{object.key}}">
+            {{object.state|state2str}}
+        </td>
+        <td class="listCell postingRuleSchedule"> {{object|scheduleInfo}}</td>
+        <td class="listCellLast postingRuleActions">
+            
+			<a class="action-button cursorPointer" href="javascript:void(0);" onclick="delete_obj('{{object.id}}','{{ret_url}}','/email/campaign/')" title="Delete">
+				<img src="{{MEDIA_URL}}sns/images/delete.png" border="0" class="cursorPointer" alt="Delete"/>
+			</a> 
+            <a class="action-button" rel="ajaxform" href="#/email/campaign/update/?id={{object.id}}&ret_url={{ret_url}}" title="Update">
+				<img src="{{MEDIA_URL}}sns/images/edit.png" border="0" class="cursorPointer" alt="Update">					
+			</a>
+			
+            {% ifequal object.state 0 %}
+			<a class="action-button" href="javascript:sns.rule.activation('{{object.className}}', '{{object.key}}')" title="Activate">
+				<img id="img_activate_{{object.key}}" src="{{MEDIA_URL}}sns/images/play.png" border="0" class="cursorPointer" alt="Activate">
+			</a>
+            <a class="action-button" href="javascript:sns.rule.activation('{{object.className}}', '{{object.key}}')" title="De-activate">
+				<img id="img_deactivate_{{object.key}}" src="{{MEDIA_URL}}sns/images/pause.png" border="0" class="cursorPointer" style="display:none;" alt="De-activate">		
+			</a>{% endifequal %}
+            {% ifequal object.state 1 %}
+			<a class="action-button" href="javascript:sns.rule.activation('{{object.className}}', '{{object.key}}')" title="Activate">
+				<img id="img_activate_{{object.key}}" src="{{MEDIA_URL}}sns/images/play.png" border="0" class="cursorPointer" style="display:none;" alt="Activate">
+					
+			</a>
+            <a class="action-button" href="javascript:sns.rule.activation('{{object.className}}', '{{object.key}}')" title="De-activate">
+				<img id="img_deactivate_{{object.key}}" src="{{MEDIA_URL}}sns/images/pause.png" border="0" class="cursorPointer" alt="De-activate">
+			</a>
+			{% endifequal %}
+            <a class="action-button" rel="ajaxform" href="#/email/campaign/record/?id={{object.id}}" title="Execution records">
+				<img src="{{MEDIA_URL}}sns/images/list.png" border="0" class="cursorPointer" alt="Execution records">
+			</a>	
+        </td>
+    </tr>
+
+    <tr>
+      <td colspan="5">
+        <div id="detail_{{object.key}}"  class="ruleDetail" style="display:none"></div>
+      </td>
+    </tr> 
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'sns/layout/content.html' %}
+{% block content %}
+<div class="content">
+    <form method="POST" action="/usr/update/">
+        <div id="userForm" class="cb1">
+            <div class="fieldLabel">Email</div>
+            <div class="fieldInput">{{user.mail}}</div>
+            <div class="clearFloat"></div>
+
+            {{ form.name.errors }}
+            <div class="clearFloat"></div>
+            <div class="fieldLabel"> <label for="id_name">{{form.name.label_tag}}</label></div>
+            <div class="fieldInput"> {{form.name}} </div>
+            <div class="clearFloat"></div>
+
+            <div class="fieldLabel"> <label for="id_timeZone">Time Zone</label></div>
+            <div class="fieldInput"> {{form.timeZone}} </div>
+            <div class="clearFloat"></div>
+            <div class="clearFloat"></div>
+            
+            
+            {% ifequal type 0 %}
+            {{ form.acceptedTerms.errors }}
+            <div > 
+                <div class="fieldInput"> <span class="required">*</span>{{form.acceptedTerms}}&nbsp;I accept the <a rel="ajaxform" href="#/sns/terms.html">Terms of Service</a>.</div>
+                <div class="clearFloat"></div>
+            </div>
+            
+            <div style="display: none;">
+            
+            <div > <div class="fieldInput"> <input type="checkbox" name="subSystemNotification" id="id_subSystemNotification" value="on" checked="checked"/> Sending system report to me.</div>
+            <div class="clearFloat"></div>
+            </div>
+            <div > <div class="fieldInput"> <input type="checkbox" name="subNewsletter" id="id_subNewsletter" value="on" checked="checked"/> Sending newsletters to we when having some news.</div>
+
+            <div class="clearFloat"></div>
+            </div>
+            <div > <div class="fieldInput"> <input type="checkbox" name="subWeeklyReport" id="id_subWeeklyReport" value="on" checked="checked"/> Sending weekly report to me on every Monday.</div>
+            <div class="clearFloat"></div>
+            </div>
+            
+            </div>
+            
+            {% endifequal %}
+            {% ifequal type 1 %}
+            <div style="display: none;"> <div class="fieldInput"><input type="checkbox" name="acceptedTerms" id="id_acceptedTerms" value="on" checked="checked"/>&nbsp;I accept the <a href="/sns/terms.html">Terms of Services</a>.</div>
+            <div class="clearFloat"></div>
+            </div>
+            <div class="clearFloat"><br></div>
+			<div class="clearFloat" style="font-weight: bold;">Please choose communication emails you want to receive:</div>
+			<div class="clearFloat"></div>
+            <div > 
+                <div class="fieldInput"> {{form.subSystemNotification}} Notification of outages and other critical issues of the system or your own account.</div>
+                <div class="clearFloat"></div>
+            </div>
+            <div > 
+                <div class="fieldInput"> {{form.subNewsletter}} Monthly newsletters on SNS products, services, and community.</div>
+                <div class="clearFloat"></div>
+            </div>
+            <div > 
+                <div class="fieldInput"> {{form.subWeeklyReport}} Weekly reports of your account activities on SNS.</div>
+                <div class="clearFloat"></div>
+            </div>
+            {% endifequal %}
+            
+            <!--
+            <div class="note_Title">
+                You can make up to {{view.dailyPostLimit}} posts every day. &nbsp; 
+                <a href="javascript:showSettingDetail(this)" class="cursorPointer" id="setting_info">More>></a>
+            </div>
+            
+            <div id="setting_detail" style="display:none">
+            <div class="note_Detail">
+               You can make up to {{limit}} posts every day. The quota is reset at beginning of every day based on your time zone.
+            </div>
+            </div>
+            -->
+            
+            <div class="clearFloat"></div>
+
+            <div class="fieldInput"> <input class="enter_press_driven" type="button" onclick="ajaxFormSubmit('{{ret_url}}', this);" value="save"> </div>
+
+            <!-- hidden inputs -->
+            {{form.id}}
+        </div>
+    </form>
+</div>
+{% endblock %}

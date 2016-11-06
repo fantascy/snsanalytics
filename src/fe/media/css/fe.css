@@ -1,0 +1,142 @@
+a.TopFollowtools_intro_bt {
+	background: url(../images/TopFollowtools_intro_bt.jpg) no-repeat;
+	width: 160px;
+	height: 29px;
+	display: block;
+	color: #333;
+	text-align: center;
+	font-family: "Arial Black";
+	line-height: 27px;
+	margin: 0 0 15px;
+}
+
+a.Home_TopFollowtools {
+	background: url(../images/Home_TopFollowtools.png) no-repeat;
+	width: 194px;
+	height: 29px;
+	display: block;
+	float: left;
+	font-size: 12px;
+	font-family: "Arial Black";
+	color: #FFF;
+	text-align: center;
+	margin: 10px 0 0 20px;
+	line-height: 28px;
+	position: relative;
+}
+
+a.Home_TopFollowtools .ico {
+	background: transparent url(../images/menu_hotIcon.png) no-repeat scroll
+		-2px -1px;
+	display: block;
+	height: 28px;
+	position: absolute;
+	right: -20px;
+	top: -14px;
+	width: 28px;
+}
+
+.Home_TopFollowtools_text {
+	float: left;
+	margin: 10px 0 0 20px;
+	color: #fff;
+}
+
+#FollowerBuilderToolDetail .fieldLabelAccount {
+	text-align: right;
+	width: 200px;
+	float: left;
+	padding: 22px 0 0;
+}
+
+.upgrade_button {
+	text-align: right;
+	height: 30px;
+}
+
+.upgrade_button .upgrade_text {
+	float: right;
+	line-height: 24px;
+}
+
+a.upgrate_bt {
+	width: 170px;
+	height: 27px;
+	display: inline-block;
+	background: url(../images/TopFollowtools_intro_bt_bg.jpg) no-repeat;
+	text-align: center;
+	line-height: 24px;
+	color: #3fa2c7;
+	margin: 0 0 0 8px;
+	float: right;
+}
+
+.acctFollowRuleName {
+	width: 200px;
+}
+
+.acctFollowRuleSource {
+	width: 180px;
+}
+
+.acctFollowRuleState {
+	width: 80px;
+}
+
+.acctFollowRuleActions {
+	width: 125px;
+}
+
+.acctFollowNameAndRuleSource {
+	width: 200px;
+}
+
+.acctFollowRuleTargetAll {
+	width: 290px;
+}
+
+.acctFollowRuleUser {
+	width: 130px;
+}
+
+.safeListName {
+	width: 180px;
+}
+
+.safeListUrl {
+	width: 200px;
+}
+
+.safeListDes {
+	width: 240px;
+}
+
+.safeListCount {
+	width: 50px;
+}
+
+.safeListStats {
+	width: 60px;
+}
+
+.safeListAction {
+	width: 60px;
+}
+
+.helpButton {
+	float: right;
+	margin: 3px;
+}
+
+.all-follow-campaigns-list-name-handle-email {
+	width: 370px;
+}
+
+.all-follow-campaigns-list-state {
+	width: 80px;
+}
+
+.all-follow-campaigns-list-actions {
+	width: 125px;
+}
+

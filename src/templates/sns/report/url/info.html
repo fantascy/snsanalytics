@@ -1,0 +1,22 @@
+{% load snsstringfiltertags %}
+
+        <div id="reportChartUrlDetail">
+            <div class="cb2Double">
+                <div class="fieldLabel">Message</div>
+                <div class="fieldDetail">
+                    <a target="_blank" href="{{urlMapping.keyNameStrip}}">{{urlMapping.msg|getMsg}}</a>&nbsp;   
+                </div>
+                <div class="clearFloat"></div>
+                <div class="fieldLabel">Popular Shorts</div>
+                <div class="fieldDetail">
+                    {% for surl in surls %}
+                    <span><a href="javascript:getSurlReport('{{surl.keyNameStrip}}')" class="cursorPointer">{{surl.keyNameStrip}}</a>&nbsp;&nbsp;</span>
+                    {% endfor %}
+                </div>
+                <div class="clearFloat"></div>
+                <div class="fieldLabel">Life Time Clicks</div>
+                <div class="fieldDetail">
+                    {{urlMapping.life|numberDisplay}}
+                </div>
+            </div>
+        </div>

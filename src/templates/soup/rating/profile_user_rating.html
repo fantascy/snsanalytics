@@ -1,0 +1,15 @@
+{% load commonstringtags %}
+{% load souptags %}
+
+<div class="profile-user-rating">
+	<ul id="rating-profile-user-{{object.id}}" class="rating rating-profile-user">
+		{% for iconId in view.const.LIST5 %}
+		<li id="rating-profile-user-icon-{{iconId}}-{{object.id}}">
+			<span class="icon-16 {{object.profileUserRating|ratingIconClass:iconId}}"></span>
+		</li>
+		{% endfor %}
+		<li>
+			<span class="inner-block-1 gray-text">{{ object.profileUserRating.modifiedTime|timeAgo }}</span>
+		</li>
+	</ul>
+</div>

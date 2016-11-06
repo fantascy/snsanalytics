@@ -1,0 +1,5 @@
+{% extends 'sns/report/ranking/table.html' %}  
+{% load snsstringfiltertags %}
+{% block table_count %}
+    <a rel="ajaxform" href="#/graph/chart?type=1&surl={{object.keyNameStrip}}&timeRange=max">{{object.life|numberDisplay}}</a>   
+{% endblock %}  

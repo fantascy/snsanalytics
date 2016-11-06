@@ -1,0 +1,85 @@
+{% extends 'sns/layout/list.html' %}
+{% load snschanneltags %}
+{% block list_header %}
+<div class="buttonCreatesection">
+	<div class="buttonCreate">
+	{% if limited %}
+	<a class="img-cursor-pointer" href="/usr/limit?name={{model_name}}&number={{limit_num}}" rel="facebox"> Add a feed</a>
+	{% else %}
+	<a class="img-cursor-pointer" href="/rssfeed/create/" rel="facebox"> Add a feed</a>
+	{% endif %}
+
+	</div>
+</div>
+<div class="clearFloat"></div>
+<div class="buttonCreatesection">
+	<script type="text/javascript">
+	$(document).ready(function($){
+		document.getElementById('id_sortBy_type').value = '{{sortBy}}';
+		document.getElementById('id_direct_type').value = '{{directType}}';
+		document.getElementById('id_paginate_num').value = '{{paginate_by}}';	
+	});
+	</script>
+
+    <div class="sortbyfunction">
+  		Sorted by {{form.type}}
+		{{form.order}}
+		&nbsp;&nbsp;&nbsp;Page Size {{form.paginate}}
+    </div>
+    <input id="post_path" type="hidden" value="{{post_path}}"/>
+</div>
+{% if show_search %}
+<div class="clearFloat"></div>
+<div class="buttonCreatesection">
+	<div class="searchfunction">
+		<input type="text" value="{{keyword}}" id="query" class="retro searchInput" name="campaign keyword" onkeydown="enterPress(event);"/>
+    	<input class="s cursorPointer" type="submit" value="Search" id="search_button" onclick="searchList('{{post_path}}')"/>
+    </div>
+</div>
+{% endif %}
+{%endblock%}
+{%block table_header %}
+<tr class="listHeader">
+    <td class="listHeaderCell feedName">Name</td>
+    <td class="listHeaderCell feedUrl">URL</td>
+    <td class="listHeaderCellLast feedActions">Actions</td>
+</tr>
+{%endblock%}
+{%block item %}
+              <script type="text/javascript">
+  				$("#{{object.id}}").editInPlace({ 
+	    			url: "/rssfeed/edit/",
+	    			bg_over: "#DCDCDC"  
+				});
+  			  </script>
+<tr id="list_tr_id_{{object.key.id}}" class="listTr{% cycle 'Odd' 'Even' %}">
+    <td id="follow_building_campaign_name_td_{{object.id}}" class="listCell textAlignLeft feedName">
+        <span id="{{object.id}}" class="cursorPointer" title="Click to edit">{{object.name}}</span>
+        {% if showTopic %}
+        <span>( {{object.topics|topicName}} )</span>
+        {% endif %}
+    </td>
+    <td id="follow_building_campaign_url_td_{{object.id}}" class="listCell textAlignLeft feedUrl">
+        <a target="_blank" href={{object.feedUrl|safe}}>
+        <span>{{object|feeddisplay|safe}}</span>
+        </a>
+    </td>
+    <td class="listCellLast feedActions">
+        <a class="action-button cursorPointer" href="javascript:void(0);" onclick="delete_obj('{{object.key.id}}','{{ret_url}}','/rssfeed/')" title="Delete">
+            <img src="{{MEDIA_URL}}sns/images/delete.png" border="0"  class="cursorPointer" alt="Delete"/>
+        </a>
+        <a class="action-button" href="/rssfeed/update/?id={{object.key.id}}" title="Update" rel="facebox">
+            <img src="{{MEDIA_URL}}sns/images/edit.png" border="0"  class="cursorPointer" alt="Update"/>
+        </a>
+        <a class="action-button" target="_blank" href="#/graph/chart?type=4&timeRange=month&feed={{object.id}}"  title="Chart">
+            <img src="{{MEDIA_URL}}sns/images/chart_line.png" border="0" class="cursorPointer" alt="Chart"/>
+        </a>
+        
+        {% if showTopic %}
+         <a class="action-button" href="/rssfeed/topic/?id={{object.id}}" title="Topic" rel="facebox">
+            T
+        </a>
+        {% endif %}
+    </td>
+</tr>
+{% endblock %}

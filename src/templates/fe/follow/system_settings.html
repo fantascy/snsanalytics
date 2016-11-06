@@ -1,0 +1,126 @@
+{% extends 'fe/layout/content.html' %}
+
+{% block content %}
+<div class="content">
+    <div class="cb1Title">Follow Campaigns</div>
+    <div class="cb1">
+      <div class="fieldLabel">
+      <span class="rightSpace">
+      Status summary:
+      </span>
+      <span id="status-summary" class="rightSpace">
+      {{config.status_summary}}
+      </span>
+      </div>
+    </div>
+    
+    <div class="cb1">
+      <div class="fieldLabel">
+      <span class="rightSpace">
+      Follow cron:
+      </span>
+      <span id="followMsg" class="rightSpace">
+      {{followMsg}}
+      </span>
+      <input type="button" class="cursorPointer" id="followAction" onclick="toggleFollowConfigCron()" value="{{followAction}}">
+      </div>
+    </div>
+    
+    <div class="cb1">
+      <div class="fieldLabel">
+      <span class="rightSpace">
+      Follow stats:
+      </span>
+      <span id="statsMsg" class="rightSpace">
+      {{statsMsg}}
+      </span>
+      <input type="button" class="cursorPointer" id="statsAction" onclick="toggleFollowConfigStats()" value="{{statsAction}}">
+      </div>
+    </div>
+        
+    <div class="cb1">
+    <div class="fieldLabel">
+	  <span class="rightSpace">Mark account as protected if follower count is greater than:</span>
+      <span class="rightSpace"> {{config.threshold_followers}} </span>
+      <span class="rightSpace">
+	      <a href="/fe/follow/account/config/update/?attr=threshold_followers" title="Update" rel="facebox">
+	         <img src="{{ MEDIA_URL }}fe/images/edit.png" border="0"  class="cursorPointer" alt="Update"/>
+	   	  </a>
+      </span>
+      </div>
+	</div>
+	
+    <div class="cb1">
+    <div class="fieldLabel">
+	  <span class="rightSpace">Mark account as protected if 30-day click count is greater than:</span>
+      <span class="rightSpace"> {{config.threshold_clicks}} </span>
+      <span class="rightSpace">
+	      <a href="/fe/follow/account/config/update/?attr=threshold_clicks" title="Update" rel="facebox">
+	         <img src="{{ MEDIA_URL }}fe/images/edit.png" border="0"  class="cursorPointer" alt="Update"/>
+	   	  </a>
+      </span>
+      </div>
+	</div>
+	
+    <div class="cb1">
+    <div class="fieldLabel">
+	  <span class="rightSpace">Mark account as protected if 30-day post count is less than:</span>
+      <span class="rightSpace"> {{config.threshold_posts}} </span>
+      <span class="rightSpace">
+	      <a href="/fe/follow/account/config/update/?attr=threshold_posts" title="Update" rel="facebox">
+	         <img src="{{ MEDIA_URL }}fe/images/edit.png" border="0"  class="cursorPointer" alt="Update"/>
+	   	  </a>
+      </span>
+      </div>
+	</div>
+	
+	<div class="cb1">
+    <div class="fieldLabel">
+	  <span class="rightSpace">
+      Hourly follow speed:
+      </span>
+      <span class="rightSpace">
+      {{config.follow_speed}}
+      </span>
+      <span class="rightSpace">
+      <a href="/fe/follow/account/config/update/?attr=follow_speed" title="Update" rel="facebox">
+         <img src="{{ MEDIA_URL }}fe/images/edit.png" border="0"  class="cursorPointer" alt="Update"/>
+   	  </a>
+      </span>
+      </div>
+	</div>
+	
+	<div class="cb1">
+    <div class="fieldLabel">
+	  <span class="rightSpace">
+      Follow campaigns daily operation time:
+      </span>
+      <span class="rightSpace">
+      Total {{config.hours}} hours, starting from {{config.begin_hour}}:00 US/Pacific time.
+      </span>
+      <span class="rightSpace">
+      <a href="/fe/follow/account/config/update/?attr=begin_hour" title="Update" rel="facebox">
+         <img src="{{ MEDIA_URL }}fe/images/edit.png" border="0"  class="cursorPointer" alt="Update"/>
+   	  </a>
+      </span>
+      </div>
+	</div>
+    
+    <div class="cb1">
+		{{form.stop_on_suspension}} Automatically stop all follow campaigns when one new account suspension is detected.
+	</div>
+	
+	<div class="cb1">
+		{{form.stop_in_weekend}} Stop follow campaigns in weekend (US/Pacific).
+	</div>
+	
+	<div class="cb1">
+		<input type="button" class="cursorPointer" onclick="resetFollowConfig()" value="Reset To Default Config">
+		<input type="button" class="cursorPointer" onclick="reactivateProtectedFollowCampaigns()" value="Reactivate All Protected">
+		{% comment %}
+		<input type="button" class="cursorPointer" onclick="reactivateSuspendedFollowCampaigns()" value="Reactivate All Suspended">
+		{% endcomment %}
+	</div>
+</div>
+
+{% endblock %}

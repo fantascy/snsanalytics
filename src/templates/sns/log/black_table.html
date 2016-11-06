@@ -1,0 +1,62 @@
+{% load snsstringfiltertags %}
+{% load snsusertags %}
+
+<table id="black_list_table" class="view_msgtable" border="0" cellspacing="0" cellpadding="0">
+
+{% block table_header %}
+<div class="clearFloat"></div>
+        <tr>
+            <td colspan="3">
+                <div class="listHeader">
+                    <div class="listHeaderCell rankingMsg">{{type}} Pattern Value</div>
+                    <div class="listHeaderCellLast rankingCount">Actions</div>
+                </div>
+            </td>
+            
+            
+        </tr>
+{% endblock %}
+ 
+ {% for object in object_list %}
+        <tr id="black_list_{{object|urlencode}}" class="listTr{% cycle 'Odd' 'Even' %}">
+            <td class="listCell textAlignLeft rankingMsg">
+                <span title="{{object}}">
+                    {{object}}
+                    {% ifequal type 'redirectuser' %}
+                    ({{object|userEmail}})
+                    {% endifequal %}
+                </span>
+            </td>
+            <td class="listCellLast rankingCount">
+             <a class="action-button cursorPointer" href="javascript:void(0);" onclick="delete_black_list('{{type}}','{{object|urlencode}}')" title="Delete">
+				<img src="{{MEDIA_URL}}sns/images/delete.png" border="0" class="cursorPointer" alt="Delete"/>
+			</a> 
+                       
+            </td>
+        </tr>  
+  {% empty %}
+        <tr class="listEmpty">
+            <td colspan="5">You have no data.</td>
+        </tr>
+  {% endfor %}
+  
+        <tr>
+            <td colspan="5">&nbsp;</td>
+        </tr>
+		{%block paganation%}
+		
+        {%if has_previous or has_next %}
+        <tr class="Channel_Tr">
+            <td colspan="5">
+                {% if has_previous %}
+                <a href="?page={{ previous }}" class="paginationButton">&lt;&lt;previous</a>
+                {% endif %}
+                {% if has_next %}
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="?page={{ next }}" class="paginationButton">next&gt;&gt;</a>
+                {% endif %}	  				
+            </td>
+        </tr>
+        {% endif %}
+        {%endblock%}
+    </table>

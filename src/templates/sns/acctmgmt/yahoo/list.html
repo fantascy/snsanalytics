@@ -1,0 +1,73 @@
+{% extends 'sns/layout/list.html' %}
+{% load snsstringfiltertags %}
+{% block list_header %}
+<div class="buttonCreatesection">
+	<div class="buttonCreate">
+		<a class="img-cursor-pointer" href="/acctmgmt/yahoo/create/" rel="facebox">Create Yahoo Account</a>
+	</div>
+</div>
+<div class="clearFloat"></div>
+<div class="buttonCreatesection">
+	<script type="text/javascript">
+	$(document).ready(function($){
+		document.getElementById('id_sortBy_type').value = '{{sortBy}}';
+		document.getElementById('id_direct_type').value = '{{directType}}';
+		document.getElementById('id_paginate_num').value = '{{paginate_by}}';	
+	});
+	</script>
+    <div class="sortbyfunction">
+  		Sorted by {{form.type}}
+		{{form.order}}
+		&nbsp;&nbsp;&nbsp;Page Size {{form.paginate}}
+    </div>
+    <input id="post_path" type="hidden" value="{{post_path}}"/>
+</div>
+{%endblock%} {%block table_header %}
+<tr class="listHeader">
+	<td class="listHeaderCell  channelLogin">
+		Yahoo Account
+	</td>
+	<td class="listHeaderCell postingRuleState">
+		State
+	</td>
+	<td class="listHeaderCell  postingTime">
+		Last Login Time
+	</td>
+	
+	<td class="listHeaderCellLast channelActions">
+		Actions
+	</td>
+</tr>
+{%endblock%} {%block item%}
+<tr id="list_tr_id_{{object.id}}" class="listTr{% cycle 'Odd' 'Even' %}">
+	<td class="listCell textAlignLeft   channelLogin">
+		{{object.name}}
+	</td>
+	<td class="listCell textAlignLeft postingRuleState">
+	{% ifequal object.state 0 %}
+		init
+	{% endifequal %}
+	{% ifequal object.state 1 %}
+		success
+	{% endifequal %} 
+	{% ifequal object.state 2 %}
+		fail
+	{% endifequal %}
+	{% ifequal object.state 3 %}
+		captcha
+	{% endifequal %}
+	</td>
+	<td class="listCell textAlignLeft  postingTime">
+	 {{object.lastLoginTime|date}}
+	</td>
+	
+	<td class="listCellLast channelActions">
+		<a class="action-button" rel="facebox" href="/acctmgmt/yahoo/update/?id={{object.id}}&ret_url={{ret_url}}"
+			title="Update"> <img src="{{MEDIA_URL}}sns/images/edit.png"
+				alt="Update" border="0" /> </a>
+		<a class="action-button cursorPointer" onclick="delete_obj('{{object.id}}','{{ret_url}}','/acctmgmt/yahoo/')" title="Delete">
+			<img src="{{MEDIA_URL}}sns/images/delete.png" alt="Delete"
+				border="0" /> </a>
+	</td>
+</tr>
+{% endblock %}

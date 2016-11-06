@@ -1,0 +1,91 @@
+{% extends 'sns/layout/content.html' %}
+{% load snsstringfiltertags %}
+{% block content %}
+
+    <div class="cb1">
+      <div class="fieldLabel">
+      <span class="rightSpace">
+      Feed Builder Fetch
+      </span>
+      <span id="builderMsg" class="rightSpace">
+      {{builderMonitor|monitorMsg}}
+      </span>
+      <input type="button" class="cursorPointer" id="builderAction" onclick="changeSystemMonitor('builder')" value="{{builderMonitor|monitorAction}}">
+      </div>
+    </div>
+    
+    <div class="cb1">
+      <div class="fieldLabel">
+      <span class="rightSpace">
+      Soup Video Redirect
+      </span>
+       <span class="rightSpace">
+      {{videoMonitor.count}}
+      </span>
+      <span id="videoMsg" class="rightSpace">
+      {{videoMonitor|monitorMsg}}
+      </span>
+      <input type="button" class="cursorPointer" id="videoAction" onclick="changeSystemMonitor('video')" value="{{videoMonitor|monitorAction}}">
+      </div>
+    </div>
+    
+    <div class="cb1">
+      <div class="fieldLabel">
+      <span class="rightSpace">
+      Soup Image Redirect
+      </span>
+       <span class="rightSpace">
+      {{imgMonitor.count}}
+      </span>
+      <span id="imgMsg" class="rightSpace">
+      {{imgMonitor|monitorMsg}}
+      </span>
+      <input type="button" class="cursorPointer" id="imgAction" onclick="changeSystemMonitor('img')" value="{{imgMonitor|monitorAction}}">
+      </div>
+    </div>
+    
+    <div class="cb1">
+      <div class="fieldLabel">
+      <span class="rightSpace">
+      Google News
+      </span>
+      <span id="googleMsg" class="rightSpace">
+      {{googleMonitor|monitorMsg}}
+      </span>
+      <input type="button" class="cursorPointer" id="googleAction" onclick="changeSystemMonitor('google')" value="{{googleMonitor|monitorAction}}">
+      </div>
+    </div>
+    
+    <div class="cb1">
+      <div class="fieldLabel">
+      <span class="rightSpace">
+      Bing News
+      </span>
+      <span id="bingMsg" class="rightSpace">
+      {{bingMonitor|monitorMsg}}
+      </span>
+      <input type="button" class="cursorPointer" id="bingAction" onclick="changeSystemMonitor('bing')" value="{{bingMonitor|monitorAction}}">
+      </div>
+    </div>
+    
+    <div class="cb1">
+      <div class="fieldLabel">
+      <span class="rightSpace">
+      Instagram Popular
+      </span>
+      <span id="instagramMsg" class="rightSpace">
+      {{instagramMonitor|monitorMsg}}
+      </span>
+      <input type="button" class="cursorPointer" id="instagramAction" onclick="changeSystemMonitor('instagram')" value="{{instagramMonitor|monitorAction}}">
+      </div>
+    </div>
+	
+	<div class="cb1">
+		 <input type="text" id="urlfetch-input" size="50">
+		 <input type="button" class="cursorPointer" onclick="systemFetchTest()" value="Fetch">
+	</div>
+	
+	<div class="cb1">
+		<input type="button" class="cursorPointer" onclick="realtimePost()" value="Realtime Post">
+	</div>
+{% endblock %}

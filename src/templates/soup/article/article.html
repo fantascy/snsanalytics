@@ -1,0 +1,175 @@
+{% extends 'soup/layout/articlelayout.html' %}
+{% load snsstringfiltertags %}
+{% load souptags %}
+
+
+{% block content-discovery-top %} 
+{% ifnotequal view.counter.mediaType view.const.MEDIA_TYPE_VIDEO %}
+<div class="yui3-u-1">
+	<div class="block-1"> 
+		<div class="separator-1"><span>Hot Soups</span></div>
+	</div>
+	<div class="block-1">
+		{% for object in view.recommendations %}
+		<div class="yui3-u-1-3 article-recommendation">
+			<a class="thumbnail-container" href="/soup/{{object.globalUrl.titleKey}}">
+				<img src="{{object.thumbnailUrl}}"></img>
+			</a> 
+			<div class="text-container">
+				<a class="title" href="/soup/{{object.globalUrl.titleKey}}">
+					{{object.globalUrl.title|safe|slic:"0:100"}} 
+				</a> 
+				{% comment %}
+				<div class="rating">
+				TODO: add rating stars here.
+				</div>
+				{% endcomment %}
+				{% comment %}
+				<a class="explicit" href="http://{{view.ctx.long_domain}}/soup/{{object.globalUrl.titleKey}}#comments">
+					<span class="icon-text-16 icon-16-comment"><fb:comments-count href="http://{{view.ctx.long_domain}}/soup/{{object.globalUrl.titleKey}}"></fb:comments-count></span>
+				</a>
+				{% endcomment %}
+			</div>
+		</div>
+		{% empty %}
+		<script type="text/javascript">	hide("#content-discovery-top"); </script>
+		{% endfor %}
+	</div>
+</div>
+{% endifnotequal %}
+{% endblock %}
+
+
+{% block content %} 
+<div class="block-2" itemscope itemtype="http://schema.org/Article">
+	<div class="separator-1"><span>Featured Soup</span></div>
+	<div id="primary-article-title">
+		<a href="{{view.globalUrl.url}}" target="_blank"><span itemprop="headline">{{view.globalUrl.title|safe}}</span></a>
+	</div>
+	
+	<div id="primary-article-body">
+		{% ifequal view.counter.mediaType view.const.MEDIA_TYPE_VIDEO %}
+			<object style="height: 390px; width: 640px">
+				<param name="movie" value="{{view.globalUrl.videoSrc|videoUrlConvert|autoPlay}}">
+				<param name="wmode" value="transparent"> 
+				<param name="allowFullScreen" value="true">
+				<param name="allowScriptAccess" value="always">
+				<embed wmode="transparent" src="{{view.globalUrl.videoSrc|videoUrlConvert|autoPlay}}" 
+					type="application/x-shockwave-flash" allowfullscreen="true" 
+					allowScriptAccess="always" width="640" height="390">
+			</object>
+		{% else %}
+			{%if view.globalUrl.getFullImage %}
+				<a href="{{view.globalUrl.getFullImage}}" target="_blank">
+					<img id="primary-article-image" src="{{view.globalUrl.getFullImage}}" itemprop="image"></img>
+				</a>
+			{%endif%}
+		{% endifequal %}
+		<div class="description">
+			<span class="inner-block-1" itemprop="articleBody">{{object.globalUrl.description|textDisplay|slic:"0:1000"|safe}}</span>
+			<a class="inner-block-1 explicit hover-underline" href="{{view.globalUrl.url}}" target="_blank" itemprop="url">{{object.globalUrl.root_domain}}</a>
+		</div>
+	</div>
+
+	<div id="primary-article-attribution" class="sub-description">
+		<span class="inner-block-1-first">
+		{% if view.counter.deleted %}
+			<span class="gray-text">by Anonymous</span>
+		{% else %}
+			<span class="gray-text">by</span>
+			{% if view.authorName %}
+			<a class="explicit hover-underline" href="/profile/{{object.authorId}}" ><span itemprop="author">{{view.authorName}}</span></a> 
+			{% else %}
+			Anonymous
+			{% endif %}
+		{% endif %}
+		</span>
+		<span class="inner-block-1">
+			<span class="gray-text"><time itemprop="datePublished" datetime="{{view.counter.createdTime}}">{{view.counter.createdTime|timeAgo}}</time></span>
+		</span>
+		{% if not view.counter.deleted and view.isAuthor %}
+		{% include 'soup/editing/editing.html' %}
+		{% endif %}
+		{% comment %}
+		<span class="inner-block-1">
+			<span class="gray-text">{{object.counter.count}} viewed</span>
+		</span>
+		<span class="inner-block-1">
+			<span class="icon-text-16 icon-16-comment gray-text"><fb:comments-count href="http://{{view.ctx.long_domain}}/soup/{{object.globalUrl.titleKey}}"></fb:comments-count></span>
+		</span>
+		{% endcomment %}
+	</div>
+
+	<div id="primary-article-rating">
+		{% include 'soup/rating/rating.html' %}
+	</div>
+			
+	<div id="primary-article-share">
+		{% comment %}
+		<span class="inner-block-1-first follow-button">
+			<a id="article-follow-status-{{object.counter.key}}" href="javascript:toggleArticleFollow('{{object.counter.key}}');">{{object.isFollowed|articleFollowAction}}</a> 
+		</span>
+		<span class="inner-block-1-first button-h-plusone"><g:plusone size="medium" href="{{view.fullUrl}}"></g:plusone></span>
+		<span class="inner-block-1 button-h-tweet">
+			<a href="http://twitter.com/share" class="twitter-share-button" 
+				data-url="{{object.fullUrlDoubleEncode}}"	data-text="{{view.globalUrl.title|safe}}" data-count="horizontal" data-via="allnewsoup">
+				Tweet</a>
+		</span>
+		{% endcomment %}
+		<span class="inner-block-1 button-h-like">
+			<fb:like href="{{view.fullUrl}}" send="true" show_faces="false" font="arial"></fb:like>
+		</span>
+		
+	</div>
+
+	<div class="ui-helper-clearfix"></div>
+
+	<div id="rating-log">
+		<div class="separator-1"><span>Ratings</span></div>
+		<div id="rating-log-all">
+		{% for rating in view.ratingLog %}
+		{% include 'soup/article/rating_log.html' %}
+		{% empty %}
+		<script type="text/javascript">	hide("#rating-log"); </script>
+		{% endfor %}
+		</div>
+
+		<div class="ui-helper-clearfix"></div>
+
+		{% ifnotequal view.ratingOffset view.ratingCount %}
+		<div id="rating-log-more" onclick="javascript:ratingLogShowMore('{{view.counter.key.name}}');">
+			<div id="rating-log-more-center" class="center">
+				<span class="rating-log-more-text">View <span id="rating-more">{{view.ratingSize}}</span> more</span> 
+				<span class="ui-icon ui-icon-triangle-1-s"></span> 
+			</div>
+			<input id="rating-offset" type="hidden" value="{{view.ratingOffset}}"/>
+			<input id="rating-count" type="hidden" value="{{view.ratingCount}}"/>
+		</div>
+		{% endifnotequal %}
+		
+		<div class="ui-helper-clearfix"></div>
+		<script  type="text/javascript"> 
+			$("#rating-log-more").hover(
+				function(){ $(this).addClass("rating-log-more-hover");},
+				function(){ $(this).removeClass("rating-log-more-hover");}
+				);
+		</script>
+	</div>
+
+	<div class="ui-helper-clearfix"></div>
+
+	<div id="comments">
+		<div class="separator-1"><span>Comments</span></div>
+		<div class="block-1">
+			<fb:comments href="{{view.fullUrl}}" num_posts="5" width="{{view.primaryColumnWidth}}"></fb:comments>
+		</div>
+	</div>
+	
+	<script type="text/javascript"> countClick('{{view.counter.keyNameStrip|safe}}','{{referrer}}'); </script>
+</div>
+{% endblock %}
+
+
+{% block content-discovery-side %} 
+	{% include 'soup/layout/side_column_common_1.html' %}		
+{% endblock %}

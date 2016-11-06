@@ -1,0 +1,16 @@
+{% load commonstringtags %}
+{% load souptags %}
+
+<span class="inner-block-1"><a class="explicit hover-underline" href="javascript:editShare('{{ object.counter.id }}')">Edit</a></span>
+<span class="inner-block-1"><a class="explicit hover-underline" href="javascript:deleteArticleConfirm('{{ object.counter.id }}')">Delete</a></span>
+<div id="delete-confirm-dialog-{{ object.counter.id }}" title="Confirm" style="display:none"> 
+	<p>Are you sure to delete this soup?</p>
+	<a class="button" href="javascript:deleteArticle('{{ object.counter.id }}')">Confirm</a>
+	<a class="button" href="javascript:deleteDialogClose('{{ object.counter.id }}')">Cancel</a> 
+</div>
+<div id="delete-fail-dialog-{{ object.counter.id }}" title="Fail" style="display:none">
+	<p>Connection error or you are not allowed to delete this article.</p>
+</div>
+<div id="already-deleted-dialog-{{ object.counter.id }}" title="Already Deleted" style="display:none">
+	<p>The article has already been deleted.</p>
+</div>

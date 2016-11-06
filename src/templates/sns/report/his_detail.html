@@ -1,0 +1,21 @@
+
+{% if home %}
+{% else %}
+<div class="cb2Double">
+    <ul id="dateBuckets">
+    <div class="dateBucketsLeft">
+        {% for key, display in timeRanges %}
+        <li id="{{key}}"  class="cursorPointer" style={% ifequal timeRange key %}"background: #8EC1DA; color:#FFFFFF"{% else %}""{% endifequal %}>
+        {% block range_choice %}
+        {% endblock %}
+        </li>
+        {% endfor %}
+    </div>
+    </ul>
+    <div class="clearFloat"></div>
+</div>
+{% endif %}
+
+{% block report_chart %}
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% load googletags %}
+<div id="header_notlogin">
+	<div class="Logo_Div">
+		<div class="Logo_Imagenologin">
+	        <a href="/"> <img src="{{MEDIA_URL}}sns/images/logo_nologin.gif"  border="0"  /> </a>
+		</div>
+        
+        <div class="nologin_TopQuicklinkdivFont">
+			{% comment %}
+			Use your existing <span class="google_ico">&nbsp;</span> account to 
+			<a class="headerMenuLast" href="{% google_login_url request.get_full_path %}">
+				Sign In
+			</a>
+			{% endcomment %}
+		</div>
+	</div>
+</div>

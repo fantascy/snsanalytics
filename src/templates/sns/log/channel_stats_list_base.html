@@ -1,0 +1,45 @@
+{% extends 'sns/layout/list.html' %}
+{% load snsstringfiltertags %}
+{% load snschanneltags %}
+{% block list_header %}
+<div class="buttonCreatesection">
+	Page Size
+	<select onchange="changePaginate('{{post_path}}', this)">
+		<option value="20" {% ifequal pageSize 20 %}selected="selected"{% endifequal %}>20</option>
+		<option value="50" {% ifequal pageSize 50 %}selected="selected"{% endifequal %}>50</option>
+		<option value="100" {% ifequal pageSize 100 %}selected="selected"{% endifequal %}>100</option>
+	</select>
+</div>
+<div class="clearFloat"></div>
+<div class="buttonCreatesection">
+	<div class="searchfunction">
+		<input id="query" class="retro searchInput" type="text" onkeydown="enterPress(event);" name="user keyword" value="">
+		<input id="search_button" class="s cursorPointer" type="submit" onclick="searchList2('{{post_path}}')" value="Search">
+	</div>
+	
+    {% block buttons %}
+    {% endblock %}
+</div>
+{% endblock %}
+
+{% block list_footer %}
+    <script type="text/javascript">
+	$('.sort-button-img-up').hover(
+		function() {
+			$(this).attr('src', '/sns/images/arrow-single-up-red.png');
+		},
+		function() {
+			$(this).attr('src', '/sns/images/arrow-single-up-green.png');
+		}
+	);
+	$('.sort-button-img-down').hover(
+		function() {
+			$(this).attr('src', '/sns/images/arrow-single-down-red.png');
+		},
+		function() {
+			$(this).attr('src', '/sns/images/arrow-single-down-green.png');
+		}
+	);
+    </script>
+{% endblock %}
+   

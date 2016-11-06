@@ -1,0 +1,95 @@
+application: ripple-a
+version: 5
+runtime: python27
+api_version: 1
+default_expiration: '30d'
+threadsafe: true
+
+
+inbound_services:
+- warmup 
+
+
+handlers:
+- url: /media
+  static_dir: _generated_media
+
+- url: /common/css
+  static_dir: common/media/css
+
+- url: /common/js
+  static_dir: common/media/js
+
+- url: /common/images
+  static_dir: common/media/images
+
+- url: /common/flash
+  static_dir: common/media/flash
+    
+- url: /common/themes
+  static_dir: common/themes
+
+- url: /common/widgets
+  static_dir: common/widgets
+  
+- url: /sns/css
+  static_dir: sns/media/css
+
+- url: /sns/js
+  static_dir: sns/media/js
+
+- url: /sns/images
+  static_dir: sns/media/images
+
+- url: /soup/css
+  static_dir: soup/media/css
+
+- url: /soup/js
+  static_dir: soup/media/js
+
+- url: /soup/images
+  static_dir: soup/media/images
+
+- url: /cake/css
+  static_dir: cake/media/css
+
+- url: /cake/js
+  static_dir: cake/media/js
+
+- url: /cake/images
+  static_dir: cake/media/images
+
+- url: /fe/css
+  static_dir: fe/media/css
+
+- url: /fe/js
+  static_dir: fe/media/js
+
+- url: /fe/images
+  static_dir: fe/media/images
+
+- url: /_ah/queue/deferred
+  script: app.aep_deferred_wsgi
+  login: admin
+    
+- url: /ebaypartnernetworkactivation.txt
+  static_files: common/verify/ebaypartnernetworkactivation.txt
+  upload: common/verify/ebaypartnernetworkactivation.txt
+
+- url: /bg-tasks/.*
+  script: app.aep_wsgi
+  secure: optional
+  login: admin
+
+- url: /.*
+  script: app.aep_wsgi
+
+
+libraries:
+- name: PIL
+  version: 1.1.7
+- name: ssl
+  version: latest
+- name: pycrypto
+  version: "latest"
+

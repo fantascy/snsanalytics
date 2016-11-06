@@ -1,0 +1,131 @@
+{% extends 'soup/topic/topic_article_list.html' %}
+{% load snsstringfiltertags %}
+{% load souptags %}
+
+{% block item %}
+<div class="topic-article">
+	<div class="topic-article-thumbnail">
+		<a href="/soup/{{object.globalUrl.titleKey}}">
+			<img src="{{object.thumbnailUrl}}"/>
+		</a>
+	</div> 
+	
+	{% if object.profileUserRating and not view.currentUserProfile %}
+	{% include 'soup/rating/profile_user_rating.html' %}
+	{% endif %}
+
+	<div class="topic-article-text">
+		{% if object.comment %}
+		<div class="topic-article-text-comment">
+			<span class="inner-block-1-first"> {{object.comment.message}} </span> 
+			<span class="inner-block-1 gray-text"> {{object.comment.createdTime|timeAgo}} </span> 
+		</div>
+		{% endif %}			
+		<div class="topic-article-text-title">
+			<a href="{{object|articleUrl}}" target="_blank" class="article-click-action" name="{{object.globalUrl.keyNameStrip}}">
+				{{object.globalUrl.title|safe}} 
+			</a> 
+		</div>			
+		<div class="topic-article-text-rating">
+			{% include 'soup/rating/rating.html' %}
+		</div>		
+		<div class="topic-article-text-body-full-column" 
+			{% comment %} {% if forloop.counter0|lessThan:5 %}class="topic-article-text-body" {% else %}class="topic-article-text-body-full-column" {% endif %} {% endcomment %}
+		>
+			<div class="description">
+				{% ifequal view.currentTopic.keyNameStrip object.counter.topics.0 %}
+					<span class="inner-block-1-first"> {{object.globalUrl.description|textDisplay|slic:"0:240"|safe}} </span>
+				{% else %}
+					<a class="inner-block-1-first explicit hover-underline topic-link" href="/{{object.counter.topics.0}}">
+						{{object.counter.topics.0|soupTopicName}}
+					</a>
+					<span class="inner-block-1"> {{object.globalUrl.description|textDisplay|slic:"0:240"|safe}} </span>
+				{% endifequal %}
+				<a class="inner-block-1 explicit hover-underline" href="{{object.globalUrl.url}}" target="_blank">{{object.globalUrl.root_domain}}</a>
+			</div>
+			<div class="sub-description">
+				<span class="inner-block-1-first">
+				{% if not view.hideArticleUserInfo %}
+				<span class="inner-block-1-first">
+				{% if object.counter.deleted %}
+					<span class="gray-text">by Anonymous</span>
+				{% else %}
+					<span class="gray-text">by</span>
+					{% if object.authorName %}
+					<a class="explicit hover-underline" href="/profile/{{object.authorId}}" ><span itemprop="author">{{object.authorName}}</span></a> 
+					{% else %}
+					Anonymous
+					{% endif %}
+				{% endif %}
+				</span>
+				<span class="inner-block-1">
+				{% endif %}
+					<span class="gray-text">{{object.counter.createdTime|timeAgo}}</span>
+				</span>
+				<!-- 
+				<span class="inner-block-1">
+					<span class="gray-text">{{object.counter.count}} viewed</span>
+				</span>
+				-->
+				<span class="inner-block-1">
+					<a id="show-{{object.globalUrl.titleKey}}" class="explicit-strong hover-underline" href="javascript:showComment('{{object.globalUrl.titleKey}}')">
+						Comment 
+					</a>
+					<script language="javascript">
+						CommentCount.set('{{object.globalUrl.titleKey}}', {{object.counter.commentCount}});
+					</script>
+					<span id="count-{{object.globalUrl.titleKey}}" class="gray-text">
+					{% if object.counter.commentCount|greaterThan:0 %}
+					({{ object.counter.commentCount }})
+					{% endif %}
+					</span>
+					<a id="hide-{{object.globalUrl.titleKey}}" class="explicit hover-underline" href="javascript:hideComment('{{object.globalUrl.titleKey}}')" style="display:none">
+						Hide comments
+					</a>
+					{% comment %}
+					<span class="gray-text">
+						(<fb:comments-count href="http://{{view.ctx.long_domain}}/soup/{{object.globalUrl.titleKey}}"></fb:comments-count>) 				
+					</span>
+					{% endcomment %}
+				</span>
+				{% if not object.counter.deleted and view.loginUser %} {% ifequal view.loginUser|keyId object.counter.uid %}
+				{% include 'soup/editing/editing.html' %}
+				{% endifequal %} {% endif %}
+			</div>
+			{% if view.isAdminUser %}
+			{% ifequal rankType view.const.RANK_TYPE_HOT %}
+			<div>
+			<span> Click:{{object.counter.c24h}} </span>
+			<span> Base:{{object.counter.baseScore}} </span>
+			<span> Hot:{{object.counter.hotScore}} </span>
+			</div>
+			{% endifequal %}
+			{% ifequal rankType view.const.RANK_TYPE_TOP %}
+			<div>
+			<span> Click:{{object.counter|getTopClick:topInfo}} </span>
+			<span> Top:{{object.counter|getTopCount:topInfo}} </span>
+			</div>
+			{% endifequal %}
+			{% endif %}
+		</div>
+		{% comment %}
+		{% if forloop.counter0|lessThan:5 %}
+		<div class="social-buttons">
+			<span>
+				<a href="http://twitter.com/share" class="twitter-share-button" counturl="http://{{view.ctx.long_domain}}/soup/{{object.globalUrl.titleKey|iriencode}}"
+					data-url="http://{{view.ctx.long_domain}}/soup/{{object.globalUrl.titleKey|iriencode}}" data-text="{{object.globalUrl.title|safe}}" data-count="vertical" data-via="allnewsoup">
+					Tweet
+				</a>
+				<g:plusone size="tall" href="http://{{view.ctx.long_domain}}/soup/{{object.globalUrl.titleKey}}"></g:plusone>
+				<fb:like href="http://{{view.ctx.long_domain}}/soup/{{object.globalUrl.titleKey}}" layout="box_count" show_faces="true" width="50" font="arial"></fb:like>
+			</span>
+		</div>
+		{% endif %}
+		{% endcomment %}
+		<div class="ui-helper-clearfix"></div>
+		<div id="comment-{{object.globalUrl.titleKey}}" class="topic-article-comment-block"></div>
+	</div>			
+	<div class="ui-helper-clearfix"></div>
+ 	{% if not forloop.last %}<div class="separator-2"></div>{% endif %}
+</div>
+{% endblock %}

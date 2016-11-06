@@ -1,0 +1,30 @@
+{% load commonstringtags %}
+{% load souptags %}
+<div class="yui3-u-1-2 one-friend">
+	<a href="{{friend.url}}"><img id="profile-thumbnail" src="{{friend.avatarUrl}}"/></a>
+	<div id="profile-details">
+		<a id="profile-title" class="title-12" href="{{friend.url}}">{{friend.name}}</a>
+		<div class="sub-description gray-text">
+			<a class="inner-block-1-first explicit hover-underline" href="{{friend.url}}?atype={{view.userConst.USER_OBJ_LIST_POSTS}}">{{friend.getCounter.postCount|pluralHandler:"post"}}</a>
+			<span>|</span>
+			<a class="inner-block-1 explicit hover-underline" href="{{friend.url}}?atype={{view.userConst.USER_OBJ_LIST_RATINGS}}">{{friend.getCounter.ratingCount|pluralHandler:"rating"}}</a>
+			<span>|</span>
+			<a class="inner-block-1 explicit hover-underline" href="{{friend.url}}?atype={{view.userConst.USER_OBJ_LIST_COMMENTS}}">{{friend.getCounter.commentCount|pluralHandler:"comment"}}</a>
+		</div>
+		<div class="description gray-text">
+			{% if friend.fbChannel %}
+				<a class="inner-block-1-first explicit hover-underline" href="{{friend.fbChannel.url}}" target="_blank">Facebook</a>
+			{% endif %}
+			{% if friend.tChannel %}
+				{% if friend.fbChannel %}
+				<span>|</span>
+				{% endif %}
+				<a class="inner-block-1 explicit hover-underline" href="{{friend.tChannel.url}}" target="_blank">Twitter</a>
+			{% endif %}
+		</div>
+	</div>
+</div>
+<div class="{% cycle 'ui-helper-hidden' 'ui-helper-clearfix' %}"></div>
+{% if not forloop.last %}
+	<div class="{% cycle 'ui-helper-hidden' 'separator-2' %}"></div>
+{% endif %}

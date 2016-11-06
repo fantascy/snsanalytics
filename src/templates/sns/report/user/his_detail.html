@@ -1,0 +1,123 @@
+{% load snsstringfiltertags %}
+{% if home %}
+<div style="text-align: center; height:24px; padding:1px; overflow: hidden; font-size:12px"><label style="font-weight:bold">Total clicks</label> : {{total|numberDisplay}}</div>
+{% else %}
+
+<div style="text-align: center; height:40px; padding:10px; overflow: hidden; font-size:12px"><label style="font-weight:bold">Total clicks</label> : {{total|numberDisplay}}</div>
+    {% if channelPieChart %}
+    	{% if view.ctx.is_ios %} 
+    	<div class="cb2Left" style="height:370px;overflow: hidden;">
+    		<div class="cb2Double" style="height: 332px;">
+    		<div class="cb2Double" style="color:red;margin-top: 150px;text-align: center;width: 310px;">Flash is not supported on iPhone/iPad!</div>
+    		</div>
+        	<div class="clearFloat"></div>
+        	<div class="caption" style="background-color:#eef7fb;margin-bottom: 5px;">Click-throughs by Account</div>
+    	</div>
+		{% else %}
+		<div class="cb2Left" style="height:370px;">
+        	<div class="cb2Double" id="channel_piechart">channel_piechart</div>
+        	<div class="clearFloat"></div>
+        	<div class="caption" style="background-color:#eef7fb;padding-bottom:5px;">Click-throughs by Account</div>
+    	</div>
+    	<script type="text/javascript">
+	 		swfobject.embedSWF(
+	 	  		"{{MEDIA_URL}}common/flash/OFC.swf", "channel_piechart", "340", "340",
+	 	  		"9.0.0","{{MEDIA_URL}}common/flash/expressInstall.swf",
+	 	  		{"data-file":"/graph/chartpath/user/data/channel/piechart?timeRange={{timeRange}}"},
+	 	  		{"wmode":"opaque"}
+	 	  	);
+		</script>
+		{% endif %}
+    {% else %}
+    	{% if feedPieChart %}
+    	<div class="cb2Left" style="height:370px;overflow: hidden;">
+    		<div class="cb2Double" style="height: 332px;">
+    		<div style="margin-top: 150px;text-align: center;width: 310px">No clicks</div>
+    		</div>
+        	<div class="caption" style="background-color:#eef7fb;padding-bottom=5px;">Click-throughs by Account</div>
+    	</div>
+    	{% else %}
+    	<div class="cb2Left" style="background-color:#eef7fb;">
+        	<div class="cb2Double">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No clicks</div>
+        	<div class="clearFloat"></div>
+        	<div class="caption" style="background-color:#eef7fb;">Click-throughs by Account</div>
+    	</div>
+    	{% endif %}
+    {% endif %}           
+    
+    {% if feedPieChart %}
+        {% if view.ctx.is_ios %} 
+    	<div class="cb2Right" style="height:370px;overflow: hidden;">
+    		<div class="cb2Double" style="height: 332px;">
+    		<div class="cb2Double" style="color:red;margin-top: 150px;text-align: center;width: 310px;">Flash is not supported on iPhone/iPad!</div>
+    		</div>
+        	<div class="clearFloat"></div>
+        	<div class="caption" style="background-color:#eef7fb;padding-bottom=5px;">Click-throughs by Feed</div>
+    	</div>
+		{% else %}
+    	<div class="cb2Right" style="height:370px;">
+        	<div class="cb2Double" id="feed_piechart">feed_piechart</div>
+        	<div class="clearFloat"></div>
+        	<div class="caption" style="background-color:#eef7fb;padding-bottom=5px;">Click-throughs by Feed</div>
+    	</div>
+    	<script type="text/javascript">
+	 		swfobject.embedSWF(
+	 	  		"{{MEDIA_URL}}common/flash/OFC.swf", "feed_piechart", "340", "340",
+	 	  		"9.0.0","{{MEDIA_URL}}common/flash/expressInstall.swf",
+	 	  		{"data-file":"/graph/chartpath/user/data/feed/piechart?timeRange={{timeRange}}"},
+	 	  		{"wmode":"opaque"}
+	 	  	);
+		</script>
+		{% endif %}
+    	
+    {% else %}
+        {% if channelPieChart %}
+    	<div class="cb2Right" style="height:370px;overflow: hidden;">
+    		<div class="cb2Double" style="height: 332px;">
+    		<div style="margin-top: 150px;text-align: center;width: 310px">No clicks</div>
+    		</div>
+        	<div class="clearFloat"></div>
+        	<div class="caption" style="background-color:#eef7fb;margin-bottom: 5px;">Click-throughs by Feed</div>
+    	</div>
+    	{% else %}
+    	<div class="cb2Right" style="background-color:#eef7fb;">
+        	<div class="cb2Double">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No clicks</div>
+        	<div class="clearFloat"></div>
+        	<div class="caption" style="background-color:#eef7fb;">Click-throughs by Feed</div>
+    	</div>
+    	{% endif %}
+
+    {% endif %}        
+{% endif %}     
+	<div style="display:none">for IE</div>     
+	{% if view.ctx.is_ios %} 
+		<div class="cb2Double" style="color:red;">Flash is not supported on iPhone/iPad!</div>
+
+	{% else %}
+	  {% if home %}
+		<div class="cb2DoubleHomeChart" id="user_flash_chart">
+			user_flash_chart
+		</div>
+	  	<script type="text/javascript">
+	 		swfobject.embedSWF(
+	 	  		"{{MEDIA_URL}}common/flash/OFC.swf", "user_flash_chart", "670", "310",
+	 	  		"9.0.0","{{MEDIA_URL}}common/flash/expressInstall.swf",
+	 	  		{"data-file":"/graph/chartpath/user/data/clickchart?timeRange={{timeRange}}"},
+	 	  		{"wmode":"opaque"}
+	 	  	);
+		</script>
+	  {% else %}		
+		<div class="cb2Double" id="user_flash_chart">
+			user_flash_chart
+		</div>
+		<script type="text/javascript">
+	 		swfobject.embedSWF(
+	 	  		"{{MEDIA_URL}}common/flash/OFC.swf", "user_flash_chart", "690", "390",
+	 	  		"9.0.0","{{MEDIA_URL}}common/flash/expressInstall.swf",
+	 	  		{"data-file":"/graph/chartpath/user/data/clickchart?timeRange={{timeRange}}"},
+	 	  		{"wmode":"opaque"}
+	 	  	);
+		</script>	
+	  {% endif %}
+
+	{% endif %}

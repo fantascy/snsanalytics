@@ -1,0 +1,25 @@
+{% extends 'sns/usr/list_common.html' %}
+
+{% block list_header %}
+
+<div class="clearFloat"></div>
+
+<div class="cb1Report">
+    <div class="cb2">
+       <div class="fieldLabel"> Period:</div>
+       <div class="fieldInput"> {{form.type}} </div>
+    </div>
+    <div class="clearFloat"></div>
+</div>
+
+<input id="his_detail_url" type="hidden" > 
+
+{% endblock %}
+
+
+{% block all_table %}
+<div class="clearFloat"></div>
+<div id="his_detail"></div>
+
+{% endblock %}
+

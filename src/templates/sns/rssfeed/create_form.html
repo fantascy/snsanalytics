@@ -1,0 +1,13 @@
+{% extends 'sns/layout/popup_form.html' %}
+{% block form %}
+    <div id="feedForm" class="cb1">
+        {{ form.url.errors }}
+        <div class="clearFloat"></div>        
+        <div class="fieldLabel"> <label for="id_url">URL<span class="required">*</span></label></div>
+        <div class="fieldInput"> {{form.url}} </div>
+        <div class="clearFloat"></div>
+
+        <!-- hidden inputs -->
+        {% if form.id %} {{form.id}} {% endif %}
+    </div>
+{% endblock %}

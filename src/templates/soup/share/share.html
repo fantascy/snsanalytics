@@ -1,0 +1,75 @@
+{% extends 'soup/layout/contentlayout.html' %}
+{% load souptags %}
+
+{% block content %} 
+<div id="submit-article" class="block-2 ui-widget">
+{% block form-title %}
+<form method="POST" action="/submit/confirm/" id="shareSoup">
+{% endblock %}
+	<div class="ui-widget-content">
+		<div class="field-label-2"> Title </div>
+		<div id="title-required" class="ui-helper-hidden" style="color:red">
+			<strong>Title is required!</strong>
+		</div>
+		{{view.form.title}}
+	</div>
+	
+	<div class="ui-widget-content">
+		<div class="field-label-2"> Description </div>
+		{{view.form.description}}
+	</div>
+	
+	<div class="ui-widget-content">
+		<div class="field-label-2"> Topic </div>
+		<div id="topic-not-exist" class="ui-helper-hidden" style="color:red">
+			<strong>Please pick a topic!</strong>
+		</div>
+		{{view.form.topic}}
+		<div id="popular-topics">
+		    {% for topic in view.popularTopics %}
+			<a class="inner-block-1 hover-underline" onclick="javascript:document.getElementById('topic-input').value='{{topic}}'">{{topic}}</a>
+		    {% endfor %}
+		</div>
+	</div>
+		
+	{% if view.mediaUrl %}
+	<div class="ui-widget-content">
+		<div id="img-media">
+				<div class="block-2">{{view.form.showImg}} Display a thumbnail for the soup</div>
+			    <ul id="submit-article-thumbnails" class="{{view.thumbnailsInOneLine}}">
+				    {% for pic in view.pics %}
+					<li><img {% ifequal pic view.defaultPic %}class="ui-state-active"{% endifequal %} src="{{pic}}"></img></li>
+				    {% endfor %}
+			    </ul>
+				<input name='picture' type='hidden' value='{{view.defaultPic}}'/>
+		</div>
+	</div>
+	{% endif %}
+	
+	<div class="ui-widget-content">
+		<span class="inner-block-1-first">{{view.form.postToFacebook}} Post to Facebook</span>
+		{% if view.loginUser.tChannel %} 
+		<span class="inner-block-1">{{view.form.postToTwitter}} Post to Twitter</span>
+		{% endif %}
+	</div>
+	
+	<div id="submit-article-submit" class="ui-widget-content">
+	{% block submit-button %}
+		<a class="button" href="javascript:shareNewSoup();">Post</a>
+	{% endblock %}
+	</div>
+	
+	<input name='videoSrc' type='hidden' value='{{view.videoSrc}}'/>
+	<input name='link' type='hidden' value='{{view.link}}'/>
+	{{view.form.mediaType}}
+	{{view.form.keywords}}
+</form>
+</div>
+
+<script> $(function() {topicAutoComplete("#topic-input", {{view.topicNames|safe}}, 0);}); </script>
+{% endblock %}
+
+
+{% block content-discovery-side %} 
+	{% include 'soup/layout/side_column_common_1.html' %}		
+{% endblock %}

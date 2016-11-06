@@ -1,0 +1,25 @@
+{% load snsstringfiltertags %}
+{% load snschanneltags %}
+
+	{% ifnotequal hisChart 'False' %}
+		{% if view.ctx.is_ios %} 
+		<div class="cb2Double" style="color:red;">Flash is not supported on iPhone/iPad!</div>
+
+		{% else %}
+		<div class="cb2Double" id="channel_clickchart">    
+			channel_clickchart
+		</div>
+		<script type="text/javascript">
+	 		swfobject.embedSWF(
+	 	  		"{{MEDIA_URL}}common/flash/OFC.swf", "channel_clickchart", "690", "390",
+	 	  		"9.0.0","{{MEDIA_URL}}common/flash/expressInstall.swf",
+	 	  		{"data-file":"/graph/chartpath/channel/data/clickchart?timerange_channel_comparechannel={{timerange_channel_comparechannel}}"},
+	 	  		{"wmode":"opaque"}
+	 	  	);
+		</script>
+	
+		{% endif %}
+	{% endifnotequal %}
+
+
+

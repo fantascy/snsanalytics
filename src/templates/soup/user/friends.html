@@ -1,0 +1,40 @@
+{% extends 'soup/layout/contentlayout.html' %}
+{% load commonstringtags %}
+{% load souptags %}
+
+{% block content %} 
+<div class="block-2"> 
+	<div class="separator-1"><span>{{view.friendsCount}} Soup Friends</span></div>
+</div>
+
+<div id="user-friends">
+	{% for friend in view.friends %}
+	{% include 'soup/user/one_friend.html' %}
+	{% endfor %}
+	<div class="ui-helper-clearfix"></div>
+</div>
+	
+{% ifnotequal view.friendsOffset view.friendsCount %}
+<div id="friends-more" onclick="javascript:friendsShowMore({{view.friendsSize}})">
+	<div id="friends-more-center" class="center">
+		<span class="friends-more-text">View more</span> 
+		<span class="ui-icon ui-icon-triangle-1-s"></span> 
+	</div>
+	<input id="friends-offset" type="hidden" value="{{view.friendsOffset}}"/>
+	<input id="friends-count" type="hidden" value="{{view.friendsCount}}"/>
+</div>
+{% endifnotequal %}	
+
+<div class="ui-helper-clearfix"></div>
+<script  type="text/javascript"> 
+	$("#friends-more").hover(
+		function(){ $(this).addClass("friends-more-hover");},
+		function(){ $(this).removeClass("friends-more-hover");}
+	);
+</script>
+
+{% endblock %}
+
+{% block content-discovery-side %} 
+	{% include 'soup/layout/side_column_common_1.html' %}		
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'sns/layout/popup_form.html' %}
+{% block form %}
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+        $('title').data('reloadOnSuccess',false);
+		jQuery(".retro",$('#tweet_reply_facebox')[0]).each(function() {
+
+		var subject = jQuery(this);
+
+		if ( subject.is(".formsubmit") ) {
+			makeFormAjaxSubmit(subject);
+		}
+	});
+});
+</script>
+
+<div id="feedForm" class="cb1">
+    {{ form.name.errors }}
+    <div class="clearFloat"></div>        
+    <div class="fieldLabel"> Name</div>
+    <div class="fieldInput"> {{form.name}} </div>
+    <div class="clearFloat"></div>
+    
+    {{ form.image.errors }}
+    <div class="clearFloat"></div>        
+    <div class="fieldLabel"> Image</div>
+    <div class="fieldInput"> {{form.image}} </div>
+    <div class="clearFloat"></div>
+    
+    {{ form.fbTopic.errors }}
+    <div class="clearFloat"></div>        
+    <div class="fieldLabel">FB Page Topic</div>
+    <div class="fieldInput"> {{form.fbTopic}} </div>
+    <div class="clearFloat"></div>
+    
+    {{ form.description.errors }}
+    <div class="clearFloat"></div>        
+    <div class="fieldLabel"> Description</div>
+    <div class="fieldInput"> {{form.description}} </div>
+    <div class="clearFloat"></div>
+    
+    {{ form.parentTopics.errors }}
+    <div class="clearFloat"></div>        
+    <div class="fieldLabel"> ParentTopics</div>
+    <div class="fieldInput"> {{form.parentTopics}} </div>
+    <div class="clearFloat"></div>
+    
+    {{ form.relatedTopics.errors }}
+    <div class="clearFloat"></div>        
+    <div class="fieldLabel"> relatedTopics</div>
+    <div class="fieldInput"> {{form.relatedTopics}} </div>
+    <div class="clearFloat"></div>
+
+
+    <!-- hidden inputs -->
+     {% if form.id %}
+     {{form.id}} 
+     {% endif %}
+</div>
+{% endblock %}

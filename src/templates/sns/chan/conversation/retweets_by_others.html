@@ -1,0 +1,77 @@
+{% extends 'sns/chan/conversation/table.html' %}
+{% load snschanneltags %}
+
+{% block all_body %}
+<table id="channel_table_id" class="view_msgtable" border="0" cellspacing="0" cellpadding="0">
+
+{% block table_header %}
+<div class="clearFloat"></div>
+	<tr class="listHeader">
+		<td class="listHeaderCell accountSenders">Sender</td>
+    	<td class="listHeaderCell accountdetail">Tweet</td>
+    	<td class="listHeaderCellLast accountActions">Actions</td>
+	</tr>
+{% endblock %}
+ 
+ {% for object in object_list %}
+        <tr id="channel_tr_id_{{object.id}}"  class="listTr{% cycle 'Odd' 'Even' %}">
+{% block table_count %}
+		<td class="listCell textAlignLeft accountSenders">
+			<img class="iconMedium" src="{{object.user.profile_image_url}}"/><a target="_blank" href="http://www.twitter.com/{{object.user.screen_name}}">&nbsp;{{object.user.screen_name}}</a>
+		</td>
+    	<td class="listCell textAlignLeft accountdetail">
+        	<div class="msgcontent">{{object.text|urlize|twitterUrlize|safe}}</div>
+        	<div class="msgdate">{{object.created_at|friendTime}} from {{object.source|safe}}</div>
+        </td>
+    	<td class="listCellLast retro accountActions">
+    		<a class="action-button facebox_retweets" href="javascript:void(0);" onclick="tweet_reply_facebox('{{object.id}}','{{uid}}','{{avatarUrl}}','{{type}}','{{object.user.screen_name}}','');return false;" title="Reply">
+            	<img src="{{MEDIA_URL}}sns/images/dm_message.png" alt="Reply" border="0"  />
+        	</a>
+        	<a class="action-button facebox_retweets" href="javascript:void(0);" onclick="retweet_facebox('{{object.id}}','{{uid}}','{{avatarUrl}}','{{type}}','{{object.user.screen_name}}','{{object.retweeted_status.text|urlencode}}','{{object.retweeted_status.user.screen_name}}','{{object.retweeted_status.id}}');return false;" title="ReTweet">
+            	<img src="{{MEDIA_URL}}sns/images/followIco_rt.png" alt="ReTweet" border="0"  />
+        	</a>
+        	{% if object.favorited %}
+        	  <span id="favorite_{{object.id}}"><a id="favorite_link_{{object.id}}" class="action-button cursorPointer" href="javascript:void(0);" onclick="un_favorite('{{object.id}}','{{avatarUrl}}','{{uid}}','{{type}}','{{MEDIA_URL}}')" title="Unfavorite the Tweet">
+            	<img id="favorite_img_{{object.id}}" src="{{MEDIA_URL}}sns/images/un_favorite.png" alt="Unfavorite the Tweet" border="0"  />
+        	  </a></span>
+        	{% else %}
+        	  <span id="favorite_{{object.id}}"><a id="favorite_link_{{object.id}}" class="action-button cursorPointer" href="javascript:void(0);" onclick="twitter_favorite('{{object.id}}','{{avatarUrl}}','{{uid}}','{{type}}','{{MEDIA_URL}}')" title="Favorite the Tweet">
+            	<img id="favorite_img_{{object.id}}" src="{{MEDIA_URL}}sns/images/favorite.png" alt="Favorite the Tweet" border="0"  />
+        	  </a></span>
+        	{% endif %}
+    		<!--     		<a href="tweets/delete?id={{object.id}}&ret_url={{ret_url}}&uid={{uid}}" title="Delete">
+            	<img src="{{MEDIA_URL}}sns/images/delete.png" alt="Delete" border="0"  />
+        	</a> -->
+        </td>
+{% endblock %}
+        </tr>  
+  {% empty %}
+        <tr class="listEmpty">
+            <td colspan="5">You have no data.</td>
+        </tr>
+  {% endfor %}
+  
+        <tr>
+            <td colspan="5">&nbsp;</td>
+        </tr>
+{% block paganation %}        
+
+     {% if max_id %}
+        <tr id="conversation_more_tr_initial" class="Channel_Tr">
+            <td colspan="5">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="javascript:changeConversationListPage('{{ max_id }}','{{div_number}}')" class="cursorPointer paginationButton">more&gt;&gt;</a> 				
+            </td>
+        </tr>
+     {% endif %}
+{% endblock %}
+
+    </table>
+        <div id="his_detail_0" > 
+		</div>	
+{% endblock %}
+
+
+
+
+

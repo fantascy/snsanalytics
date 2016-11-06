@@ -1,0 +1,27 @@
+{% extends 'fe/follow/form.html' %}
+
+{% block formContent %}
+	<div class="cb1">
+	    <div class="cb1Title">Basic Info</div>
+	
+	    <div class="cb2Double">
+		    {{ form.name.errors }}
+		    <div class="clearFloat"></div>
+			<div>{{form.name.label_tag}} {{form.name}} </div>
+		    <div class="clearFloat"></div>
+	    </div>
+	    <div class="clearFloat"></div>
+	
+	</div>
+	{% block hidden %}
+	{% endblock %}
+{% endblock %}
+
+{% block buttons %}
+<div class="cb1">
+	<div class="fieldInput"> <input type="button" onclick="ajaxFormSubmit('{{ret_url}}', this);" value="Save and Activate"> </div>
+	<div class="fieldInput"> <input type="button" value="Save and Define Safe Lists" onclick="submitFollowRule()"> </div>
+	<div class="fieldInput"> <input type="button" value="cancel" onclick="ajaxUpdate('ajax_content','{{ret_url}}',null,'GET');"> </div>
+</div>
+{% endblock %}
+			

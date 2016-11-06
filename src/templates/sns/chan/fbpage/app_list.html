@@ -1,0 +1,24 @@
+{% extends 'sns/layout/content.html' %}
+{% block content %}
+<div class="content">
+	<div class="cb1">
+		<span class="fchannelChoiceInfo">
+		  Add this Facebook App:&nbsp;
+	    </span>
+	    <span class="fchannelChoice">
+		    <!-- <img class="iconMedium" id="choice_img" src="{{imgSrc}}"/> -->
+		    {{form.apps}}
+    	</span>
+	    <div class="clearFloat"></div>
+	</div>
+	
+    <div class="cb2Double">
+        <div class="fieldInput"> <input type="button" value="OK" onclick="AddFbApp('{{key}}')"> </div>
+        <div class="fieldInput"> <input type="button" value="Cancel" onclick="redirectTo('/#/chan/fbapp/login')"> </div>
+    </div>
+    
+    {% for app in apps %}
+        <input id="{{app.app_id}}" type="hidden" value="{{app.icon_url}}"/>
+    {% endfor %}
+</div>
+{% endblock %}

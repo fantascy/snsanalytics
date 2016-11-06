@@ -1,0 +1,37 @@
+{% extends 'sns/report/info_detail.html' %}  
+
+{% block report_datail %} 
+<div class="cb2Double">
+   {% ifequal barChart "False" %}
+        <div class="fieldDetail">There are no click data in this category.</div>
+   {% else %}
+   		{% block report_bar_chart%}
+   		{% if view.ctx.is_ios %} 
+		<div class="cb2Double" style="color:red;">Flash is not supported on iPhone/iPad!</div>
+
+		{% else %}
+   		<script type="text/javascript">
+	 		swfobject.embedSWF(
+	 	  		"{{MEDIA_URL}}common/flash/OFC.swf", "barChart", "600", "300",
+	 	  		"9.0.0","{{MEDIA_URL}}common/flash/expressInstall.swf",
+	 	  		{"data-file":"/graph/chartpath/user/data/barchart?infoType={{infoType}}"},
+	 	  		{"wmode":"opaque"}
+	 	  	);
+		</script>
+        <div class="cb2Double" id="barChart">
+		</div>
+		{% endifnotequal %} 
+		{% endblock %}
+        {% ifequal infoType "referrer" %}
+        <div class="clearFloat">
+             Direct clicks include all other human clicks that are not from a browser. &nbsp; 
+            <a href="javascript:showReferrerDetail()" class="cursorPointer" id="referrer_info">More>></a>
+        </div>
+        <div id="referrer_detail" style = "display:none">
+        {% include 'sns/report/referrer_detail.html'%}
+        </div>
+        {% endifequal %} 
+   {% endifequal %} 
+</div>   
+<div class="clearFloat"></div>
+{% endblock %}

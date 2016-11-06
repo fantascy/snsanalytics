@@ -1,0 +1,5 @@
+/* theme skin changer */
+ul.themeColors{float:left;margin:0 0 1em;padding:0}
+ul.themeColors li{float:left;height:22px;margin:0;overflow:hidden;padding:0;width:22px}
+ul.themeColors li a{background-color:#fff;border:0;border-color:#111;display:block;float:left;height:22px;margin:0;overflow:hidden;padding:0;text-indent:-1234px;width:22px}
+ul.themeColors li a:hover,ul.themeColors li a:active{border-style:solid;border-width:4px;height:14px;width:14px}

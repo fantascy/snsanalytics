@@ -1,0 +1,16 @@
+<div class="side-column-block">
+	<div class="separator-1"><span>SEARCH ALLNEWSOUP</span></div>
+	<form action="/search/" id="cse-search-box">
+	<div class="ui-widget">
+	    <input type="hidden" name="cx" value="{{view.ctx.google_cse_key}}" />
+	    <input type="hidden" name="cof" value="FORID:11" />
+	    <input type="hidden" name="ie" value="UTF-8" />
+	    <input id="cse-search-input" type="text" name="q" />
+		<div id="cse-search-action" class="search-element">
+			<li class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-search"></span></li>
+		</div>
+	    <!--  <input class="ui-button" type="submit" name="sa" value="Go"/>  -->
+	</div>
+	</form>
+	<script type="text/javascript" src="//www.google.com/cse/brand?form=cse-search-box&lang=en"></script>
+</div>

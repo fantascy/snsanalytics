@@ -1,0 +1,84 @@
+cron:
+- description: execute feed campaigns
+  url: /api/post/rule/feed/cron_execute
+  schedule: every 1 minutes
+  target: prod
+#- description: execute message campaigns
+#  url: /api/post/rule/article/cron_execute
+#  schedule: every 1 minutes
+#  target: prod
+- description: execute posts
+  url: /api/post/post/cron_execute
+  schedule: every 1 minutes
+  target: prod
+- description: count clicks
+  url: /api/urlshort/cron_execute
+  schedule: every 5 minutes
+  target: prod
+- description: execute topic score feed builder
+  url: /api/feedbuilder/topic_score/cron_execute
+  schedule: every 5 minutes
+  target: prod
+- description: execute feed builders
+  url: /api/feedbuilder/cron_execute
+  schedule: every 60 minutes  
+  target: prod
+#- description: execute deal builders
+#  url: /api/deal/cron_execute
+#  schedule: every 1 minutes
+#  target: prod
+- description: execute topic campaigns
+  url: /api/mgmt/topic/cron_execute
+  schedule: every 12 hours from 06:30 to 18:30
+  timezone: America/Los_Angeles
+  target: prod
+#- description: rank hot articles for each topic
+#  url: /api/topicrank/cron_execute
+#  schedule: every 12 hours from 05:30 to 17:30
+#  timezone: America/Los_Angeles
+#  target: prod
+#- description: submit site map to google search engine
+#  url: /api/sitemap/cron_execute
+#  schedule: every 1 hours from 01:15 to 23:15
+#  timezone: America/Los_Angeles
+#  target: prod
+#- description: ads for top deals
+#  url: /api/ads/cron_execute
+#  schedule: every 10 minutes from 08:00 to 20:00
+#  timezone: America/Los_Angeles
+#  target: prod
+#- description: raw content feed crawl
+#  url: /api/cont/raw/cron_execute
+#  schedule: every 10 minutes from 02:58 to 22:58
+#  timezone: America/Los_Angeles
+#  target: prod
+#- description: raw content import
+#  url: /api/cont/topic_cs/cron_execute
+#  schedule: every 10 minutes from 03:03 to 23:03
+#  timezone: America/Los_Angeles
+#  target: prod
+#- description: update search rank
+#  url: /api/log/cmptwitterstats/cron_execute?op=refresh_search_rank
+#  schedule: every 1 hours from 02:35 to 23:35
+#  timezone: America/Los_Angeles
+#  target: prod
+- description: init follow
+  url: /api/log/cmptwitterstats/cron_execute?op=init_follow
+  schedule: every 1 hours from 02:45 to 21:45
+  timezone: America/Los_Angeles
+  target: prod
+- description: execute global stats
+  url: /api/log/globalstats/cron_execute
+  schedule: every 2 hours from 00:23 to 08:23  
+  timezone: America/Los_Angeles
+  target: b8
+- description: update cmp twiter stats
+  url: /api/log/cmptwitterstats/cron_execute?op=sync_channel_statuses
+  schedule: every 12 hours from 07:30 to 19:30
+  timezone: America/Los_Angeles
+  target: prod
+- description: count unique followers 1st day every month
+  url: /api/log/cmptwitterstats/cron_execute?op=refresh_count_unique_followers
+  schedule: 1 of month 05:00
+  timezone: America/Los_Angeles
+  target: b8

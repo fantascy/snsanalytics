@@ -1,0 +1,24 @@
+{% load caketags %}
+
+	<div>
+		<div class="feedback">
+			<a onclick="toggleDialog('#feedback-dialog', showFeedbackDialog);">Feedback on RippleOne</a>
+		</div>
+		<div id="feedback-dialog" title="Feedback" style="display:none">
+			<div>
+				<form id="feedback-form" action="/cake/user/feedback/" method="post">
+					<input name="subject" type="text" placeholder="Subject">
+					<textarea name="body" rows="4" cols="20" placeholder="Some details here."></textarea>
+					<input name="email" type="text" placeholder="Your email. (Optional)">
+				</form>
+			</div>
+			<div id="feedback-ack-msg"></div>
+			<div class="feedback-buttons">
+				<span class="button" onclick="feedbackFormSubmit();">Submit</span>
+				<span class="button" onclick="toggleDialog('#feedback-dialog', showFeedbackDialog);;">Close</span>
+			</div>
+			<div></div>
+		</div>
+	</div>
+	
+                

@@ -1,0 +1,40 @@
+{% extends 'sns/layout/list.html' %}
+
+{% block table_header %}
+<tr class="listHeader">
+    <td class="listHeaderCell fbGroupName">Name</div>
+    <td class="listHeaderCell fbGroupStatus">Status</div>
+	<td class="listHeaderCellLast fbGroupAction">Action</div>
+</tr>
+{%endblock%}
+
+{%block  item %}
+<tr id="list_tr_id_{{object.id}}" class="listTr{% cycle 'Odd' 'Even' %}">
+    <td class="listCell textAlignLeft fbGroupName">
+        <span >
+            {{object.name}}
+        </span>
+    </td>
+    <td class="listCell fbGroupStatus">   
+         <span id="status_{{object.id}}">{{object.status}}</span>     
+    </td>
+	<td class="listCellLast fbGroupAction">
+        {% ifequal object.status 'Included' %}
+		<a class="action-button" href="javascript:changePageStatus('{{object.id}}','{{object.name|urlencode}}','{{chid}}')" title="Include">
+			<img id="add_{{object.id}}" src="{{MEDIA_URL}}sns/images/add.png" border="0" class="cursorPointer" style="display:none;" alt="Include">
+		</a>
+        <a class="action-button" href="javascript:changePageStatus('{{object.id}}','{{object.name|urlencode}}','{{chid}}')" title="Exclude">
+			<img id="minus_{{object.id}}" src="{{MEDIA_URL}}sns/images/minus.png" border="0" class="cursorPointer"  alt="Exclude">		
+		</a>
+		{% endifequal %}
+        {% ifequal object.status 'Excluded' %}
+		<a class="action-button" href="javascript:changePageStatus('{{object.id}}','{{object.name|urlencode}}','{{chid}}')" title="Include">
+			<img id="add_{{object.id}}" src="{{MEDIA_URL}}sns/images/add.png" border="0" class="cursorPointer" alt="Include">
+		</a>
+        <a class="action-button" href="javascript:changePageStatus('{{object.id}}','{{object.name|urlencode}}','{{chid}}')" title="Exclude">
+			<img id="minus_{{object.id}}" src="{{MEDIA_URL}}sns/images/minus.png" border="0" class="cursorPointer" style="display:none;" alt="Exclude">		
+		</a>
+		{% endifequal %}
+	</td>
+</tr>
+{%endblock%}

@@ -1,0 +1,66 @@
+{% extends 'fe/layout/list.html' %}
+{% load snschanneltags %}
+{% load fecampaigntags %}
+
+{% block table_header %}
+    <tr>
+        <th colspan="5">
+            <div class="listHeader">
+                <div class="listHeaderCell textAlignCenter all-follow-campaigns-list-name-handle-email">Name / Handle / Login</div>
+                <div class="listHeaderCell textAlignCenter all-follow-campaigns-list-state">Status</div>
+                <div class="listHeaderCellLast textAlignCenter all-follow-campaigns-list-actions">Actions</div>
+            </div>
+        </th>
+    </tr>
+{% endblock%}
+
+{%block item%}
+    <tr id="list_tr_id_{{object.id}}" class="listTr{% cycle 'Odd' 'Even' %}">
+        <td class="listCell textAlignLeft all-follow-campaigns-list-name-handle-email">
+            {{object.name}}
+            &nbsp;&nbsp;&nbsp; <img src="{{object.src_channel.avatarUrl|displayNoneAvatar}}" class="iconSmall"/> 
+			<a target="_blank" href="https://twitter.com/{{object.src_channel.name}}">{{object.src_channel.name}}</a> ({{object.uid}})
+	    	<!-- &nbsp;&nbsp;&nbsp;  <a class="js-link" onclick="changeCurrentUser('{{object.uid}}')"> {{object.uid}} </a>  -->
+        </td>
+        <td class="listCell all-follow-campaigns-list-state">
+            <label id="status_{{object.key}}">{{object.state|state2str}}</label>
+        </td>
+        <td class="listCellLast all-follow-campaigns-list-actions">
+			<a class="cursorPointer" href="javascript:void(0);" onclick="delete_obj_admin('{{object.id}}','{{ret_url}}','/fe/follow/account/')" title="Delete">
+				<img src="{{ MEDIA_URL }}fe/images/delete.png" border="0" class="cursorPointer" alt="Delete"/>
+			</a> 
+			<!--             <a rel="ajaxform" href="#/fe/follow/account/update/?id={{object.id}}&ret_url={{ret_url}}" title="Update">
+				<img src="{{ MEDIA_URL }}fe/images/edit.png" border="0" class="cursorPointer" alt="Update">
+				</a> -->
+            {% ifequal object.state 0 %}
+			<a onclick="javascript:fe.rule.activation('{{object.key}}')" title="Activate">
+				<img id="img_activate_{{object.key}}" src="{{ MEDIA_URL }}fe/images/play.png" border="0" class="cursorPointer" alt="Activate">
+			</a>
+            <a onclick="javascript:fe.rule.activation('{{object.key}}')" title="De-activate">
+				<img id="img_deactivate_{{object.key}}" src="{{ MEDIA_URL }}fe/images/pause.png" border="0" class="cursorPointer" style="display:none;" alt="De-activate">		
+			</a>{% endifequal %}
+            {% ifequal object.state 1 %}
+			<a onclick="javascript:fe.rule.activation('{{object.key}}')" title="Activate">
+				<img id="img_activate_{{object.key}}" src="{{ MEDIA_URL }}fe/images/play.png" border="0" class="cursorPointer" style="display:none;" alt="Activate">
+			</a>
+            <a onclick="javascript:fe.rule.activation('{{object.key}}')" title="De-activate">
+				<img id="img_deactivate_{{object.key}}" src="{{ MEDIA_URL }}fe/images/pause.png" border="0" class="cursorPointer" alt="De-activate">
+			</a>
+			{% endifequal %}
+            <a target="_blank" href="#/fe/follow/account/chart/?id={{object.id}}"  title="Chart">
+                 <img src="{{ MEDIA_URL }}fe/images/chart_line.png" border="0" class="cursorPointer" alt="Chart"/>
+            </a>
+			<a target="_blank" href="#/fe/follow/account/safelist/?id={{object.id}}" title="Safelist">
+                 <img src="{{ MEDIA_URL }}fe/images/safelock.png" border="0" class="cursorPointer" alt="Safelist"/>
+			</a>
+        </td>
+        
+    </tr>
+
+    <tr>
+      <td colspan="5">
+        <div id="detail_{{object.key}}"  class="ruleDetail" style="display:none"></div>
+      </td>
+    </tr> 
+
+{% endblock %}

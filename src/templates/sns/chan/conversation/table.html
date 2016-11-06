@@ -1,0 +1,41 @@
+{% load snsstringfiltertags %}
+
+{% block all_body %}
+<table id="channel_table_id" class="view_msgtable" border="0" cellspacing="0" cellpadding="0">
+
+{% block table_header %}
+
+{% endblock %}
+ 
+ {% for object in object_list %}
+        <tr id="channel_tr_id_{{object.id}}"  class="listTr{% cycle 'Odd' 'Even' %}">
+           	{% block table_count %}
+            {% endblock %}
+        </tr>  
+  {% empty %}
+        <tr class="listEmpty">
+            <td colspan="5">You have no data.</td>
+        </tr>
+  {% endfor %}
+  
+        <tr>
+            <td colspan="5">&nbsp;</td>
+        </tr>
+		{%block paganation%}
+		
+        {%if has_previous or has_next %}
+        <tr class="Channel_Tr">
+            <td colspan="5">
+                {% if has_previous %}
+                <a href="javascript:getPage('{{ previous }}','his_detail')"  class="cursorPointer paginationButton">&lt;&lt;previous</a>
+                {% endif %}
+                {% if has_next %}
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="javascript:getPage('{{ next }}','his_detail')" class="cursorPointer paginationButton">next&gt;&gt;</a>
+                {% endif %}	  				
+            </td>
+        </tr>
+        {% endif %}
+        {%endblock%}
+    </table>
+{% endblock %}

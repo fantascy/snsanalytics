@@ -1,0 +1,22 @@
+{% load snsstringfiltertags %}
+{% load snschanneltags %}
+
+        <div id="reportChartUrlDetail">
+            <div class="cb2Double">
+                <div class="fieldLabel">Facebook Account/Page</div>
+                <div class="fieldDetail">
+                	<img src="{{fchannel.avatarUrl|displayNoneAvatar}}" class="iconMedium"/>
+                    {% if fchannel.profileUrl %}
+                    	&nbsp; <a target="_blank" href="{{fchannel.profileUrl}}">{{fchannel.name}}</a>
+                    {% else %}
+                        &nbsp; <a target="_blank" href="{{fchannel.url}}">{{fchannel.name}}</a>
+                    {% endif %}        
+                </div>
+                <div class="clearFloat"></div>
+                <div class="fieldLabel">Life Time Clicks</div>
+                <div class="fieldDetail">
+                    {{urlMapping.life|numberDisplay}}
+                </div>
+            </div>
+        </div>
+  

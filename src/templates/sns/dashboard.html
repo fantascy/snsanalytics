@@ -1,0 +1,147 @@
+{% extends 'sns/layout/content.html' %}
+{% load snsstringfiltertags %}
+{% block title %}<div class="ajax_contentTitle">Dashboard</div>{% endblock %}
+
+{% block content %}
+{% if limited %}
+<div style="font-size:140%;color:red">You have reached daily post limit of {{limit}}.</div>
+{% endif %}
+
+{% if executionLimited %}
+<div style="font-size:140%;color:red">You have reached daily campaign execution limit of {{executionLimit}}.</div>
+{% endif %}
+
+<div class="content">
+<div><span class="dashboardTitle">Activities Summary</span><span><a rel="ajaxform" href="/#/graph/chart" class="dashboardViewDetail"><em>{{keyRanking}}View details</em></a></span></div>
+	<div class="clearfloat"></div>
+	<div style="float: left;width: 700px;">
+   <table class="view_msgtable" border="0" cellspacing="0" cellpadding="0">
+       <tr>
+           <td colspan="6">
+               <div class="listHeader">
+                   <div class="listHeaderCell dashboardSummaryNameFirst"></div>
+                   <div class="listHeaderCell dashboardSummaryValue">Current hour</div>
+                   <div class="listHeaderCell dashboardSummaryValue">Today</div>
+                   <div class="listHeaderCell dashboardSummaryValue">This week</div>
+                   <div class="listHeaderCell dashboardSummaryValue">This month</div>
+                   <div class="listHeaderCellLast dashboardSummaryValue">Life time</div>
+               </div>
+           </td>
+       </tr>
+       <tr class="listTrOdd">
+        	<td colspan="6">
+           	<div>
+                   <div class="listCell textAlignLeft dashboardSummaryNameFirst">Total Posts</div>
+                   <div class="listCell dashboardSummaryValue">{{ userCounters.postCounter.hour|numberDisplay }}</div>
+                   <div class="listCell dashboardSummaryValue">{{userCounters.postCounter.day|numberDisplay}}</div>
+                   <div class="listCell dashboardSummaryValue">{{ userCounters.postCounter.week|numberDisplay}}</div>
+                   <div class="listCell dashboardSummaryValue">{{ userCounters.postCounter.month|numberDisplay}}</div>
+                   <div class="listCellLast dashboardSummaryValue">{{ userCounters.postCounter.life|numberDisplay}}</div>
+			</div>
+           </td>
+       </tr>
+       <tr class="listTrEven">
+        	<td colspan="6">
+           	<div>
+                   <div class="listCell textAlignLeft dashboardSummaryNameFirst">Failed Posts</div>
+                   <div class="listCell dashboardSummaryValue">{{userCounters.failureCounter.hour|numberDisplay}}</div>
+                   <div class="listCell dashboardSummaryValue">{{userCounters.failureCounter.day|numberDisplay}}</div>
+                   <div class="listCell dashboardSummaryValue">{{userCounters.failureCounter.week|numberDisplay}}</div>
+                   <div class="listCell dashboardSummaryValue">{{userCounters.failureCounter.month|numberDisplay}}</div>
+                   <div class="listCellLast dashboardSummaryValue">{{userCounters.failureCounter.life|numberDisplay}}</div>
+			</div>
+           </td>
+       </tr>
+       <tr class="listTrOdd">
+        	<td colspan="6">
+           	<div>
+                   <div class="listCell textAlignLeft dashboardSummaryNameFirst">Total Clicks</div>
+                   <div class="listCell dashboardSummaryValue">
+                       <a rel="ajaxform" href="#/graph/chart?type=0&timeRange=hour">{{ clickCounter.hour|numberDisplay }}</a>
+                   </div>
+                   <div class="listCell dashboardSummaryValue">
+                       <a rel="ajaxform" href="#/graph/chart?type=0&timeRange=day">{{clickCounter.day|numberDisplay}}</a>
+                   </div>
+                   <div class="listCell dashboardSummaryValue">
+                       <a rel="ajaxform" href="#/graph/chart?type=0&timeRange=week">{{clickCounter.week|numberDisplay}}</a>
+                   </div>
+                   <div class="listCell dashboardSummaryValue">
+                       <a rel="ajaxform" href="#/graph/chart?type=0&timeRange=month">{{clickCounter.month|numberDisplay}}</a>
+                   </div>
+                   <div class="listCellLast dashboardSummaryValue">
+                       <a rel="ajaxform" href="#/graph/chart?type=0&timeRange=max">{{clickCounter.life|numberDisplay}}</a>
+                   </div>
+			</div>
+           </td>
+       </tr>
+       <tr><td></td></tr>
+   </table>
+</div>
+
+<div class="contentSeparator"></div>
+
+<div><span class="dashboardTitle2">Most Popular</span><span><a rel="ajaxform" href="javascript:void(0)" onclick="dashboardViewRankingDetail()" class="dashboardViewDetail"><em>{{keyRanking}}View details</em></a></span></div>
+<div>
+    {% block list_header %}
+            <div id="datepicker" class="reporting_viewtime">
+                <ul id="dateBuckets">
+                <div class="dateBucketsLeft"> 
+                    {% for keyRanking, displayRanking in timeRangesRanking %}
+                    <li id="{{keyRanking}}_ranking"  style={% ifequal timeRangeRanking keyRanking %}"background: #8EC1DA; color:#FFFFFF"{% else %}""{% endifequal %}>
+                       <a  onclick="chooseRankingType('{{keyRanking}}',true,5,'home')" class="cursorPointer">{{displayRanking}}</a> 
+                    </li>             
+                    {% endfor %}
+                </div>
+                </ul>
+            </div>
+            
+            <input id="timeRangeRanking" type="hidden" value="{{timeRangeRanking}}" class="retro loadHomeRanking"/>
+            <script type="text/javascript">
+                document.getElementById('timeRangeRanking').value = "{{timeRangeRanking}}";
+            </script>
+            
+            <input id="his_detail_url" type="hidden" > 
+    {% endblock %}
+    
+    {% block all_table %}
+    <div class="clearFloat"></div>
+    <div id="his_detail_home" > 
+    </div>    
+    {% endblock %}
+    
+</div>
+
+<div class="contentSeparator"></div>
+
+<div><span class="dashboardTitle2">Click-throughs</span><span><a rel="ajaxform" href="javascript:void(0)" onclick="dashboardViewChartDetail()" class="dashboardViewDetail"><em>{{keyRanking}}View details</em></a></span></div>
+
+    <div>
+    <div id="datepicker" class="reporting_viewtime">
+        <ul id="dateBuckets">
+        <div class="dateBucketsLeft">
+            {% for key, display in timeRanges %}
+            <li id="{{key}}"  class="cursorPointer" style={% ifequal timeRange key %}"background: #8EC1DA; color:#FFFFFF"{% else %}""{% endifequal %}>
+            <a href="javascript:updateHomeHisDetailT('{{key}}')" >{{display}}</a>
+            </li>
+            {% endfor %}
+        </div>
+        </ul>
+    </div>
+    <div class="clearFloat"></div>
+    
+   	{% block report_chart %}
+    	<div class="clearFloat"></div>
+ 		<div id="his_detail">
+ 		</div>    
+    {% endblock %}
+    
+ <input id="timeRange" type="hidden" value="{{timeRange}}" class="retro loadHomeChart"/>
+	<script type="text/javascript">
+    	document.getElementById('timeRange').value = "{{timeRange}}";
+	</script>   
+
+</div>
+
+</div>
+{% endblock %} <!-- end of content -->
+

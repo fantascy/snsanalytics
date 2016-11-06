@@ -1,0 +1,53 @@
+blacklist:
+- subnet: 50.16.0.0/16
+  description: amazon ec2
+- subnet: 50.17.0.0/16
+  description: amazon ec2
+- subnet: 50.18.0.0/16
+  description: amazon ec2
+- subnet: 50.19.0.0/16
+  description: amazon ec2
+- subnet: 107.20.0.0/16
+  description: amazon ec2
+- subnet: 107.22.0.0/16
+  description: amazon ec2
+- subnet: 204.236.0.0/16
+  description: amazon ec2
+- subnet: 72.44.0.0/16
+  description: amazon ec2
+- subnet: 174.129.0.0/16
+  description: amazon ec2
+- subnet: 184.72.0.0/16
+  description: amazon ec2
+- subnet: 184.73.0.0/16
+  description: amazon ec2
+- subnet: 50.57.128.0/17
+  description: cloud-ips
+- subnet: 184.106.82.0/24
+  description: cloud-ips
+- subnet: 184.106.83.0/24
+  description: cloud-ips
+- subnet: 173.192.79.101
+  description: softlayer
+- subnet: 89.151.64.0/18
+  description: fevsys.net/datasift
+- subnet: 205.188.0.0/16
+  description: aol
+- subnet: 70.91.204.0/24
+  description: comcastbusiness
+- subnet: 184.172.0.0/24
+  description: instapaper
+- subnet: 208.94.145.108
+  description: tiggee.net
+- subnet: 199.19.104.202
+  description: mj12bot
+- subnet: 195.221.21.229
+  description: wikiwix-bot-3.0
+- subnet: 216.168.43.104
+  description: enri
+- subnet: 65.52.0.0/24
+  description: unknown
+- subnet: 46.20.47.43
+  description: unknown
+  
+  

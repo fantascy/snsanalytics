@@ -1,0 +1,95 @@
+{% extends 'fe/layout/layout.html' %}
+{% load googletags %}
+{% load snsstringfiltertags %}
+{% block main %}
+	{% if not view.ctx.has_login %}
+	    {% ifequal view.viewName 'Home' %}
+		<div class="Center_TopImg"><img src="{{ MEDIA_URL }}fe/images/Center_topImg.gif"></div>
+		<div><div class="HomeCenter_TopBlock">
+		{% else %}
+		<div class="layoutcenter_bg">
+		<div class="Channel_Center">
+		{% endifequal%}
+	{% else %}
+	<script type="text/javascript">	
+		
+	jQuery(document).ready(function($) {
+		
+		$("input[type!='button']").keydown(function(event) { 
+			if (event.keyCode == 13) { 
+				$('form').each(function() { 
+					event.preventDefault(); 
+				}); 
+			}; 
+		});
+	});
+
+	
+	</script>
+	<div class="MenuBg">
+	
+	<div>
+		<script type="text/javascript">
+		
+		function toggle(div){
+				if (document.getElementById('dropmenu'+div)){
+					if (document.getElementById('dropmenu'+div).style.display == 'none') {
+						jQuery('#dropmenutitle'+div).css('background-image','url("/fe/images/menu_arrow2.gif")');
+					} else {
+						jQuery('#dropmenutitle'+div).css('background-image','url("/fe/images/menu_arrow1.gif")');
+					}
+					jQuery('#dropmenu'+div).slideToggle('fast');
+				}
+			}
+		</script>
+	</div>
+
+	<div id="chromemenu">
+		{% for key, value, submenu in view.navigation %}
+		<div class="Menu_Title" onclick="toggle('{{key|normalize}}');">
+		     {% ifequal key 'Follower Builder'%}
+		        <span class="ico"></span>
+		     {% endifequal %}
+			<a
+				id="dropmenutitle{{key|normalize}}" 
+				class="selected" 
+				{% if submenu %}
+				rel="dropmenu{{key|normalize}}"
+				style="text-decoration: none;"
+				{% endif %}
+				{% if value %}			    	
+				href="/{{ value }}"
+				{% else %}
+				{% ifequal key 'Home' %}
+				rel="ajaxform" 
+				href="#/home/"
+				{% endifequal %}
+				{% endif %}
+				>{{ key }}</a>
+		</div>
+		{% if submenu %}
+		<div id="dropmenu{{key|normalize}}" class="dropmenudiv" style="overflow: hidden; height: auto; left: -1000px; top: -1000px;display: none;">
+				{% for skey, svalue in submenu %}
+				<div class="submenu_element"><a id="dropmenu{{skey|normalize}}" rel="ajaxform" href="#{{ svalue }}" class='unselected'>{{ skey }}</a></div>
+				{% endfor %}
+		</div>
+		{% endif %}
+		{% endfor %}
+	</div>
+	<div class="sidemenu_bottom"></div> 
+	</div>
+	
+	{% endif %}
+	<div class="layoutcenter_bg">
+		<div id="ajax_statebar">
+			<img alt="loading" src="{{ MEDIA_URL }}fe/images/loading.gif">
+		</div>
+		<div id="ajax_content">
+		
+		</div>
+	</div>
+	<div class="layoutcenter_bottom">
+           <img height="21" width="721" src="{{ MEDIA_URL }}fe/images/layoutcenter_BottomImg.gif"/>
+       </div>	
+	{% endblock %}
+	

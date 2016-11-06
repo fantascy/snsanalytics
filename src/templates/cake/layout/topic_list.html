@@ -1,0 +1,103 @@
+<div id="topic-list" title="Explore Topics" style="display:none">
+	<div id="topic-list-search-bar">
+		<input type="text" onkeydown="pressEnter(event,'topic-search-action');" placeholder="Search a topic" id="topic-search-value" class="ui-autocomplete-input" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+		<span class="button" onclick="topicSearch()">Search</span>
+	</div>
+	<div>
+		<div class="first-level"><a href="/topic/entertainment/">Entertainment</a></div>
+		<div><ul>
+			<li><a href="/topic/celebrities/">Celebrities</a></li>
+			<li><a href="/topic/movies/">Movies</a></li>
+			<li><a href="/topic/television/">TV</a></li>
+			<li><a href="/topic/music/">Music</a></li>
+			<li><a href="/topic/dating/">Dating</a></li>
+			<li><a href="/topic/fashion/">Fashion</a></li>
+			<li><a href="/topic/weirdfunny/">Weird &amp; Funny</a></li>
+		</ul></div>
+	</div>
+	<div>
+		<div class="first-level"><a href="/topic/technology/">Technology</a></div>
+		<div><ul>
+			<li><a href="/topic/gadgets/">Gadgets</a></li>
+			<li><a href="/topic/socialmedia/">Social Media</a></li>
+			<li><a href="/topic/mobile/">Mobile</a></li>
+			<li><a href="/topic/cleantech/">Cleantech</a></li>
+			<li><a href="/topic/cloudcomputing/">Cloud Computing</a></li>
+			<li><a href="/topic/science/">Science</a></li>
+		</ul></div>
+	</div>
+	<div>
+		<div class="first-level"><a href="/topic/business/">Business</a></div>
+		<div><ul>
+			<li><a href="/topic/markets/">Markets</a></li>
+			<li><a href="/topic/personalfinance/">Personal Finance</a></li>
+			<li><a href="/topic/economy/">Economy</a></li>
+			<li><a href="/topic/entrepreneurs/">Entrepreneurs</a></li>
+			<li><a href="/topic/energy/">Energy</a></li>
+			<li><a href="/topic/media/">Media</a></li>
+			<li><a href="/topic/realestate/">Real Estate</a></li>
+		</ul></div>
+	</div>
+	<div>
+		<div class="first-level"><a href="/topic/politics/">Politics</a></div>
+		<div><ul>
+			<li><a href="/topic/election2012/">Election 2012</a></li>
+			<li><a href="/topic/conservative/">Conservative</a></li>
+			<li><a href="/topic/liberal/">Liberal</a></li>
+			<li><a href="/topic/teaparty/">Tea Party</a></li>
+			<li><a href="/topic/international/">International</a></li>
+		</ul></div>
+	</div>
+	<div>
+		<div class="first-level"><a href="/topic/regional/">Regional</a></div>
+		<div><ul>
+			<li><a href="/topic/asia/">Asia</a></li>
+			<li><a href="/topic/europe/">Europe</a></li>
+			<li><a href="/topic/middleeast/">Middle East</a></li>
+			<li><a href="/topic/iraqafghanistan/">Iraq/Afghanistan</a></li>
+			<li><a href="/topic/americas/">Americas</a></li>
+			<li><a href="/topic/africa/">Africa</a></li>
+		</ul></div>
+	</div>
+	<div>
+		<div class="first-level"><a href="/topic/gaming/">Gaming</a></div>
+		<div><ul>
+			<li><a href="/topic/ps3/">PS3</a></li>
+			<li><a href="/topic/xbox360/">Xbox 360</a></li>
+			<li><a href="/topic/wii/">Wii</a></li>
+			<li><a href="/topic/ds/">DS</a></li>
+			<li><a href="/topic/pcgaming/">PC</a></li>
+			<li><a href="/topic/mobilegaming/">Mobile</a></li>
+			<li><a href="/topic/socialgaming/">Social</a></li>
+		</ul></div>
+	</div>
+	<div>
+		<div class="first-level"><a href="/topic/sports/">Sports</a></div>
+		<div><ul>
+			<li><a href="/topic/football/">Football</a></li>
+			<li><a href="/topic/baseball/">Baseball</a></li>
+			<li><a href="/topic/basketball/">Basketball</a></li>
+			<li><a href="/topic/hockey/">Hockey</a></li>
+			<li><a href="/topic/soccer/">Soccer</a></li>
+		</ul></div>
+	</div>
+	<div>
+		<div class="first-level"><a href="/topic/lifestyle/">Lifestyle</a></div>
+		<div><ul>
+			<li><a href="/topic/motors/">Motors</a></li>
+			<li><a href="/topic/food/">Food</a></li>
+			<li><a href="/topic/health/">Health</a></li>
+			<li><a href="/topic/travel/">Travel</a></li>
+			<li><a href="/topic/homemaking/">Home</a></li>
+			<li><a href="/topic/parenting/">Parenting</a></li>
+		</ul></div>
+	</div>
+	<div class="highlight">
+		<div class="first-level">Rich Media</div>
+		<div><ul>
+			<li><a href="/topic/photos/">Photos</a></li>
+			<li><a href="/topic/videos/">Videos</a></li>
+		</ul></div>
+	</div>
+</div>
+<script> $(function() {topicAutoComplete("#topic-search-value", {{view.topicNames|safe}}, 1);}); </script>

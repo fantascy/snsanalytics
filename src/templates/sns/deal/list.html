@@ -1,0 +1,51 @@
+{% extends 'sns/layout/list.html' %}
+{% block list_header %}
+{% load snspostingruletags %}
+<div class="buttonCreatesection">
+	<div class="buttonCreate">
+	<a class="img-cursor-pointer" href="/#/deal/create/">Add</a>
+	</div>
+</div>
+<div class="clearFloat"></div>
+<div class="buttonCreatesection">
+    <input id="post_path" type="hidden" value="{{post_path}}"/>
+</div>
+
+{% if show_search %}
+<div class="clearFloat"></div>
+<div class="buttonCreatesection">
+	<div class="searchfunction">
+		<input type="text" value="{{keyword}}" id="query" class="retro searchInput" name="campaign keyword" onkeydown="enterPress(event);"/>
+    	<input class="s cursorPointer" type="submit" value="Search" id="search_button" onclick="searchList('{{post_path}}')"/>
+    </div>
+</div>
+{% endif %}
+{%endblock%}
+
+{%block table_header %}
+<tr class="listHeader">
+    <td class="listHeaderCell feedBuilderName">Feed Name</td>
+    <td class="listHeaderCell feedBuilderUrl">Feed URL</td>
+    <td class="listHeaderCellLast feedBuilderActions">Actions</td>
+</tr>
+{%endblock%}
+{%block item %}
+<tr id="list_tr_id_{{object.id}}" class="listTr{% cycle 'Odd' 'Even' %}">
+    <td id="follow_building_campaign_name_td_{{object.id}}" class="listCell textAlignLeft feedBuilderName">
+        <span id="{{object.id}}" class="cursorPointer">{{object.name}}</span>
+    </td>
+    <td id="follow_building_campaign_url_td_{{object.id}}" class="listCell textAlignLeft feedBuilderUrl">
+        <a target="_blank" href="{{object.feedUrl}}">
+        <span>{{object.feedUrl}}</span>
+        </a>
+    </td>
+    <td class="listCellLast feedBuilderActions">
+        <a class="action-button cursorPointer" onclick="delete_obj('{{object.id}}','{{ret_url}}','/deal/')" title="Delete">
+            <img src="{{MEDIA_URL}}sns/images/delete.png" border="0"  class="cursorPointer" alt="Delete"/>
+        </a>
+        <a class="action-button" href="/#/deal/update/?id={{object.id}}" title="Update">
+            <img src="{{MEDIA_URL}}sns/images/edit.png" border="0"  class="cursorPointer" alt="Update"/>
+        </a>
+    </td>
+</tr>
+{% endblock %}

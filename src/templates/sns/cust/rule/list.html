@@ -1,0 +1,83 @@
+{% extends 'sns/layout/list.html' %}
+{% load snsstringfiltertags %}
+{% load snschanneltags %}
+
+{% block list_header %}
+<div class="buttonCreatesection">
+	<div class="buttonCreate">
+    	<a class="img-cursor-pointer" href="/#/cust/rule/create/" rel="ajaxform" >Add a Custom Campaign</a>
+	</div>
+</div>
+<div class="clearFloat"></div>
+
+<div class="clearFloat"></div>
+<div class="buttonCreatesection">
+	<script type="text/javascript">
+	$(document).ready(function($){
+		document.getElementById('id_sortBy_type').value = '{{sortBy}}';
+		document.getElementById('id_direct_type').value = '{{directType}}';
+		document.getElementById('id_paginate_num').value = '{{paginate_by}}';	
+	});
+	</script>
+    <div class="sortbyfunction">
+  		Sorted by {{form.type}}
+		{{form.order}}
+		&nbsp;&nbsp;&nbsp;Page Size {{form.paginate}}
+    </div>
+    <input id="post_path" type="hidden" value="{{post_path}}"/>
+</div>
+<div class="clearFloat"></div>
+{% if show_search %}
+<div class="buttonCreatesection">
+	<div class="searchfunction">
+		<input type="text" value="{{keyword}}" id="query" class="retro searchInput" name="campaign keyword" onkeydown="enterPress(event);"/>
+    	<input class="s cursorPointer" type="submit" value="Search" id="search_button" onclick="searchList('{{post_path}}')"/>
+    </div>
+</div>
+{% endif %}
+{%endblock%}
+
+{% block table_header %}
+<tr class="listHeader">
+    <td class="listHeaderCell customRuleName">Name</td>
+    <td class="listHeaderCellLast customRuleActions">Actions</td>
+</tr>
+{%endblock%}
+
+{%block  item %}
+<tr id="list_tr_id_{{object.keyInfo}}" class="listTr{% cycle 'Odd' 'Even' %}">
+    <td id="follow_building_campaign_msg_td_{{object.id}}" class="listCell textAlignLeft customRuleName">{{object.msg}}<span>
+        <a href="javascript:toggleDetail('{{object.className}}', '{{object.key}}')" title="Show detail">
+            <img id="img_show_{{object.key}}" src="{{MEDIA_URL}}sns/images/arrow_down.png" border="0" class="cursorPointer" alt="Show detail"/>
+        </a>
+        <a href="javascript:toggleDetail('{{object.className}}', '{{object.key}}')" title="Hide detail">
+            <img id="img_hide_{{object.key}}" src="{{MEDIA_URL}}sns/images/arrow_up.png" border="0" class="cursorPointer" style="display:none;" alt="Hide detail"/>
+        </a>
+            
+        <a id='{{object.id}}' class="cursorPointer" title="Click to edit">{{object.name}}</a>              
+    		<script type="text/javascript">
+  				$("#{{object.id}}").editInPlace({ 
+	    			url: "/cust/rule/edit/",
+	    			bg_over: "#DCDCDC"  
+				});
+  			</script>	 
+    </span>
+    </td>
+    <td class="listCellLast customRuleActions">
+        <a class="action-button cursorPointer" onclick="delete_batch_obj('{{object.key.id}}','{{object.parent.batch}}','{{ret_url}}','/cust/rule/')" title="Delete">
+            <img src="{{MEDIA_URL}}sns/images/delete.png" border="0" class="cursorPointer" alt="Delete"/>
+        </a>
+        <a class="action-button" href="/#/cust/rule/update/?id={{object.key.id}}&batch={{object.parent.batch}}" rel="ajaxform" title="Update">
+            <img src="{{MEDIA_URL}}sns/images/edit.png" border="0" class="cursorPointer" alt="Update"/>
+        </a>
+        <a class="action-button" target="_blank" href="#/graph/chart?type=5&timeRange=month&campaign={{object.id}}"  title="Chart">
+            <img src="{{MEDIA_URL}}sns/images/chart_line.png" border="0" class="cursorPointer" alt="Chart"/>
+        </a>
+    </td>
+</tr>
+    <tr>
+      <td colspan="5">
+        <div id="detail_{{object.key}}"  class="ruleDetail" style="display:none"></div>
+      </td>
+    </tr> 
+{%endblock%}

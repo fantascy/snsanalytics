@@ -1,0 +1,77 @@
+{% extends 'fe/layout/list.html' %}
+{% load snsstringfiltertags %}
+
+{% block list_header %}
+
+<div class="helpButton">
+    <a href="/fe/follow/account/safelist/help/"  rel="facebox"> Help</a>
+</div>
+
+{%endblock%}
+
+{% block table_header %}
+<tr class="listHeader">
+    <td class="listHeaderCell safeListName">Name</td>
+    <!-- <td class="listHeaderCell safeListUrl">URL</td> -->    
+    <td class="listHeaderCell safeListDes">Description</td>
+    <td class="listHeaderCell safeListCount">Count</td>
+    <td class="listHeaderCell safeListStats">Status</td>
+    <td class="listHeaderCellLast safeListAction">Actions</td>
+</tr>
+{%endblock%}
+
+{%block  item %}
+<tr class="listTr{% cycle 'Odd' 'Even' %}">
+    <td class="listCell textAlignLeft safeListName">
+        <span><a href="{{object.uri|addDomain}}" target="_blank">{{object.name}}<a></span>
+    </td>
+    <!--     <td class="listCell textAlignLeft safeListUrl">
+        <span><a href="{{object.uri|addDomain}}" target="_blank">{{object.uri|addDomain}}</a></span>
+    </td> -->
+    <td class="listCell textAlignLeft safeListDes">
+        <span>{{object.description}}</span>
+    </td>
+    <td class="listCell safeListCount">
+        <span>{{object.member_count}}</span>
+    </td>
+    <td class="listCell safeListStats">
+        <span id="status_{{object.id}}">{{object.status}}</span>
+    </td>
+    <td class="listCellLast safeListAction">
+            {% ifequal object.status 'Included' %}
+			<a onclick="changeListStatus('{{object.id}}', '{{chid}}')" title="Include">
+				<img id="add_{{object.id}}" src="{{ MEDIA_URL }}fe/images/add.png" border="0" class="cursorPointer" style="display:none;" alt="Include">
+			</a>
+            <a onclick="changeListStatus('{{object.id}}', '{{chid}}')" title="Exclude">
+				<img id="minus_{{object.id}}" src="{{ MEDIA_URL }}fe/images/minus.png" border="0" class="cursorPointer"  alt="Exclude">		
+			</a>
+			{% endifequal %}
+            {% ifequal object.status 'Excluded' %}
+			<a onclick="changeListStatus('{{object.id}}', '{{chid}}')" title="Include">
+				<img id="add_{{object.id}}" src="{{ MEDIA_URL }}fe/images/add.png" border="0" class="cursorPointer" alt="Include">
+			</a>
+            <a onclick="changeListStatus('{{object.id}}', '{{chid}}')" title="Exclude">
+				<img id="minus_{{object.id}}" src="{{ MEDIA_URL }}fe/images/minus.png" border="0" class="cursorPointer" style="display:none;" alt="Exclude">		
+			</a>
+			{% endifequal %}
+    </td>
+</tr>
+{%endblock%}
+
+{% block empty_info %}
+<p>Your safelist is empty. This may be OK for you.</p> 
+<p>If you are not familiar with safelist yet, click the <a href="/fe/follow/account/safelist/help/"  rel="facebox"> Help</a> link to learn more.</p>
+{%endblock%}
+
+{% block list_footer %}
+{% ifequal state 0 %}
+<div class="fieldInput"> <input type="button" value="Activate the Follow Campaign" onclick="activateFollowRule()"> </div>
+{% endifequal %}
+<div class="fieldInput"> <input type="button" value="Return to Follow Campaign List" onclick="redirectTo('/fe/follow/account/')"> </div>
+
+<input id="rule_id" type="hidden" value="{{id}}"/>
+<script type="text/javascript">
+    document.getElementById('rule_id').value = "{{id}}";
+</script>
+
+{% endblock %}

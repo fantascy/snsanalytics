@@ -1,0 +1,46 @@
+<div>
+{% block title %}{% if title %}<div class="ajax_contentTitle">{{title}}</div>{% endif %}{% endblock %}
+{% block content %}{% endblock %}
+</div>
+<script type="text/javascript">	
+		
+	//$('title').data('reloadOnSuccess',true);
+	//$('a[class*=facebox]').each(function(){
+	//	$(this).click(function(){
+	//		$('title').data('reloadOnSuccess',false);
+	//		});
+	//	});
+	$('a[rel*=facebox]', $('#ajax_content')).facebox();
+
+
+	$('a[rel*=ajaxform]', $('#ajax_content')).each(function(){
+		$(this).click(function(){
+
+			var his = location.href;
+
+			if(his.indexOf('#') > -1){
+				var link = his.substring(his.indexOf('#'));
+				if($(this).attr('href') == link){
+					page_load(his);
+				}
+			}
+			location.href = $(this).attr('href');
+			
+			return false;
+		});
+	});
+	
+	$("input[type!='button']", $('#ajax_content')).keydown(function(event) {
+		  if (event.keyCode == 13) { 
+		    $('form').each(function() { 
+		      event.preventDefault(); 
+		    }); 
+		    $(this).closest('form').find("input[type='button'][class='enter_press_driven']").click();
+		  } 
+		});
+	//$(window).scroll(function(){
+	//	$('#facebox').css('left', $(window).width() / 2 - ($('#facebox table').width() / 2));
+	//    $('#facebox').css('top', getPageScroll()[1] +  getPageHeight() / 2 - $('#facebox table').height() / 2);
+	//	});
+	
+</script>

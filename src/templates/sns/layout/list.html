@@ -1,0 +1,67 @@
+{% extends 'sns/layout/content.html' %}
+{% load snsstringfiltertags %}
+<!-- block for buttons,etc-->
+{% block content %}
+<div class="content">
+{% block list_link %}
+{% endblock %}
+{% block list_header %}
+{% endblock %}
+
+{% block all_table %}
+    <table id="layout_table" class="view_msgtable" border="0" cellspacing="0" cellpadding="0">
+        {% block table_header %}
+        {% endblock %}
+               
+        {% for object in object_list %}
+        {% block item %}
+        {% endblock %}
+        {% empty %}
+        <tr class="listEmpty">
+            <td colspan="5">{% block empty_info %}You have no data.{% endblock %}</td>
+        </tr>
+        {% endfor %}
+        
+        <tr>
+            <td colspan="5">&nbsp;</td>
+        </tr>
+		{%block paganation%}
+		
+        {%if has_previous or has_next %}
+        <tr class="Channel_Tr">
+            <td colspan="8">
+            	<span class="paginatioTotal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total {{pages}} pages, <span id='total_items_number'>{{hits|numberDisplay}}</span> records</span>
+            	<a rel="ajaxform" href="#{{post_path}}&page=1" class="cursorPointer paginationButton">&lt;&lt;</a>
+            	{% if has_previous %}
+            	<a rel="ajaxform" href="#{{post_path}}&page={{previous}}" class="cursorPointer paginationButton">&lt;</a>
+                <a rel="ajaxform" href="#{{post_path}}&page={{previous}}" class="cursorPointer paginatioNext">{{previous}}</a>
+                {% endif %}
+                
+                <span class="paginationPage">{{page}}</span>
+                
+                {% if has_next %}
+                <a rel="ajaxform" href="#{{post_path}}&page={{next}}" class="cursorPointer paginatioNext">{{next}}</a>
+                <a rel="ajaxform" href="#{{post_path}}&page={{next}}" class="cursorPointer paginationButton">&gt;</a>
+                {% endif %}
+                
+                <a rel="ajaxform" href="#{{post_path}}&page={{pages}}" class="cursorPointer paginationButton">&gt;&gt;</a>
+       
+                &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:goToPage('{{post_path}}', '{{pages}}')" class="cursorPointer paginationButton">Go to</a><input id='id_goToPages' type="text" value='{{page}}' style="width: 30px" onkeydown="pageOnClick(event,'{{post_path}}', '{{pages}}');">	  				
+            </td>
+        </tr>
+        {% else %}
+        {% ifequal show_list_info 'True' %}
+        <tr class="Channel_Tr">
+            <td colspan="8">
+            	<span class="paginatioTotal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total <span id='total_items_number'>{{hits}}</span> records</span>
+			</td>
+        </tr>
+        {% endifequal %}
+        {% endif %}
+        {%endblock%}
+    </table>
+{% endblock %}
+    {% block list_footer %}
+    {% endblock %}
+</div>
+{% endblock %}

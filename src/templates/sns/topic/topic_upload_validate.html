@@ -1,0 +1,9 @@
+{% extends 'sns/topic/topic_upload.html' %}
+
+{% block formtitle %}
+<script type="text/javascript">
+	getAjaxUploadProcessor('/sns/topic/validate/');
+</script>    
+    
+	<form id='importFromCSVForm' method="POST" action="/sns/topic/validate/" enctype="multipart/form-data">
+{% endblock %}

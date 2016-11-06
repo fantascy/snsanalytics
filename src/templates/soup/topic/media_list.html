@@ -1,0 +1,98 @@
+{% extends 'soup/topic/topic_article_list.html' %}
+{% load souptags %}
+{% load snsstringfiltertags %}
+
+{% block item %}
+<div class="yui3-u-1-2 topic-media">
+	<div class="section media-section">
+	{% ifequal view.mediaType view.const.MEDIA_TYPE_VIDEO_STR %}
+		<object style="height: 100%; width: 100%">
+			<param name="movie" value="{{object.globalUrl.videoSrc|videoUrlConvert}}">
+			<param name="wmode" value="transparent"> 
+			<param name="allowFullScreen" value="true">
+			<param name="allowScriptAccess" value="always">
+			<embed wmode="transparent" src="{{object.globalUrl.videoSrc|videoUrlConvert}}" 
+				type="application/x-shockwave-flash" allowfullscreen="true" 
+				allowScriptAccess="always" width="100%" height="100%">
+		</object>
+	{% else %}
+		<a href="/soup/{{object.globalUrl.titleKey}}">
+			<img src="{{object.globalUrl.getThumbnail}}"/>
+		</a> 
+	{% endifequal %}  
+	</div>
+	<div class="section title-section">
+		<span class="inner-block-1-first title">
+		<a href="/soup/{{object.globalUrl.titleKey}}"> {{object.globalUrl.title|safe|slic:"0:60"}} </a>
+		</span>
+		<span class="inner-block-1 sub-description">
+			<a class="explicit hover-underline" href="{{object.globalUrl.url}}" target="_blank">{{object.globalUrl.root_domain}}</a>
+		</span>
+	</div>
+	<div class="section rating-section">
+	{% include 'soup/topic/media_list_rating.html' %}		
+	</div>
+	{% if forloop.counter0|lessThan:4 %}
+	<div class="section social-buttons">
+		<!-- 
+		<span class="inner-block-1-first follow-button">
+			<a id="article-follow-status-{{object.counter.key}}" href="javascript:toggleArticleFollow('{{object.counter.key}}');">{{object.isFollowed|articleFollowAction}}</a> 
+		</span>
+		-->
+		<span class="inner-block-1-first button-h-plusone"><g:plusone size="medium" href="http://{{view.ctx.long_domain}}/soup/{{object.globalUrl.titleKey}}"></g:plusone></span>
+		<span class="inner-block-1 button-h-tweet">
+			<a href="http://twitter.com/share" class="twitter-share-button" counturl="http://{{view.ctx.long_domain}}/soup/{{object.globalUrl.titleKey|iriencode}}"
+				data-url="http://{{view.ctx.long_domain}}/soup/{{object.globalUrl.titleKey|iriencode}}" data-text="{{object.globalUrl.title|safe}}" data-count="horizontal" data-via="allnewsoup">
+				Tweet
+			</a>
+		</span>
+		<span class="inner-block-1 button-h-like">
+			<fb:like href="http://{{view.ctx.long_domain}}/soup/{{object.globalUrl.titleKey}}" layout="button_count" show_faces="false" width="50" font="arial"></fb:like>
+		</span>
+		<div class="ui-helper-clearfix"></div>
+	</div>	
+	{% endif %}		
+	<div class="section sub-description">
+		<span class="inner-block-1-first">
+		{% if object.counter.deleted %}
+			<span class="gray-text">by Anonymous</span>
+		{% else %}
+			<span class="gray-text">by</span>
+			<a class="explicit hover-underline" href="/profile/{{object.authorId}}">{{object.authorName}}</a> 
+		{% endif %}
+		</span>
+		<span class="inner-block-1">
+			<span class="gray-text">{{object.counter.createdTime|timeAgo}}</span>
+		</span>
+		<span class="inner-block-1">
+				<a id="show-{{object.globalUrl.titleKey}}" class="explicit-strong hover-underline" href="javascript:showCommentVideo('{{object.globalUrl.titleKey}}', {{forloop.counter0|divide:2}})">
+					Comment
+				</a>
+				<script language="javascript">
+					CommentCount.set('{{object.globalUrl.titleKey}}', {{object.counter.commentCount}});
+				</script>
+				<span id="count-{{object.globalUrl.titleKey}}" class="gray-text">
+				{% if object.counter.commentCount|greaterThan:0 %}
+				({{ object.counter.commentCount }})
+				{% endif %}
+				</span>
+				<a id="hide-{{object.globalUrl.titleKey}}" class="explicit hover-underline" href="javascript:hideCommentVideo('{{object.globalUrl.titleKey}}', {{forloop.counter0|divide:2}})" style="display:none">
+					Hide comments
+				</a>
+			{% comment %}
+			<span class="gray-text">
+				(<fb:comments-count href="http://{{view.ctx.long_domain}}/soup/{{object.globalUrl.titleKey}}"></fb:comments-count>) 				
+			</span>
+			{% endcomment %}
+			{% if not object.counter.deleted and view.loginUser %} {% ifequal view.loginUser|keyId object.counter.uid %}
+			{% include 'soup/editing/editing.html' %}
+			{% endifequal %} {% endif %}
+		</span>
+		<div id="comment-{{object.globalUrl.titleKey}}" class="topic-media-comment-block{% if forloop.counter|divisibleby:'2' %} right-column{% endif %}"></div>
+	</div>
+</div>
+<div class="{% cycle 'ui-helper-hidden' 'ui-helper-clearfix' %}"></div>
+{% if not forloop.last %}
+	<div class="{% cycle 'ui-helper-hidden' 'separator-2' %}"></div>
+{% endif %}
+{% endblock %}

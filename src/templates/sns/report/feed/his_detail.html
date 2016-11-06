@@ -1,0 +1,21 @@
+{% load snsstringfiltertags %}
+
+	{% ifnotequal hisChart 'False' %}
+		{% if view.ctx.is_ios %} 
+		<div class="cb2Double" style="color:red;">Flash is not supported on iPhone/iPad!</div>
+
+		{% else %}
+		<div class="cb2Double" id="feed_clickchart">    
+			feed_clickchart
+		</div>
+		<script type="text/javascript">
+	 		swfobject.embedSWF(
+	 	  		"{{MEDIA_URL}}common/flash/OFC.swf", "feed_clickchart", "690", "390",
+	 	  		"9.0.0","{{MEDIA_URL}}common/flash/expressInstall.swf",
+	 	  		{"data-file":"/graph/chartpath/feed/data/clickchart?timerange_feed_comparefeed={{timerange_feed_comparefeed}}"},
+	 	  		{"wmode":"opaque"}
+	 	  	);
+		</script>
+	
+		{% endif %}
+	{% endifnotequal %}

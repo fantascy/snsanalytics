@@ -1,0 +1,32 @@
+{% extends 'sns/layout/content.html' %}
+{% block content %}
+<div class="content">
+    
+{% block formtitle %}
+<script type="text/javascript">
+	getAjaxUploadProcessor('/acctmgmt/cmp/pwdupload/');
+</script>    
+    
+	<form id='importFromCSVForm' method="POST" action="/acctmgmt/cmp/pwdupload/" enctype="multipart/form-data">
+{% endblock %}	
+    <table>
+    <div class="ruleForm">
+	    {% block form %}
+				<div class="cb1">
+				    				    
+				    <div class="cb2Double">
+					    {{ form.file.errors }}
+					    <div class="clearFloat"></div>
+						<div>{{form.file.label_tag}}</div> <div>{{form.file}}</div>
+					    <div class="clearFloat"></div>
+				    </div>
+				    <div id="upload_state" class="cb2Double"><div id="upload_loading" style="display: none;"><img alt="loading" src="{{MEDIA_URL}}sns/images/loading.gif"></div></div>
+					 
+				</div>
+
+		{% endblock %}
+        </div>
+    </table>
+	</form>
+</div>
+{% endblock %}

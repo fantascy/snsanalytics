@@ -1,0 +1,17 @@
+{% load snschanneltags %}
+{% load snsstringfiltertags %}
+
+        <div id="reportChartUrlDetail">
+            <div class="cb2Double">
+                <div class="fieldLabel">Feed URL</div>
+                <div class="fieldDetail">
+                    {{feed.feedUrl|urlize|twitterUrlize|safe}}               
+                </div>
+                <div class="clearFloat"></div>
+                <div class="fieldLabel">Life Time Clicks</div>
+                <div class="fieldDetail">
+                    {{urlMapping.life|numberDisplay}}
+                </div>
+            </div>
+        </div>
+

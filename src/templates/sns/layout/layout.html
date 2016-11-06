@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{% include 'sns/layout/html_head.html' %}		
+
+
+<body>
+	{% include 'common/ga.html' %}		
+    
+    <div 
+		{% ifequal view.viewName 'Home' %}
+			{% if view.ctx.has_login and view.ctx.get_user.isApproved %}
+				id="layoutbgimage">
+			{% else %}
+				id="homebgimage">
+			{% endif %}	
+		{% else %}
+				id="homebgimage">
+		{% endifequal%}
+		
+
+		{% if view.ctx.has_login %}
+		    {% include 'sns/layout/header.html' %}		
+		{% else %}
+			{% load googletags %}
+			
+		    {% ifequal view.viewName 'Home' %}		    
+			<div class="home_TopQuicklinkdivFont">
+			{% comment %}
+			No registration is needed, just use your <span class="google_ico">&nbsp;</span> account to 
+			<a class="headerMenuLast" href="{% google_login_url request.get_full_path %}" id="home_sign_in" name="home_sign_in">
+				Sign In
+			</a>
+			{% endcomment %}
+		    </div>
+		    {% else %}	    
+			   {% include 'sns/layout/nologin_header.html' %}				
+		    {% endifequal%}			    	
+		{% endif %}
+		
+		
+		<div id='layout_content_center_div' class="ContentCenter_Div">
+			{% block main %} {% endblock %}
+		</div>				
+		<script type="text/javascript">
+			var Sys = {}; 
+	        var ua = navigator.userAgent.toLowerCase(); 
+	        var s; 
+	        var ie6=false;
+	        (s = ua.match(/msie ([\d.]+)/)) ? Sys.ie = s[1] : 
+	        (s = ua.match(/firefox\/([\d.]+)/)) ? Sys.firefox = s[1] : 
+	        (s = ua.match(/chrome\/([\d.]+)/)) ? Sys.chrome = s[1] : 
+	        (s = ua.match(/opera.([\d.]+)/)) ? Sys.opera = s[1] : 
+	        (s = ua.match(/version\/([\d.]+).*safari/)) ? Sys.safari = s[1] : 0; 
+			
+	        if (Sys.ie){
+		        	if(parseInt(Sys.ie.split('.')[0])==6){
+		        		ie6=true;
+		        	}
+	        } 
+        	if(ie6){
+        		document.getElementById('layout_content_center_div').className='ContentCenter_Div_IE6';
+        		if(document.getElementById('not_support_ie6')!=null){
+        			document.getElementById('not_support_ie6').style.display='';
+        		}
+        	}
+    	</script>
+    	
+		{% include 'sns/layout/footer.html' %}
+		
+		 <div id="fb-root"></div>
+		 <script>
+		   	window.fbAsyncInit = function() {
+		    	FB.init({appId: '{{view.ctx.fb_app_id}}', status: true, cookie: true, xfbml: true});
+			};
+			(function() {
+			  var e = document.createElement('script'); e.async = true;
+			  e.src = document.location.protocol +
+			    '//connect.facebook.net/en_US/all.js';
+			  document.getElementById('fb-root').appendChild(e);
+			}());
+		 </script>
+	</div>
+	
+	
+	<!-- Olark.com live chat widget. -->
+	<!-- Comment away for now, because of no support resource.
+	<script type="text/javascript">
+		var hblProto = document.location.protocol == 'https:' ? "https:" : "http:";
+		document.write(unescape('%3Cscript src=\'' + hblProto + '//static.olark.com/js/wc.js\' type=\'text/javascript\'%3E%3C/script%3E'));
+	</script>
+	<a href="http://olark.com/#4927-543-10-4085" id="hbl_code">Olark Livehelp</a>      
+	<script type="text/javascript"> wc_init();</script>
+	-->
+
+	<!-- Start of uservoice.com feedback widget. Please keep it closest possible to the body enclosing tag. -->
+	<!--
+	<script type="text/javascript">
+		var uservoiceJsHost = ("https:" == document.location.protocol) ? "https://uservoice.com" : "http://cdn.uservoice.com";
+		document.write(unescape("%3Cscript src='" + uservoiceJsHost + "/javascripts/widgets/tab.js' type='text/javascript'%3E%3C/script%3E"))
+	</script>
+	<script type="text/javascript">
+		UserVoice.Tab.show({ 
+		  /* required */
+		  key: 'snsanalytics',
+		  host: 'snsanalytics.uservoice.com', 
+		  forum: '29501', 
+		  /* optional */
+		  alignment: 'right',
+		  background_color:'#3e64c2', 
+		  text_color: 'white',
+		  hover_color: '#0085cc',
+		  lang: 'en'
+		})
+	</script>
+	-->
+	
+	{% include "common/quantcast.html" %}
+</body>
+</html>
+

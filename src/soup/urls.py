@@ -1,0 +1,23 @@
+from django.conf.urls.defaults import patterns
+
+urlpatterns = patterns('',
+    (r'^$', 'soup.dashboard.views.home'),
+    (r'^rate/$', 'soup.article.views.article_rate'),
+    (r'^delete/$', 'soup.article.views.article_delete'),
+    (r'^getcommentcount/$', 'soup.article.views.get_comment_count'),
+    (r'^comment/$', 'soup.article.views.article_comment'),
+    (r'^click/$', 'soup.article.views.article_click'),
+    (r'^rate/log/$', 'soup.article.views.get_rating_log'),
+    (r'^login/$', 'soup.dashboard.views.login'),
+    (r'^facebook/login/$', 'soup.user.views.facebook_login'),
+    (r'^facebook/realtime/$', 'soup.user.views.facebook_realtime'),
+    (r'^user/name/$', 'soup.user.views.user_name'),
+    (r'^user/friends/$', 'soup.user.views.get_more_friends'),
+    (r'^feellucky/$', 'soup.topic.views.topic_feel_lucky'),
+    (r'^local/$', 'soup.topic.views.topic_local'),
+    (r'^topic/find/$', 'soup.topic.views.topic_find'),
+    (r'^fresh/$', 'soup.topic.views.fresh_articles'),
+    (r'^user/toggle_article_follow/$', 'soup.user.views.user_toggle_article_follow'),
+    (r'^corp/tos$', 'soup.corp.views.tos'),
+    (r'^robots.txt', 'django.views.generic.simple.direct_to_template', {'template':'soup/robots.txt', 'mimetype':'text/plain'}),
+)

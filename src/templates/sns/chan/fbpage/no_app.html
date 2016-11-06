@@ -1,0 +1,14 @@
+{% extends 'sns/layout/content.html' %}
+
+{% block content %}
+<div class="content">
+    <div class="cb1">
+        <div class="fieldDetail">Sorry , {{account}} does not own any Facebook App.</div>
+        <div class="clearFloat"></div>
+        <div class="fieldDetail">
+        <input type="button" value="Back" onclick="redirectTo('{{url}}')"> </div>
+        </div>
+        <div class="clearFloat"></div>
+    </div>
+</div>
+{% endblock %}

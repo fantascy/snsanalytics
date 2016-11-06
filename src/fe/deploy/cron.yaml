@@ -1,0 +1,17 @@
+cron:
+- description: execute jobs in a specific queue, every minute
+  url: /api/follow/cron_execute
+  schedule: every 1 minutes
+  
+- description: send follow stats, every 12 hours, 2 times a day
+  url: /api/follow/cron_execute?op=send_stats
+  schedule: every 12 hours from 7:00 to 19:00
+  timezone: America/Los_Angeles
+  
+- description: clean data, once every day
+  url: /api/follow/cron_execute?op=sync
+  schedule: every day 06:00
+  timezone: America/Los_Angeles
+
+  
+

@@ -1,0 +1,239 @@
+{% load snsstringfiltertags %}
+{% load snschanneltags %}
+{% load snspostingruletags %}
+
+    <div class="cb1">
+        <div class="cb1Title">Basic Info</div>
+        <div class="cb3">
+          <div class="fieldLabel">Name</div><div class="fieldDetail">{{object.name}}</div>
+        </div>
+        
+        <div class="cb3">
+          <div class="fieldLabel">Status</div><div class="fieldDetail" id="detail_stats_{{object.key}}">{{object.state|state2str}} </div>
+        </div>
+        <div class="cb3">
+          <div class="fieldLabel">Modified Time</div><div class="fieldDetail">{{object.modifiedTime|toUserTz|date:view.dateFormat}}</div>
+        </div>
+
+        {% ifequal object.className "MCampaign" %}
+            <div class="clearFloat"></div>
+            <div class="cb3">
+              <div class="fieldLabel">Messages</div>
+              <div class="clearFloat"></div>
+              <div>
+                {% for content in params.contents %}
+                    <div class="fieldListCell">{{ content.msg }} </div>
+                    <div class="clearFloat"></div>
+                {% endfor %}
+              </div>
+            </div>
+        {% else %}
+            <div class="cb3">
+              <div class="fieldLabel">Last Posted at</div>
+                    <div class="fieldDetail">{{object.normalizedLastChecked|toUserTz|date:view.dateFormat|displayNone:"Never"}}</div>
+                    <div class="clearFloat"></div>
+            </div>
+            <div class="cb3">
+              <div class="fieldLabel">Feeds</div>
+              <div class="clearFloat"></div>
+              <div>
+                {% for content in params.contents %}
+                    <div class="fieldListCell">{{content.name}}</div>
+                    <div class="clearFloat"></div>
+                {% endfor %}
+              </div>
+            </div>
+            
+        {% endifequal %}
+        <div class="clearFloat"></div>
+
+        <div class="cb3">
+          <div class="fieldListHeader">Twitter Accts</div>
+          <div class="clearFloat"></div>
+          <div>
+            {% for channel in params.channels %}
+                <div class="fieldDetail">        
+                    <img src="{{channel.avatarUrl|displayNoneAvatar}}" class="iconMedium"/>
+                    	<a target="_blank" href="http://www.twitter.com/{{ channel.name }}">{{ channel.name }}</a>                    
+                    </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="cb3">
+          <div class="fieldListHeader">Facebook Walls</div>
+          <div class="clearFloat"></div>
+          <div>
+            {% for channel in params.fbDestinations %}
+                <div class="fieldDetail">        
+                    <img src="{{channel.avatarUrl|displayNoneAvatar}}" class="iconMedium"/>
+                     <a target="_blank" href="{{channel.profileUrl}}">{{channel.name}}</a>
+                    </div>
+            {% endfor %}
+             <div class="clearFloat"></div>
+             
+             {% for channel in params.adminpages %}
+                <div class="fieldDetail">        
+                    <img src="{{channel.url}}" class="iconMedium"/>
+                     <a target="_blank" href="{{channel.profileUrl}}">{{channel.name}}</a>
+                    </div>
+            {% endfor %}
+             <div class="clearFloat"></div>
+            
+            {% for channel in params.groups %}
+                <div class="fieldDetail">     
+                	<img src="{{channel.pre_avatarUrl|displayNoneAvatar}}" class="iconMedium"/>
+                     <a target="_blank" href="{{channel.pre_profileUrl}}">{{channel.pre_name}}</a>&nbsp;
+					<img src="{{MEDIA_URL}}sns/images/arrow_down.png" class="iconSmall"/>&nbsp;
+                    <!-- <img src="{{MEDIA_URL}}sns/images/sns_facebook_group.png" alt="Facebook group" border="0"/>&nbsp; -->
+                	<a target="_blank" href="http://www.facebook.com/group.php?gid={{channel.id}}">
+                	{{ channel.name }} 
+                	</a>
+                </div>
+            {% endfor %}
+            {% for channel in params.pages %}
+                <div class="fieldDetail">     
+                	<img src="{{channel.pre_avatarUrl|displayNoneAvatar}}" class="iconMedium"/>
+                     <a target="_blank" href="{{channel.pre_profileUrl}}">{{channel.pre_name}}</a>&nbsp;
+                     <img src="{{MEDIA_URL}}sns/images/arrow_down.png" class="iconSmall"/>&nbsp;
+                	<!-- <img src="{{MEDIA_URL}}sns/images/sns_facebook_page.gif" alt="Facebook page" border="0"/>&nbsp; -->
+                	<a target="_blank" href="http://www.facebook.com/pages/{{channel.flag}}/{{channel.id}}">
+                	{{ channel.name }} 
+                	</a>
+                </div>
+            {% endfor %}
+            
+          </div>
+        </div>
+    </div>
+    <div class="clearFloat"/>
+    <div class="cb1">
+        <div class="cb1Title">Schedule Info</div>
+        {% ifequal object.className "MCampaign" %}
+            {% ifequal object.scheduleType 0 %}
+                <div class="cb3">
+                  <div class="fieldLabel">Schedule Type</div><div class="fieldDetail">{{object.scheduleType|scheduleType2str}} </div>
+                </div>
+            {% endifequal %}
+
+            {% ifequal object.scheduleType 1 %}
+                <div class="cb3">
+                  <div class="fieldLabel">Schedule Type</div><div class="fieldDetail">{{object.scheduleType|scheduleType2str}} </div>
+                </div>
+                <div class="cb3">
+                  <div class="fieldLabel">Scheduled Time</div><div class="fieldDetail">{{object.scheduleNext|toUserTz|date:view.dateFormat|displayNone:"Not scheduled"}}</div>
+                </div>
+            {% endifequal %}
+
+            {% ifequal object.scheduleType 2 %}
+                <div class="cb3">
+                  <div class="fieldLabel">Schedule Type</div><div class="fieldDetail">{{object.scheduleType|scheduleType2str}} </div>
+                </div>
+                <div class="cb3">
+                  <div class="fieldLabel">Next Run</div><div class="fieldDetail">{{object.scheduleNext|toUserTz|date:view.dateFormat|displayNone:"Not scheduled"}}</div>
+                </div>
+                <div class="clearFloat"></div>
+                <div class="cb3">
+                  <div class="fieldLabel">Schedule Start</div><div class="fieldDetail">{{object.scheduleStart|toUserTz|date:view.dateFormat|displayNone:"Immediately"}}</div>
+                </div>
+                <div class="cb3">
+                  <div class="fieldLabel">Schedule End</div><div class="fieldDetail">{{object.scheduleEnd|toUserTz|date:view.dateFormat|displayNone:"Never"}}</div>
+                </div>
+                <div class="cb3">
+                  <div class="fieldLabel">Schedule Interval</div><div class="fieldDetail">{{object|scheduleInfo}}</div>
+                </div>
+                {% if object.randomize %}
+                	<div class="cb3">
+                  		<div class="fieldLabel">Randomized In</div><div class="fieldDetail">{{params.randomize_time_count_value|displayNone}}</div>
+               	 	</div>
+               	{% endif %}
+            {% endifequal %}
+        {% endifequal %}
+
+        {% ifequal object.className "FCampaign" %}
+            <div class="cb3">
+              <div class="fieldLabel">Schedule Type</div><div class="fieldDetail">Recurring </div>
+            </div>
+            <div class="cb3">
+              <div class="fieldLabel">Next Run</div><div class="fieldDetail">{{object.scheduleNext|toUserTz|date:view.dateFormat|displayNone:"Not scheduled"}}</div>
+            </div>         
+            <div class="clearFloat"></div>
+            <div class="cb3">
+              <div class="fieldLabel">Schedule Start</div><div class="fieldDetail">{{object.scheduleStart|toUserTz|date:view.dateFormat|displayNone:"Immediately"}}</div>
+            </div>
+            <div class="cb3">
+              <div class="fieldLabel">Schedule End</div><div class="fieldDetail">{{object.scheduleEnd|toUserTz|date:view.dateFormat|displayNone:"Never"}}</div>
+            </div>
+            <div class="clearFloat"></div>
+            <div class="cb3">
+               <div class="fieldLabel">Schedule Interval</div><div class="fieldDetail">{{object|scheduleInfo}}</div>
+            </div>   
+            {% if object.randomize %}
+            	<div class="cb3">
+              		<div class="fieldLabel">Randomized In</div><div class="fieldDetail">{{params.randomize_time_count_value|displayNone}}</div>
+            	</div>
+            {% endif %}            
+        {% endifequal %}
+</div>
+    <div class="clearFloat"/>
+
+    <div class="cb1">
+        <div class="cb1Title">Advanced</div>
+
+        {% ifequal object.className "FCampaign" %}
+        <div>
+          <div class="fieldDetail">&nbsp;&nbsp;Every time when this campaign is executed, post no more than {{object.maxMessagePerFeed}} new article(s) from each feed.</div>
+        </div>
+        <div class="clearFloat"></div>
+        {% endifequal %}
+
+        <div class="cb3">
+          <div class="fieldLabel">Keywords</div><div class="fieldDetail">{{object.keywords|join:','|displayNone}}</div>
+        </div>
+        {% ifequal object.className "FCampaign" %}
+        <div class="cb3">
+          <div class="fieldLabel">Title Only</div><div class="fieldDetail">{{object.titleOnly}}</div>
+        </div>
+        {% endifequal %}
+        <!-- <div class="cb3">
+          <div class="fieldLabel">Disable marketing channel keywords filter</div><div class="fieldDetail">{{object.disableChannelFilter}}</div>
+        </div> -->
+        <div class="clearFloat"></div>
+        <div class="cb3">
+          <div class="fieldLabel">Message Prefix</div><div class="fieldDetail">{{object.msgPrefix|displayNone}}</div>
+        </div>
+        <div class="cb3">
+          <div class="fieldLabel">Message Suffix</div><div class="fieldDetail">{{object.msgSuffix|displayNone}}</div>
+        </div>
+		<div class="clearFloat"></div>
+		{% ifequal object.className "FCampaign" %}
+        <div class="cb3">
+          <div class="fieldLabel">Truncate Prefix</div><div class="fieldDetail">{{object.prefixDelimter|displayAffix|displayNone}}</div>
+        </div>
+        <div class="cb3">
+          <div class="fieldLabel">Truncate Suffix</div><div class="fieldDetail">{{object.suffixDelimter|displayAffix|displayNone}}</div>
+        </div>
+		<div class="clearFloat"></div>
+        {% endifequal %}
+        {% if object.gaOn %}
+	        <div class="cb3Double">
+	          <div class="fieldLabel">GA Campaign</div><div class="fieldDetail">{{object|gaCampaign}}</div>
+	        </div>
+			<div class="clearFloat"></div>
+	        <div class="cb3">
+	          <div class="fieldLabel">GA Source</div><div class="fieldDetail">{{object.gaSource|displayNone}}</div>
+	        </div>
+			<div class="cb3">
+	          <div class="fieldLabel">GA Medium</div><div class="fieldDetail">{{object.gaMedium|displayNone}}</div>
+	        </div>
+			<div class="clearFloat"></div>
+	        <div class="cb3">
+	          <div class="fieldLabel">GA Term</div><div class="fieldDetail">{{object.gaTerm|displayNone}}</div>
+	        </div>
+			<div class="cb3">
+	          <div class="fieldLabel">GA Content</div><div class="fieldDetail">{{object.gaContent|displayNone}}</div>
+	        </div>
+			<div class="clearFloat"></div>
+        {% endif %}
+        
+    </div>
+    

@@ -1,0 +1,52 @@
+{% load snsstringfiltertags %}
+	{% ifnotequal hisChart 'False' %}
+		<canvas id="myLine" width="670" height="310">[No canvas support]</canvas>
+		<script type="text/javascript">
+				var chart_info = eval('{{chart_info}}'.replace(/&#39;/g,"'").replace(/&quot;/g,'"'));				
+				var data = chart_info[0];
+				var tooltips=chart_info[2];
+				if('{{chart_compare_info}}'!='extra_counters'){
+					var chart_compare_info = eval('{{chart_compare_info}}'.replace(/&#39;/g,"'").replace(/&quot;/g,'"'));
+					var data_compare = chart_compare_info[0];
+					var line = new RGraph.Line("myLine", eval(data),eval(data_compare));
+					var tooltips_compare=chart_compare_info[1]
+					line.Set('chart.key', eval(decodeURIComponent(escape(chart_compare_info[2]))));
+					line.Set('chart.tooltips',eval(tooltips_compare));					
+				}
+				else{				
+		         	var line = new RGraph.Line("myLine", eval(data));
+		        	line.Set('chart.tooltips',eval(tooltips));
+				}						  
+				//line.Set('chart.background.grid', false);      
+		        line.Set('chart.background.barcolor1', 'white');
+		        line.Set('chart.background.barcolor2', 'white');
+		        line.Set('chart.colors', ['#FF9900','#8EC1DA']);
+		        //var tooltips='{{tooltips}}'.replace(/&#39;/g,"'");
+		        
+		        line.Set('chart.tooltips.effect', 'fade');
+		        
+		        line.Set('chart.filled', false);
+		        line.Set('chart.linewidth', 2);
+		        line.Set('chart.hmargin', 10);
+		        line.Set('chart.tickmarks', 'filledcircle');
+		        line.Set('chart.ticksize', chart_info[7]);
+		        line.Set('chart.scale.decimals', 0);
+		        //var x_labels='{{x_labels}}'.replace(/&#39;/g,"'");
+		        var x_labels=chart_info[1]
+		        line.Set('chart.labels', eval(x_labels));
+		        line.Set('chart.ymin', 0);
+		        var y_max=chart_info[6];
+		        if(y_max<10){
+			        y_max=10;
+			        line.Set('chart.ymax', y_max);
+			    }
+		        //line.Set('chart.ymax', y_max);
+		        line.Set('chart.ylabels.count', getYLabelsCount(y_max));
+		        line.Set('chart.gutter', 40);
+		       	line.Set('chart.title.xaxis', chart_info[8]);
+		       	line.Set('chart.title', 'Total Clicks : '+String(chart_info[5]));
+		        line.Set('chart.text.size', 7);
+		        line.Draw();
+		</script>		
+	{% endifnotequal %}
+

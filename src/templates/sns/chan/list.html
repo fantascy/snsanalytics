@@ -1,0 +1,86 @@
+{% extends 'sns/layout/list.html' %}
+{% load snschanneltags %}
+
+{% block list_header %}
+<div class="buttonCreatesection">
+	<div class="buttonCreate">
+    	{% if limited %}
+    	<a class="img-cursor-pointer" href="/usr/limit?name=twitter account" rel="facebox"> Add a Twitter account</a>
+    	{% else %}
+    	<a class="img-cursor-pointer" href="/chan/twitter/login" id="add_twitter_account"> Add a Twitter account</a>
+    	{% endif %}
+	</div>
+</div>
+<div class="clearFloat"></div>
+
+<div class="buttonCreatesection">
+<script type="text/javascript">
+$(document).ready(function($){
+
+	document.getElementById('id_sortBy_type').value = '{{sortBy}}';
+	document.getElementById('id_direct_type').value = '{{directType}}';
+	document.getElementById('id_paginate_num').value = '{{paginate_by}}';
+	
+});
+
+</script>
+    <div class="sortbyfunction">
+  		Sorted by {{form.type}}
+		{{form.order}}
+		&nbsp;&nbsp;&nbsp;Page Size {{form.paginate}}
+    </div>
+    <input id="post_path" type="hidden" value="{{post_path}}"/>
+</div>
+<div class="clearFloat"></div>
+{% if show_search %}
+<div class="buttonCreatesection">
+	<div class="searchfunction">
+		<input type="text" value="{{keyword}}" id="query" class="retro searchInput" name="campaign keyword" onkeydown="enterPress(event);"/>
+    	<input class="s cursorPointer" type="submit" value="Search" id="search_button" onclick="searchList('{{post_path}}')"/>
+    </div>
+</div>
+{% endif %}
+
+
+{%endblock%}
+
+{%block table_header %}
+<tr class="listHeader">
+    <td class="listHeaderCell twitter-login">Twitter Account</td>
+    <td class="listHeaderCellLast twitterActions">Actions</td>
+</tr>
+{%endblock%}
+
+{%block item%}
+<tr id="list_tr_id_{{object.chid}}" class="listTr{% cycle 'Odd' 'Even' %}">
+    <td id="channel_list_name_td_{{object.id}}" class="listCell textAlignLeft twitter-login">
+        <img id="channel_list_avatar_{{object.id}}" src="{{object.avatarUrl|displayNoneAvatar}}" class="iconMedium"/>
+        &nbsp; <a id="channel_list_name_{{object.id}}" target="_blank" href="http://www.twitter.com/{{object.name}}">{{object.name}}{% if isAdmin %}({{object|topic}}){% endif %}</a>
+        {% ifequal object.state 1 %}
+        <span style="color:red" class="cursorPointer" title="We encountered some error on this account. Please delete this account and add back. Once you add back this account, all your campaigns and reports data are restored automatically. You can double check and make sure your campaigns are in active status.">
+            &nbsp; Error
+            <img src="{{MEDIA_URL}}sns/images/warning.png" />
+        </span>
+        {% endifequal %}
+    </td>
+    <td class="listCellLast twitterActions">
+        <a class="action-button" href="javascript:void(0);" onclick="channel_twitter_sync('{{object.id}}')" title="Sync">
+            <img src="{{MEDIA_URL}}sns/images/refresh.png" alt="Sync" border="0"  />
+        </a>
+        <a class="action-button" rel="ajaxform" href="#/chan/details/?id={{object.id}}&avatarUrl={{object.avatarUrl}}" title="Conversations">
+            <img src="{{MEDIA_URL}}sns/images/conversations.png" alt="Conversations" border="0"  class="cursorPointer" />
+        </a>
+        <a class="action-button cursorPointer"  onclick="delete_obj('{{object.chid}}','{{ret_url}}','/chan/')" title="Delete">
+            <img src="{{MEDIA_URL}}sns/images/delete.png" alt="Delete" border="0"  />
+        </a>
+        <a class="action-button" target="_blank" href="#/graph/chart?type=3&timeRange=month&channel={{object.chid}}"  title="Chart">
+            <img src="{{MEDIA_URL}}sns/images/chart_line.png" border="0" class="cursorPointer" alt="Chart"/>
+        </a>
+        {% if isAdmin %}
+        <a href="/#/chan/twitter/confirm?id={{object.id}}&login={{object.name}}&avatarUrl={{object.avatarUrl}}"  title="Topics">
+            T
+        </a>
+        {% endif %}
+    </td>
+</tr>
+{% endblock %}

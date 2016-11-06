@@ -1,0 +1,180 @@
+{% extends 'sns/layout/content.html' %}
+{% load snspostingruletags %}
+{% block content %}
+<div class="content">
+
+	<script type="text/javascript">	
+	var twitter = document.getElementById('is_twitter');
+	var facebook = document.getElementById('is_facebook');
+	if(twitter==null){
+		facebook.checked=true;
+		choosePostToType(facebook,true);
+	}
+	if(facebook==null){
+		twitter.checked=true;
+		choosePostToType(twitter,true);
+	}
+	var is_twitter = $('option[value=0]','#id_type').attr('selected');
+	var is_facebook = $('option[value=1]','#id_type').attr('selected');
+
+	if(is_twitter){
+		$('#is_twitter').attr('checked',true);
+		$('#channels_info').show();
+	} 
+
+	if(is_facebook){
+
+		$('#is_facebook').attr('checked',true);
+		
+		var info = $('#id_info').text();
+		var count = parseInt(info) + 280;
+		$('#id_info').empty();
+		$('#id_info').append(count);
+
+	    $('#fchannels_info').show();
+	    
+	    if($('#id_url').val()){
+	    	$('#link_attchment').show();
+	    }
+	    
+	    
+	}
+
+	$("input", $('#ajax_content')).keydown(function(event) {
+		  if (event.keyCode == 13) { 
+		    $('form').each(function() { 
+		      event.preventDefault(); 
+		    }); 
+		  } 
+		});
+
+	
+	</script>
+    
+	<form method="POST" action="{{action}}">
+		    <div id="postMessageForm">
+		  
+		    <div class="clearFloat"></div>
+		    <div class="input_block">
+		   	    {{form.channels.errors}}
+	    		{{form.fbDestinations.errors}}
+			    <div class="fieldLabel" style="width: 80px;"> <label for="id_type">Post to<span class="required">*</span></label></div>
+			    <div class="fieldInput">
+			    	<!-- <input style="width: auto;" id="is_twitter" onclick="choosePostToType(this);" type="checkbox">Twitter
+			    	<input style="width: auto;" id="is_facebook" onclick="choosePostToType(this);" type="checkbox">Facebook
+			    	 -->
+			    	 {% ifnotequal twitter_count 0 %}
+			    	 	{{form.twitter}}Twitter&nbsp;&nbsp;&nbsp;&nbsp;
+			    	 {% endifnotequal %}
+			    	 {% ifnotequal facebook_count 0 %}
+			    	 	{{form.facebook}}Facebook
+			    	 {% endifnotequal %}
+			    	 <br>
+			    	Maximum message length is 140 for Twitter and 420 for Facebook. 
+			    	{{form.type}}
+			    </div>
+		    </div>
+		    
+	        <div class="clearFloat"></div>
+		    <div class="input_block">
+		        {{ form.msg.errors }}
+		        <div class="fieldLabel" style="width: 80px;"><label for="id_msg">Message<span class="required">*</span></label></div>
+		        <div class="fieldInput"> {{form.msg}} </div>
+		        <div class="fieldLabel fieldLabelCounter">
+		            <div class="msgLengthCounter retro counter" id="id_info" rel_msg="id_msg" rel_url="id_url" rel_fb="id_fb" rel_type="id_type">140</div>
+		            <div class="clearFloat"></div>
+		            <div class="textAlignCenter">left</div>
+		        </div>
+	        </div>
+	        
+	        <div class="clearFloat"></div>
+	        <div class="input_block">
+			    {{ form.url.errors }}
+		        <div class="clearFloat"></div>
+		        <div class="fieldLabel" style="width: 80px;"><label for="id_url">Link</label></div>
+		        <div class="fieldInput"> {{form.url}} </div>
+	        </div>
+	        
+	        <div class="clearFloat"></div>
+	        <div id="channels_info" class="input_block" {% ifequal form.initial.twitter 'on' %}{% else %}{% ifequal form.data.twitter 'on' %}{% else %}style="display:none"{% endifequal %}{% endifequal %}>
+		        <ul class="errorlist" id="id_channels_errorlist" style="display: none;"><li>You must select at least one Twitter account!</li></ul>
+		        <div class="fieldLabel" style="width: 80px;"><label for="id_channels">Twitter Accounts<span class="required">*</span></label></div>
+		        <div class="fieldInput">{{form.channels}}</div>
+	        </div>
+	        
+	        <div class="clearFloat"></div>
+	        <div id="fchannels_info" class="input_block" {% ifequal form.initial.facebook 'on' %}{% else %}{% ifequal form.data.facebook 'on' %}{% else %}style="display:none"{% endifequal %}{% endifequal %}>
+	        	
+		        <ul class="errorlist" id="id_fbDestinations_errorlist" style="display: none;"><li>You must define at least one Facebook account!</li></ul>
+		        <div class="fieldLabel" style="width: 80px;"><label for="id_fbDestinations">Facebook Walls<span class="required">*</span></label></div>
+		        <div class="fieldInput">{{form.fbDestinations}}</div>
+		        
+		        <div class="clearFloat"></div>
+		        
+		        <div id="link_attchment" {% ifequal form.initial.facebook 'on' %}{% else %}{% ifequal form.data.facebook 'on' %}{% else %}style="display:none"{% endifequal %}{% endifequal %}>
+		        
+			        <div class="clearFloat"></div>
+				    <div class="fieldInput" style="padding-left: 40px;">
+				    	<div class="id_mode">
+					    	<!-- <input style="width: auto;" id="is_attach" name="mode" onclick="attach_link(this);" type="checkbox"> -->
+					    	{{form.fbPostStyle}}
+					    		<span>
+					    			Show link as attachment with rich info on Facebook post
+					    		</span>
+						</div>
+				    </div>
+			    
+				    <div class="clearFloat"></div>
+				    <div id="link_detail_loading" style="display: none;">
+			    		<div style="text-align: center;padding:10px;"><img src="/common/images/facebox/loading.gif"/></div>
+			    	</div>
+			    	<div class="clearFloat"></div>
+				    <div id="link_detail" style="{% ifequal form.initial.fbPostStyle 'on' %}{% else %}{% ifequal form.data.fbPostStyle 'on' %}{% else %}display:none;{% endifequal %}{% endifequal %}padding-left: 40px;">
+				    	<div style="float: left;width:180px;margin-right:10px;">
+				    		<div><input style="width: auto;" id="thumbnail" type="checkbox" onclick="shift_pic(this)" checked="checked">
+					    		Show thumbnail for link</div>
+							<div class="clearFloat"></div>
+					    	<div id="picture_info" style="text-align: center;overflow: hidden;width: 180px;height:120px;overflow: hidden;">
+								<img id='link_img' width="180px;" src="" class="cursorPointer" border="0">
+							</div>
+							<div class="clearFloat"></div>
+							<div id="picture_info_control" style="text-align: center;margin-top: 5px;">
+								<a class="icon_back" href="javascript:void(0);" onclick="preview()"><img style="margin-bottom: -3px;" src="{{MEDIA_URL}}sns/images/back.png" border="0"></a>
+								<span style="padding-left: 15px;padding-right: 15px;"><span style="margin: 0px;padding: 0px;" id="id_pic_info_current"></span>/<span style="margin: 0px;padding: 0px;" id="id_pic_info_total"></span></span>
+								<a class="icon_next" href="javascript:void(0);" onclick="next()"><img style="margin-bottom: -3px;" src="{{MEDIA_URL}}sns/images/forward.png" border="0"></a>
+							</div>
+						</div>
+				    	<div style="float: left;">
+				    		{{form.fbName.errors}}
+				    		<div><strong>Link Title</strong></div>
+				    		<div class="clearFloat"></div>
+					    	<!-- <div><input name="fbName" id="id_fbName" size="60" type="text" style="width: 400px;"></div> -->
+						    {{form.fbName}}
+						    <div class="clearFloat"></div>
+						    {{form.fbDescription.errors}}
+						    <div><strong>Link Description</strong>&nbsp;(<label class="retro linkDescriptionCounter" id="id_info_description" rel_description="id_fbDescription">500</label> characters left)</div>
+				    		<div class="clearFloat"></div>
+							<!-- <div><textarea id="id_fbDescription" name="fbDescription" style="width: 400px;height:100px; "></textarea></div> -->
+							{{form.fbDescription}}
+							<div class="clearFloat"></div>
+							
+							<div><span style="display: none;">{{form.fbPicture}}{{form.pic_current}}{{form.pic_total}}</span></div>
+						</div>
+			    	</div>
+			    <div class="clearFloat"></div>
+	        </div>
+	    </div>
+        </div>
+        <!-- hidden input -->
+		<input id="twitter_count" type="hidden" value="{{twitter_count}}"/>
+		<input id="facebook_count" type="hidden" value="{{facebook_count}}"/>
+		
+        {{form.ret_url}}
+        <div class="cb1">
+	                <div class="fieldInput"> <input id="quick_post_article_button" type="button" onclick="ajaxFormSubmitQuick('/', this);" value="Post"> </div>
+	                <div class="fieldInput"> <input type="button" value="Cancel" onclick="history.back(-1);"> </div>
+				</div>
+	</form>
+	
+</div>
+{% endblock %}

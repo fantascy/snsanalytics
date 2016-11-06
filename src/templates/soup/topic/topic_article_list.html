@@ -1,0 +1,35 @@
+{% load souptags %}
+{% for object in object_list %}
+{% block item %}
+{% endblock %}
+{% empty %}
+	<div class="block-2 topic-empty">Oops. No soup is available here.</div>
+{% endfor %}
+
+<div class="ui-helper-clearfix"></div>
+
+{%if has_previous or has_next %}
+	<div class="block-1 pagination">
+	    	<span class="stats gray-text">Total {{hits}} soups in {{pages}} pages</span>
+	    	<a href="{{path|pagePath:1}}" class="button">&lt;&lt;</a>
+	    	{% if has_previous %}
+		    	<a href="{{path|pagePath:previous}}" class="button">&lt;</a>
+	        {% endif %}
+	        
+	        {% for page_num in page_numbers %}
+	        <a href="{{path|pagePath:page_num}}" {% ifequal page_num page %}class="paginator select-button-active"{% else %}class="paginator select-button-default"{% endifequal %}>{{page_num}}</a>
+	        {% endfor %}
+	        
+	        
+	        {% if has_next %}
+	    		<a href="{{path|pagePath:next}}" class="button">&gt;</a>
+	        {% endif %}
+	        
+	    	<a href="{{path|pagePath:pages}}" class="button">&gt;&gt;</a>
+			
+			{% comment %}	   
+	        &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:clickToPage('{{path}}', '{{pages}}')" class="cursor-pointer">Go to</a>
+	        <input id='id_goToPages' type="text" value='{{page}}' style="width: 30px" onkeydown="pageOnClick(event,'{{path}}', '{{pages}}');">	  				
+			{% endcomment %}	   
+	</div>
+{% endif %}

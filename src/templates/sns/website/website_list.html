@@ -1,0 +1,52 @@
+{% extends 'sns/layout/list.html' %}
+{% load snschanneltags %}
+
+{% block title %}<div class="ajax_contentTitle">Content Sources</div>{% endblock %}
+
+{% block list_header %}
+<div class="buttonCreatesection">
+	<div class="buttonCreate">
+	<a class="img-cursor-pointer" href="/url/website/export/">Export</a>
+	</div>
+	<div class="buttonCreate">
+	<a class="img-cursor-pointer" href="/#/url/website/upload/">Import</a>
+	</div>
+	<div class="buttonCreate">
+	<a class="img-cursor-pointer" href="/url/website/create/" rel="facebox">Add</a>
+	</div>
+</div>
+<div class="clearFloat"></div>
+
+
+{%endblock%}
+
+{% block table_header %}
+<tr class="listHeader">
+    <td class="listHeaderCell webSiteDomain">Domain</td>
+    <td class="listHeaderCell webSiteInclude">Effective Params</td>
+    <td class="listHeaderCell webSiteExclude">Useless Params</td>
+    <td class="listHeaderCellLast webSiteAction">Actions</td>
+</tr>
+{%endblock%}
+
+{%block  item %}
+<tr id="list_tr_id_{{object.id}}" class="listTr{% cycle 'Odd' 'Even' %}">
+    <td class="listCellText webSiteDomain">
+    {{object.keyNameStrip}}
+    </td>
+    <td class="listCellText webSiteInclude">
+    {{object.includedKeys}}
+    </td>
+    <td class="listCellText webSiteExclude">
+    {{object.excludedKeys}}
+    </td>
+    <td class="listCellLast webSiteAction">
+    <a class="action-button" class="cursorPointer" onclick="delete_obj('{{object.id}}','{{ret_url}}','/url/website/')" title="Delete">
+        <img src="{{MEDIA_URL}}sns/images/delete.png" border="0"  class="cursorPointer" alt="Delete"/>
+    </a>
+    <a class="action-button" href="/url/website/update/?id={{object.id}}" title="Update" rel="facebox">
+         <img src="{{MEDIA_URL}}sns/images/edit.png" border="0"  class="cursorPointer" alt="Update"/>
+    </a>
+    </td>
+ </tr>
+{%endblock%}

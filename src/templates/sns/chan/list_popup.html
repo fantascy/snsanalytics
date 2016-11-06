@@ -1,0 +1,108 @@
+{% extends 'sns/layout/list.html' %}
+{% load snschanneltags %}
+
+{% block list_header %}
+<div class="buttonCreatesection">
+{% if usePasswd %}
+<!--  Add a Twitter account by passwd -->
+	<div class="buttonCreate">
+    	{% if limited %}
+    	<a class="img-cursor-pointer" href="/usr/limit?name=twitter account" rel="facebox">Add a Twitter account</a>
+    	{% else %}
+    	<a class="img-cursor-pointer" href="/chan/create/" rel="facebox">Add a Twitter account</a>
+    	{% endif %}
+	</div>
+{% else %}	
+    <!--  Add a Twitter account by OAuth -->
+	<div class="buttonCreate">
+    	{% if limited %}
+    	<a class="img-cursor-pointer" href="/usr/limit?name=twitter account" rel="facebox"> Add a Twitter account</a>
+    	{% else %}
+    	<script>    	
+    		$(document).ready(function(){
+    			$('#add_twitter_account').click(function(){
+        			$.oauthpopup({
+            			path: '/chan/twitter/login',
+            			callback: function(){
+        					page_reload();
+            			}
+        			});
+    			});
+			});
+		</script>
+		
+    	
+    	<!-- <a href="/chan/twitter/login" id="add_twitter_account"> Add a Twitter account</a> -->
+    	<!-- <a href="javascript:void(0);" onclick="twitter_login_oauth_token()" id="add_twitter_account"> Add a Twitter account</a> -->
+    	<a href="javascript:void(0);" id="add_twitter_account"> Add a Twitter account</a>
+    	<div id="foo" style="display: none;"></div>
+    	{% endif %}
+	</div>
+{% endif %}
+</div>
+<div class="clearFloat"></div>
+
+<div class="buttonCreatesection">
+<script type="text/javascript">
+$(document).ready(function($){
+
+	document.getElementById('id_sortBy_type').value = '{{sortBy}}';
+	document.getElementById('id_direct_type').value = '{{directType}}';
+	document.getElementById('id_paginate_num').value = '{{paginate_by}}';
+	
+});
+
+</script>
+    <div class="sortbyfunction">
+  		Sorted by {{form.type}}
+		{{form.order}}
+		&nbsp;&nbsp;&nbsp;Page Size {{form.paginate}}
+    </div>
+    <input id="post_path" type="hidden" value="{{post_path}}"/>
+</div>
+<div class="clearFloat"></div>
+{% if show_search %}
+<div class="buttonCreatesection">
+	<div class="searchfunction">
+		<input type="text" value="{{keyword}}" id="query" class="retro searchInput" name="campaign keyword" onkeydown="enterPress(event);"/>
+    	<input class="s cursorPointer" type="submit" value="Search" id="search_button" onclick="searchList('{{post_path}}')"/>
+    </div>
+</div>
+{% endif %}
+
+
+{%endblock%}
+
+{%block table_header %}
+<tr class="listHeader">
+    <td class="listHeaderCell channelLogin">Twitter Account</td>
+    <td class="listHeaderCell channelKeywords">Keywords</td>
+    <td class="listHeaderCellLast channelActions">Actions</td>
+</tr>
+{%endblock%}
+
+{%block item%}
+<tr id="list_tr_id_{{object.id}}" class="listTr{% cycle 'Odd' 'Even' %}">
+    <td id="channel_list_name_td_{{object.id}}" class="listCell textAlignLeft channelLogin">
+        <img id="channel_list_avatar_{{object.id}}" src="{{object.avatarUrl|displayNoneAvatar}}" class="iconMedium"/>
+        &nbsp; <a target="_blank" href="http://www.twitter.com/{{object.name}}">{{object.name}}</a>
+    </td>
+    <td id="channel_list_keywords_td_{{object.id}}" class="listCell textAlignLeft channelKeywords">
+        <span>{{object.keywords|join:", "}}</span>
+    </td>
+    <td class="listCellLast channelActions">
+        <a class="action-button" href="javascript:void(0);" onclick="channel_twitter_sync('{{object.id}}')" title="Sync">
+            <img src="{{MEDIA_URL}}sns/images/refresh.png" alt="Sync" border="0"  />
+        </a>
+        <a class="action-button" rel="ajaxform" href="#/chan/details/?id={{object.id}}&avatarUrl={{object.avatarUrl}}" title="Conversations">
+            <img src="{{MEDIA_URL}}sns/images/conversations.png" alt="Conversations" border="0"  class="cursorPointer" />
+        </a>
+        <a class="cursorPointer action-button" href="javascript:void(0);" onclick="delete_obj('{{object.id}}','{{ret_url}}','/chan/')" title="Delete">
+            <img src="{{MEDIA_URL}}sns/images/delete.png" alt="Delete" border="0"  />
+        </a>
+        <a class="action-button" rel="facebox" href="/chan/update/?id={{object.id}}&login={{object.login}}&password={{object.passwd}}" title="Update">
+            <img src="{{MEDIA_URL}}sns/images/edit.png" alt="Update" border="0"  class="cursorPointer" />
+        </a>
+    </td>
+</tr>
+{% endblock %}

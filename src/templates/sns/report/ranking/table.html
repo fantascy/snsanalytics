@@ -1,0 +1,109 @@
+{% load snsstringfiltertags %}
+
+<table class="view_msgtable" border="0" cellspacing="0" cellpadding="0">
+
+{% block table_header %}
+<div class="clearFloat"></div>
+        <tr>
+            <td colspan="3">
+                <div class="listHeader">
+                    <div class="listHeaderCell rankingMsg">Original Link</div>
+                    <div class="listHeaderCell rankingHash">Short Link</div>
+                    <div class="listHeaderCell rankingTime">Post Time</div>
+                    <div class="listHeaderCellLast rankingCount">Clicks</div>
+                </div>
+            </td>
+        </tr>
+{% endblock %}
+ 
+ {% for object in object_list %}
+        <tr class="listTr{% cycle 'Odd' 'Even' %}">
+            <td class="listCell textAlignLeft rankingMsg">
+                <span>
+                    <a target="_blank" href="{{object.url}}">{{object.post.origMsg}}</a>
+                </span>
+            </td>
+            <td class="listCell rankingHash">
+                <span>
+                    <a target="_blank" href="{{object.keyNameStrip|shortUrlLongDomain}}">{{object.keyNameStrip}}</a>
+                </span>
+            </td>
+            <td class="listCell rankingTime">
+               {{object.post.modifiedTime|toUserTz|date:view.dateFormat}}          
+            </td>
+            <td class="listCellLast rankingCount">
+               {% block table_count %}
+               {% endblock %}           
+            </td>
+        </tr>  
+  {% empty %}
+        <tr class="listEmpty">
+            <td colspan="5">You have no data.</td>
+        </tr>
+  {% endfor %}
+  
+        <tr>
+            <td colspan="5">&nbsp;</td>
+        </tr>
+		{%block paganation%}		
+			{% ifequal home '' %}
+		        {%if has_previous or has_next %}
+		
+		        <tr class="Channel_Tr">
+		            <td colspan="8">
+		            	<span class="paginatioTotal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total <label id="ranking_total_pages">{{pages}}</label> pages, {{hits|numberDisplay}} records</span>
+		            	<a rel="ajaxform" href="javascript:void(0);" onclick="chooseDashboardRankingDetailTypePage('{{post_path}}','1')" class="cursorPointer paginationButton">&lt;&lt;</a>
+		            	{% if has_previous %}
+		            	<a rel="ajaxform" href="javascript:void(0);" onclick="chooseDashboardRankingDetailTypePage('{{post_path}}','{{previous}}')" class="cursorPointer paginationButton">&lt;</a>
+		                <a rel="ajaxform" href="javascript:void(0);" onclick="chooseDashboardRankingDetailTypePage('{{post_path}}','{{previous}}')"  class="cursorPointer paginatioNext">{{previous}}</a>
+		                {% endif %}
+		                
+		                <span class="paginationPage">{{page}}</span>
+		                
+		                {% if has_next %}
+		                <a rel="ajaxform" href="javascript:void(0);" onclick="chooseDashboardRankingDetailTypePage('{{post_path}}','{{next}}')"  class="cursorPointer paginatioNext">{{next}}</a>
+		                <a id="next" rel="ajaxform"href="javascript:void(0);" onclick="chooseDashboardRankingDetailTypePage('{{post_path}}','{{next}}')"  class="cursorPointer paginationButton">&gt;</a>
+		                {% endif %}
+		                
+		                <a rel="ajaxform" href="javascript:void(0);" onclick="chooseDashboardRankingDetailTypePage('{{post_path}}','{{pages}}')" " class="cursorPointer paginationButton">&gt;&gt;</a>
+		                &nbsp;&nbsp;&nbsp;&nbsp;<a id="go_to_certain_page" onclick="chooseDashboardRankingDetailTypeCertainPage('{{post_path}}')" class="cursorPointer paginationButton">Go to</a><input id='id_goToPages' type="text" value='{{page}}' style="width: 30px">	 
+		       		</td>
+		        </tr>
+		<!-- <tr class="Channel_Tr">
+		            <td colspan="8">
+		            	<span class="paginatioTotal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total {{pages}} pages, <span id='total_items_number'>{{hits}}</span> records</span>
+		            	<a rel="ajaxform" href="#{{post_path}}+&page=1" class="cursorPointer paginationButton">&lt;&lt;</a>
+		            	{% if has_previous %}
+		            	<a rel="ajaxform" href="#{{post_path}}&page={{previous}}" class="cursorPointer paginationButton">&lt;</a>
+		                <a rel="ajaxform" href="#{{post_path}}&page={{previous}}" class="cursorPointer paginatioNext">{{previous}}</a>
+		                {% endif %}
+		                
+		                <span class="paginationPage">{{page}}</span>
+		                
+		                {% if has_next %}
+		                <a rel="ajaxform" href="#{{post_path}}&page={{next}}" class="cursorPointer paginatioNext">{{next}}</a>
+		                <a rel="ajaxform" href="#{{post_path}}&page={{next}}" class="cursorPointer paginationButton">&gt;</a>
+		                {% endif %}
+		                
+		                <a rel="ajaxform" href="#{{post_path}}&page={{pages}}" class="cursorPointer paginationButton">&gt;&gt;</a>
+		       
+		                &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:goToPage('{{post_path}}', '{{pages}}')" class="cursorPointer paginationButton">Go to</a><input id='id_goToPages' type="text" value='{{page}}' style="width: 30px" onkeydown="pageOnClick(event,'{{post_path}}', '{{pages}}');">	  				
+		            </td>
+		        </tr>
+		 -->
+		        
+		       	{% else %}
+		        {% ifequal show_list_info 'True' %}
+		        <tr class="Channel_Tr">
+		            <td colspan="8">
+		            	<span class="paginatioTotal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total <span id='total_items_number'>{{hits}}</span> records</span>
+					</td>
+		        </tr>
+		        {% endifequal %}
+		        {% endif %}
+	        {% else %}
+	        {% endifequal %}
+        {%endblock%}
+    </table>
+
+  

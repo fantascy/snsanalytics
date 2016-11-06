@@ -1,0 +1,45 @@
+{% extends 'sns/layout/content.html' %}
+{% block content %}
+<div class="content">
+	<div class="cb1">
+		<span class="fchannelChoiceInfo">
+	       Add from Facebook account:&nbsp;
+	    </span>
+	    <span class="fchannelChoice">
+		    <!-- <img class="iconMedium" id="choice_img" src="{{imgSrc}}"/> -->
+		    {{form.fchannels}}
+    	</span>
+	    <div class="clearFloat"></div>
+    </div>
+    
+    <div class="cb1">
+        <div class="fieldInput">  <input type="button" value="OK" onclick="AddFbPage('{{url}}')"> </div>
+        <div class="fieldInput"> <input type="button" value="Cancel" onclick="redirectTo('/#/chan/fbpage/')"> </div>
+	</div>
+    
+    {% if no_manage%}
+	<div class="cb1">
+       You have not authorized SNS Analytics to administer Facebook Pages owned by these Facebook accounts: 
+       <div class="clearFloat"></div>
+    </div>
+	<div class="cb1">
+       {% for channel in no_manage_info %}
+        <span>        
+            <img src="{{channel.avatarUrl}}" class="iconMedium"/>
+            <a target="_blank" href="{{channel.profileUrl}}">{{channel.name}}</a>
+            &nbsp;&nbsp;&nbsp;
+        </span>
+       {% endfor %}
+	   <div class="clearFloat"></div>
+    </div>
+	<div class="cb1">
+	   To authorize, you can log in to your target Facebook account in this same browser, then <a href="/chan/facebook/login">click here</a>.
+	   <div class="clearFloat"></div>
+    </div>
+    {% endif %}
+
+    {% for account in accounts %}
+    <input id="{{account.id}}" type="hidden" value="{{account.avatarUrl}}"/>
+    {% endfor %}
+</div>
+{% endblock %}

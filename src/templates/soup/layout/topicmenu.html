@@ -1,0 +1,59 @@
+{% load souptags %}
+
+<div id="header-notice" class="yui3-u-1 block-1 ui-widget-header  ui-state-highlight">
+	<!-- Put notice message here. -->	
+</div>
+
+<div id="topic-menu" class="yui3-u-1">
+	<div id="topic-menu-1" class="topic-menu">
+		<ul>
+			{% for topic in view.mainMenu2TopicKeyMap %}
+			<li class="{{view.mainTopic.keyNameStrip|uiStateClass:topic.keyNameStrip}}"><a href="/{{topic.keyNameStrip}}{{topic_suffix}}">{{topic.name}}</a></li>
+			{% if forloop.counter|lessThan:2 %}
+			{% comment %} <li class="ui-state-default"><a href="javascript:gotoFeelLucky()">Feel Lucky</a></li> {% endcomment %}
+			{% endif %}
+			{% endfor %}
+			{% comment %} <li class="ui-state-default last"><a href="javascript:gotoLocal()">Local</a></li> {% endcomment %} 
+		</ul>
+		<div class="ui-helper-clearfix"></div>
+	</div>
+	
+	<div>
+		<div id="topic-search" class="ui-widget side-column">
+			<div id="topic-search-action" class="search-element">
+				<li class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-search"></span></li>
+			</div>
+			<div id="topic-search-input" class="search-element">
+				<input type="text" id="topic-search-value" placeholder="Search a topic" onkeydown="pressEnter(event,'topic-search-action');">
+			</div>
+		</div>
+		<div id="topic-menu-2" class="primary-column topic-menu">
+			<ul>
+				{% if view.customTopics %}
+				{% for topic in view.customTopics %}
+				<li class="{{view.currentTopic.keyNameStrip|uiStateClass:topic.keyNameStrip}}"><a href="/{{topic.keyNameStrip}}{{topic_suffix}}">{{topic.name}}</a></li>
+				{% endfor %}
+				{% endif %}
+				<li class="ui-state-default" style="visibility:hidden;"><a href="">TODO: Figure out why we need at least one item here?</a></li>
+			</ul>
+		</div>
+		<script> $(function() {topicAutoComplete("#topic-search-value", {{view.topicNames|safe}}, 1);}); </script>
+		<div class="ui-helper-clearfix"></div>
+	</div> 
+
+</div>		
+
+{% if view.headerAdsOn %}
+<div class="yui3-u-1 ui-widget-header block-1">
+	<div class="block-2">
+		<div id="header-ads-left" class="place-holder">
+			Self Promotion
+		</div>
+		<div id="header-ads-right" class="place-holder">
+			Header Ads
+		</div>
+		<div class="ui-helper-clearfix"></div>
+	</div>
+</div>
+{% endif %}
+	

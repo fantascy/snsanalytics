@@ -1,0 +1,44 @@
+{% extends 'sns/layout/content.html' %}
+{% block title %}<div class="ajax_contentTitle">Add Facebook Pages Confirmation</div>{% endblock %}
+{% block content %}
+<div class="content">
+	<div class="cb1">
+        <div class="fieldLabel">You've successfully authorized SNS Analytics with management access of these pages administered by <strong><a target='_blank' href='{{profileUrl}}'>{{account}}</a></strong> . </div>
+        <div class="clearFloat"></div>
+    </div>
+    <div class="cb1">
+    	{% for pchannel,number,even in page_list %} 
+    		{% ifequal even 0 %} 
+    			<div> 
+    		{% endifequal %} 
+		    	    <div class="cb3" style="overflow:hidden;">
+		          		<div style="float:left;width:58px;">
+			    			<input id="pchannel_post_id_{{number}}" type='hidden' value='{{pchannel.id}}'/>
+			    			<img src="{{pchannel.avatarUrl}}" class="iconMedium"/>
+			    		</div>
+			    		<div style="float:left;width:240px;">
+			    			<a target="_blank" href="http://www.facebook.com/pages/snsanalytics/{{pchannel.pageid}}"><strong>{{pchannel.name}}</strong></a>
+			    		</div>
+		        	</div>   
+		    {% ifequal number last_number %}  
+		    	</div>
+		    {% else %}  	 
+		      {% ifequal even 1 %} 
+    			</div> 
+    		  {% endifequal %} 	
+    		{% endifequal %}
+    	{% endfor %}
+    </div>
+    {% if max_pages_limit %}
+        <div class="cb1">
+    		&nbsp;&nbsp;&nbsp;&nbsp;and other {{max_pages_limit}} pages...
+    	</div>
+    {% endif %}
+    
+    <div class="cb1">
+        <div class="fieldInput"> <input type="button" onclick="redirectTo('/#/chan/fbpage/')" value="OK"> </div>
+        <div class="clearFloat"></div>			
+    </div>
+    
+</div>
+{% endblock %}

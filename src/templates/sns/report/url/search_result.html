@@ -1,0 +1,63 @@
+{% load snschanneltags %}
+{% load snsstringfiltertags %}
+<table class="view_msgtable" border="0" cellspacing="0" cellpadding="0">
+
+        <tr>
+            <td colspan="5">
+                <div class="listHeader">
+                    <div class="listHeaderCell postMsg">URL</div>
+                    <div class="listHeaderCell postStatus">Click Number</div>
+					<div class="listHeaderCell postActions">Action</div>
+                </div>
+            </td>
+        </tr>
+        
+        <input id="his_detail_url" type="hidden" >
+
+
+        {% for object in object_list %}
+        <tr class="listTr{% cycle 'Odd' 'Even' %}">
+            <td class="listCell textAlignLeft postMsg">
+                <span >
+                    {{object.keyNameStrip}}
+                </span>
+            </td>
+            <td class="listCell postStatus">   
+                {{object.life|numberDisplay}}     
+            </td>
+			<td class="listCell postActions">
+                <a class="cursorPointer" onclick="javascript:getUrlSearchReport('{{object.keyNameStrip}}')">
+		            <img src="{{MEDIA_URL}}sns/images/chart_line.png" alt="Stats" border="0"/>
+				</a>                
+			</td>
+        </tr>
+        
+        {% empty %}
+        <tr class="listEmpty">
+            <td colspan="5">You have no data.</td>
+        </tr>
+        {% endfor %}
+        
+        <tr>
+            <td colspan="5">&nbsp;</td>
+        </tr>
+		{%block paganation%}
+		
+		<!--  
+        {%if has_previous or has_next %}
+        <tr class="Channel_Tr">
+            <td colspan="5">
+                {% if has_previous %}
+                <a href="javascript:getPage('{{ previous }}','his_detail_url')"  class="cursorPointer paginationButton">&lt;&lt;previous</a>
+                {% endif %}
+                {% if has_next %}
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="javascript:getPage('{{ next }}','his_detail_url')" class="cursorPointer paginationButton">next&gt;&gt;</a>
+                {% endif %}	  				
+            </td>
+        </tr>
+        {% endif %}
+        -->
+        {%endblock%}
+</table>
+

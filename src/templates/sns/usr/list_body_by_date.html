@@ -1,0 +1,54 @@
+<table class="view_msgtable" border="0" cellspacing="0" cellpadding="0">
+
+<tr class="listHeader">
+    <td class="listHeaderCell agentName">Email</td>
+    <td class="listHeaderCell agentIp">Name</td>
+    <td class="listHeaderCell agentTime">First Visit</td>
+    <td class="listHeaderCellLast agentActions">Last Visit</td>
+</tr>
+
+
+{% for object in object_list %}
+<tr class="listTr{% cycle 'Odd' 'Even' %}">
+    <td class="listCell textAlignLeft agentName">
+        <span class="js-link"  onclick="changeCurrentUser('{{object.mail}}')">{{object.mail}}</span>
+    </td>
+    <td class="listCell textAlignLeft agentIp">
+        <span>{{object.name}}</span>
+    </td>
+    <td class="listCell textAlignLeft agentTime">
+        <span>{{object.firstVisit}}</span>
+    </td>
+    <td class="listCellLast agentActions">
+        <span>{{object.lastVisit}}</span>
+    </td>
+</tr>
+        
+{% empty %}
+        <tr class="listEmpty">
+            <td colspan="5">You have no data.</td>
+        </tr>
+{% endfor %}
+        
+        <tr>
+            <td colspan="5">&nbsp;</td>
+        </tr>
+		{%block paganation%}
+		
+        {%if has_previous or has_next %}
+        <tr class="Channel_Tr">
+            <td colspan="5">
+                {% if has_previous %}
+                <a href="javascript:getPage('{{ previous }}','his_detail')" class="cursorPointer paginationButton">&lt;&lt;previous</a>
+                {% endif %}
+                {% if has_next %}
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="javascript:getPage('{{ next }}','his_detail')" class="cursorPointer paginationButton">next&gt;&gt;</a>
+                {% endif %}	  				
+            </td>
+        </tr>
+        {% endif %}
+        {%endblock%}
+</table>
+
+

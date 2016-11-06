@@ -1,0 +1,42 @@
+{% extends 'sns/layout/popup_form.html' %}
+{% block form %} 			
+    <div id="postMessageForm" class="cb1">
+        <!--         <div class="fieldLabel"><label for="id_channels">Send to<span class="required">*</span></label></div>
+        <div class="fieldInput">{{form.sendto}}</div> -->
+    
+        {{ form.url.errors }}
+        <div class="clearFloat"></div>
+        <div class="fieldLabel"> <label for="id_url">URL</label></div>
+        <div class="fieldInput"> {{form.url}} </div>
+        <div class="clearFloat"></div>
+    
+        {{ form.msg.errors }}
+        <div class="fieldLabel"> <label for="id_msg">Message<span class="required">*</span></label></div>
+        <div class="fieldInput"> {{form.msg}} </div>
+        <div class="fieldLabel fieldLabelCounter">
+            <div class="msgLengthCounter retro counter" rel_msg="id_msg" rel_url="id_url">{{form.initial.left_length}}</div>
+            <div class="clearFloat"></div>
+            <div class="textAlignCenter">left</div>
+        </div>
+        <div class="clearFloat"></div>
+        
+        <!-- hidden input -->
+        {{form.uid.errors}}
+		{{form.avatarUrl.errors}}
+		{{form.type.errors}}
+		{{form.uid}}
+		{{form.avatarUrl}}
+		{{form.type}}
+		
+		<div style="display:none">
+			{{form.fbName}}
+			{{form.fbDescription}}
+			{{form.fbPicture}}
+		</div>
+    </div>	
+	
+{% endblock %}
+
+{% block buttonName %}
+Post
+{% endblock %}

@@ -1,0 +1,6 @@
+
+/* theme skin changer */
+ul.themeColors { margin: 0 0 1em; padding: 0; float: left; }
+ul.themeColors li { margin: 0; padding: 0; width: 22px; height: 22px; overflow: hidden; float: left; }
+ul.themeColors li a { margin: 0; padding: 0; width: 22px; height: 22px; overflow: hidden; float: left; border: 0; display: block; text-indent: -1234px; background-color: #fff; border-color: #111; }
+ul.themeColors li a:hover, ul.themeColors li a:active { width: 14px; height: 14px; border-width: 4px; border-style: solid; }

@@ -1,0 +1,34 @@
+{% extends 'sns/layout/list.html' %}
+
+{% block list_header %}
+<div class="buttonCreatesection">
+Page Size: {{form.pagination}}
+</div>
+{%endblock%}
+
+{% block table_header %}
+    <tr>
+        <th colspan="4">
+            <div class="listHeader">
+                <div class="listHeaderCell no-topic-channel">Channel</div>
+                <div class="listHeaderCell no-topic-topic">Topic</div>
+                <div class="listHeaderCellLast no-topic-user">User</div>
+            </div>
+        </th>
+    </tr>
+{%endblock%}
+
+{% block item %}
+    <tr id="list_tr_id_{{object.id}}" class="listTr{% cycle 'Odd' 'Even' %}">
+        <td class="listCellText no-topic-channel">
+             <a class="cursorPointer" target="_blank" href="http://twitter.com/{{object.0}}">{{object.0}}</a>
+        </td>
+        <td class="listCellText no-topic-topic">
+             {{object.2}}
+        </td>
+        <td class="listCellLast no-topic-user">
+	         <span class="js-link"  onclick="changeCurrentUser('{{object.1}}')">{{object.1}}</span>
+        </td>
+    </tr>
+{% endblock %}
+   

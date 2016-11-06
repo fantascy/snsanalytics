@@ -1,0 +1,38 @@
+{% extends 'sns/layout/popup_form.html' %}
+{% block form %}
+<div id="addChannel" class="cb1">
+	{{form.email.errors}}
+    <div class="fieldLabel"> <label>Email</label><span class="required">*</span></div>
+    <div class="fieldInput"> {{form.email}} </div>
+    <div class="clearFloat"></div>
+    {{form.fullName.errors}}
+    <div class="fieldLabel"> <label>F-Name</label><span class="required">*</span></div>
+    <div class="fieldInput"> {{form.fullName}} </div>
+    <div class="clearFloat"></div>
+    {{form.firstName.errors}}
+    <div class="fieldLabel"> <label>First</label></div>
+    <div class="fieldInput"> {{form.firstName}} </div>
+    <div class="clearFloat"></div>
+    {{form.lastName.errors}}
+    <div class="fieldLabel"> <label>Last</label></div>
+    <div class="fieldInput"> {{form.lastName}} </div>
+    <div class="clearFloat"></div>
+    {% if not form.id %}
+    {{form.parent.errors}}
+    <div class="fieldLabel"> <label>Parent</label><span class="required">*</span></div>
+    <div class="fieldInput"> {{form.parent}} </div>
+    <div class="clearFloat"></div>
+    
+    {% endif %}
+    
+    
+    <!-- hidden inputs -->
+    {{form.id.errors}}
+    {% if form.id %} {{form.id}} {% endif %}
+    <div style="display: none">
+    {% if form.id %} {{form.parent}} {% endif %}
+    </div>
+    
+
+</div>
+{% endblock %}

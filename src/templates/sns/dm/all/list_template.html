@@ -1,0 +1,66 @@
+{% extends 'sns/layout/list.html' %}
+{% load snspostingruletags %}
+
+{% block table_header %}
+    <tr>
+        <th colspan="4">
+            <div class="listHeader">
+                <div class="listHeaderCell AllDMName">Name</div>
+                <div class="listHeaderCell AllDMUid">User Id</div>
+                <div class="listHeaderCell AllDMAccount">Source Account</div>
+                <div class="listHeaderCell AllDMState">Status</div>
+                <div class="listHeaderCellLast AllDMAction">Actions</div>
+            </div>
+        </th>
+    </tr>
+{% endblock%}
+
+{%block item%}
+    <tr id="list_tr_id_{{object.id}}" class="listTr{% cycle 'Odd' 'Even' %}">
+        <td class="listCell textAlignLeft AllDMName">
+            {{object.name}}
+        </td>
+        <td class="listCell AllDMUid">
+            {{object.uid}}
+        </td>        
+        <td class="listCell AllDMAccount"> {{object.sourceChannel.login}}</td>
+        <td class="listCell AllDMState" id="status_{{object.key}}">
+            {{object.state|state2str}}
+        </td>
+        <td class="listCellLast AllDMAction">
+			<a  class="cursorPointer" href="javascript:void(0);" onclick="delete_obj_admin('{{object.id}}','{{ret_url}}','/dm/rule/')" title="Delete">
+				<img src="{{ MEDIA_URL }}sns/images/delete.png" border="0" class="cursorPointer" alt="Delete"/>
+			</a> 
+			<!--             <a rel="ajaxform" href="#/dm/rule/update/?id={{object.id}}&ret_url={{ret_url}}&current_page={{current_page}}" title="Update">
+				<img src="{{ MEDIA_URL }}sns/images/edit.png" border="0" class="cursorPointer" alt="Update">
+				</a> -->
+
+            {% ifequal object.state 0 %}
+			<a onclick="javascript:sns.rule.activation('{{object.className}}', '{{object.key}}')" title="Activate">
+				<img id="img_activate_{{object.key}}" src="{{ MEDIA_URL }}sns/images/play.png" border="0" class="cursorPointer" alt="Activate">
+			</a>
+            <a onclick="javascript:sns.rule.activation('{{object.className}}', '{{object.key}}')" title="De-activate">
+				<img id="img_deactivate_{{object.key}}" src="{{ MEDIA_URL }}sns/images/pause.png" border="0" class="cursorPointer" style="display:none;" alt="De-activate">		
+			</a>{% endifequal %}
+            {% ifequal object.state 1 %}
+			<a onclick="javascript:sns.rule.activation('{{object.className}}', '{{object.key}}')" title="Activate">
+				<img id="img_activate_{{object.key}}" src="{{ MEDIA_URL }}sns/images/play.png" border="0" class="cursorPointer" style="display:none;" alt="Activate">
+					
+			</a>
+            <a onclick="javascript:sns.rule.activation('{{object.className}}', '{{object.key}}')" title="De-activate">
+				<img id="img_deactivate_{{object.key}}" src="{{ MEDIA_URL }}sns/images/pause.png" border="0" class="cursorPointer" alt="De-activate">
+			</a>
+			{% endifequal %}
+			<a target="_blank" href="#/dm/rule/chart/?id={{object.id}}"  title="Chart">
+			   <img src="{{ MEDIA_URL }}sns/images/chart_line.png" border="0" class="cursorPointer" alt="Chart"/>
+			</a>					
+			
+        </td>
+    </tr>
+
+    <tr>
+      <td colspan="5">
+        <div id="detail_{{object.key}}"  class="ruleDetail" style="display:none"></div>
+      </td>
+    </tr> 
+{% endblock %}

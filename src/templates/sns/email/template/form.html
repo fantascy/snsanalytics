@@ -1,0 +1,50 @@
+{% extends 'sns/layout/content.html' %}
+{% load snspostingruletags %}
+{% block content %}
+
+<div class="content">
+   	 <form method="POST" action="{{action}}">
+	 <table>
+        <div class="ruleForm">
+				<div class="cb1">
+				    <div class="cb1Title">Email Template</div>
+				    
+				    <div class="cb2Double">
+					    {{ form.name.errors }}
+					    <div class="clearFloat"></div>
+						<div>{{form.name.label_tag}}</div> <div>{{form.name}}</div>
+					    <div class="clearFloat"></div>
+				    </div>
+				    <div class="cb2Double">
+					    {{ form.subject.errors }}
+					    <div class="clearFloat"></div>
+						<div>{{form.subject.label_tag}}</div> <div>{{form.subject}}</div>
+					    <div class="clearFloat"></div>
+				    </div>
+				    <div class="cb2Double">
+					    {{ form.type.errors }}
+					    <div class="clearFloat"></div>
+						<div>{{form.type.label_tag}}</div> <div>{{form.type}}</div>
+					    <div class="clearFloat"></div>
+				    </div>
+				    <div class="cb2Double">
+					    {{ form.textBody.errors }}
+					    <div class="clearFloat"></div>
+						<div>{{form.textBody.label_tag}}</div> <div>{{form.textBody}}</div>
+					    <div class="clearFloat"></div>
+				    </div>
+				    <div class="clearFloat"></div>
+				    <div class="cb1">
+		                <div class="fieldInput"> <input type="button" onclick="ajaxFormSubmit('{{ret_url}}', this);" value="save"> </div>
+		                <div class="fieldInput"> <input type="button" value="cancel" onclick="javascript:history.back(-1);"> </div>
+					</div>
+				</div>
+				
+				<!-- hidden inputs -->
+	            {{form.id}}
+	            {{form.ret_url}}
+        </div>
+    </table>
+	</form>
+</div>
+{% endblock %}

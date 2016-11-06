@@ -1,0 +1,39 @@
+{% load googletags %}
+{% load snsstringfiltertags %}
+
+<div id="header">
+	<div class="Logo_Div">
+		<div class="Logo_Image">
+		  <a rel="ajaxform" href="#/sns/contactus.html"> <img src="{{MEDIA_URL}}sns/images/logo.gif"  border="0"  /> </a>
+		</div>
+
+		<div id="TopRightDiv">
+			<div class="TopQuicklinkdivFont">
+				<div style='float:right;'>
+				<span id="account_board" class="headerMenu">
+					<strong>
+						{% if view.ctx.get_user.name %}
+						{{ view.ctx.get_user.name|slic:"0:40" }}
+						{% else %}
+						{{ user.email }}
+						{% endif %}
+					</strong>
+				</span>
+				<a rel="ajaxform" href="#/home/" class="headerMenu">Home</a>
+				<a rel="ajaxform" href="#/usr/settings" class="headerMenu">Settings</a>
+				<a href="{% google_logout_url "/" %}" class="headerMenuEnd">Sign Out</a>	
+				</div>
+				<div class="clearFloat"></div>
+				<div style='float:right;'>
+				<fb:like href="http://www.facebook.com/snsanalytics" layout="button_count" width="80"></fb:like>
+				</div>	
+				<div class="clearFloat"></div>
+				<div class="float:right">				
+					<label id='not_support_ie6' style='display:none;color:red'>This site doesn't support Internet Exporer 6 - the browser you are using. Please use other browser or newer version Internet Explorer.</label>
+				</div>	
+			</div>		
+		</div>
+	</div>
+	
+	<input id="current_location" type="hidden" value=""/>
+</div>

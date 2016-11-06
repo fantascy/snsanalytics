@@ -1,0 +1,13 @@
+{% extends 'sns/layout/popup.html' %}
+
+<!-- if subclass form doesn't override the form block, auto form layout will be used. -->
+{% block form %} 
+    {{form.as_table}} 
+{% endblock %}
+
+{% block buttons %}
+    <div class="spriteSave retro formsubmit">
+	   <a href="javascript:void(0);">{% block buttonName %}Save{% endblock %}</a>
+	</div>
+	<div class="spriteCancel"><a href="javascript:void(0);" class="external_close">Cancel</a></div>
+{% endblock %}

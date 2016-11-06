@@ -1,0 +1,50 @@
+{% extends 'sns/layout/content.html' %}
+{% block title %}<div class="ajax_contentTitle">Post Confirmation</div>{% endblock %}
+{% block content %}
+<div class="content">
+    <div>Your message "{{message}}" failed to post on some channel(s).</div>
+    <div class="clearFloat"></div>
+    <div class="cb1">
+    	{% for post_success,error_msg,post_to,type in result_twitter %}
+        	<div class="fieldDetail">
+        		<img src="{{MEDIA_URL}}sns/images/tweet_small.png" alt="Tweet" border="0"/>&nbsp;<a target="_blank" href="http://www.twitter.com/{{post_to}}">{{post_to}}</a>&nbsp;&nbsp; 
+        		{% if post_success %}
+        			<label style='color:green'>Successful.</label>
+        		{% else %}
+        			<label style='color:red'>{{error_msg}}.</label>
+        		{% endif %}
+        	</div>
+        	<div class="clearFloat"></div>
+        {% endfor %}
+    </div>
+    <div class="clearFloat"></div>
+    <div class="cb1">
+    	{% for post_success,error_msg,post_to,type,url,parent_name,parent_url in result_facebook %}
+        	<div class="fieldDetail">
+        		{% ifequal type 'Page' %}
+        			<img src="{{MEDIA_URL}}sns/images/sns_facebook_page.gif" alt="Facebook page" border="0"/>&nbsp;
+        			<a target="_blank" href="{{parent_url}}">{{parent_name}}</a>&nbsp;=>&nbsp;
+        		{% endifequal %}
+        		{% ifequal type 'Group' %}
+        			<img src="{{MEDIA_URL}}sns/images/sns_facebook_group.png" alt="Facebook group" border="0"/>&nbsp;
+        			<a target="_blank" href="{{parent_url}}">{{parent_name}}</a>&nbsp;=>&nbsp;
+        		{% endifequal %}
+        		{% ifequal type '' %}
+        			<img src="{{MEDIA_URL}}sns/images/sns_facebook_small.png" alt="Facebook post" border="0"/>&nbsp;
+        		{% endifequal %}
+        		<a target="_blank" href="{{url}}">{{post_to}}</a>&nbsp;&nbsp;
+        		{% if post_success %}
+        			<label style='color:green'>Successful.</label>
+        		{% else %}
+        			<label style='color:red'>{{error_msg}}.</label>
+        		{% endif %}
+        	</div>
+        	<div class="clearFloat"></div>
+        {% endfor %}
+    </div>
+   	<div class="cb1">
+	    <div class="fieldInput"> <input type="button" onclick="location.href='#{{ret_url}}';" value="OK"> </div>
+	    <!-- <div class="fieldInput"> <input type="button" value="Post Again" onclick="history.back(-1);"> </div> -->
+	</div>
+</div>
+{% endblock %}

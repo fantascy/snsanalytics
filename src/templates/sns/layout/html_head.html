@@ -1,0 +1,48 @@
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>{{ view.pageTitle }}</title>
+	
+	<meta name="alexaVerifyID" content="m7-NjkiNEfs4ssI3nq68de0ik2A" />
+	<meta name="keywords" content="SNS Analytics, snsanalytics, Social Analytics, Social Marketing, Twitter Marketing, Real-time Analytics, Content Aggregator" /> 
+	<meta property="fb:page_id" content="268726292849" />
+	 
+	<script type="text/javascript">APP = "{{ view.ctx.app }}";</script>
+	<script type="text/javascript">APP_PATH = "{{ view.ctx.app_path }}";</script>
+	<script type="text/javascript">MEDIA_PATH = "{{ MEDIA_URL }}";</script>
+	<script type="text/javascript">SHORT_URL_LENGTH = {{ view.ctx.short_url_length }};</script>
+
+	{% if view.ctx.debug %}
+		<link href="/common/css/facebox.css" rel="stylesheet" type="text/css" />
+		<link href="/common/css/jquery-ui-latest.custom.css" rel="stylesheet" type="text/css" />
+		<link href="/sns/css/sns.css" rel="stylesheet" type="text/css" />
+		<script src="/common/js/jquery-latest.min.js" type="text/javascript"></script>
+		<script src="/common/js/jquery-ui-latest.custom.min.js" type="text/javascript"></script>
+		<script src="/common/js/jquery-plugins.js" type="text/javascript"></script>	
+		<script src="/common/js/jquery.history.js" type="text/javascript"></script>
+		<script src="/common/js/ajaxupload.js" type="text/javascript"></script>
+		<script src="/common/js/json2.js" type="text/javascript"></script>
+		<script src="/common/js/swfobject.js" type="text/javascript"></script>
+		<script src="/common/js/rgraph/RGraph.common.core.js" type="text/javascript"></script>
+		<script src="/common/js/rgraph/RGraph.line.js" type="text/javascript"></script>   <!-- Just needed for line graphs -->
+		<script src="/common/js/rgraph/RGraph.pie.js" type="text/javascript"></script>   <!-- Just needed for pie AND donut charts -->		
+		<script src="/common/js/rgraph/RGraph.common.tooltips.js" type="text/javascript"></script>   <!-- Just needed for tooltips -->
+		<script src="/common/js/rgraph/RGraph.bar.js" type="text/javascript"></script>   <!-- Just needed for bar graphs -->				
+		<script src="/common/js/common.js" type="text/javascript"></script>
+		<script src="/common/js/facebox.js" type="text/javascript"></script>
+		<script src="/sns/js/sns.js" type="text/javascript"></script>
+	{% else %}
+		<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}sns-combined-{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}.css" />
+		<script type="text/javascript" src="{{MEDIA_URL}}sns-combined-{{LANGUAGE_CODE}}.js"></script>
+	{% endif %}
+	<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+   	<script type="text/javascript">google.load('swfobject', '2.2');</script>
+	<script type="text/javascript" type="text/javascript" src="/common/widgets/datetime/WdatePicker.js"></script>
+
+  	{% if view.headScripts %}
+	{% for headScript in view.headScripts %}
+		<link href="/{{ view.viewName }}/{{ headScript }}" rel="stylesheet" type="text/css" />
+    {% endfor %}
+  	{% endif %}
+
+	<script type="text/javascript">	jQuery(document).ready(jQueryDocReady);	</script>
+</head>

@@ -1,0 +1,98 @@
+{% extends 'sns/layout/list.html' %}
+{% load snspostingruletags %}
+
+{% block list_header %}
+<div class="buttonCreatesection">
+<div class="buttonCreate">
+    <a class="img-cursor-pointer" href="/campaign/create/?ret_url={{ret_url}}"> Add a campaign</a>
+</div>
+<div class="searchfunction">
+
+                    		<!-- <div class="fieldLabel">Filter by:</div> -->    					
+    						Sorted by: <select id="id_type" onchange="sortByKeyWord(this)" class="loadChannelDetail" name="type" >
+<option value={{sortBy}}>{{sortBy}}</option>
+{% ifnotequal sortBy 'Name'%}<option value="name">Name</option>{% endifnotequal %}
+{% ifnotequal sortBy 'Last modified time'%}<option value="modifiedTime">Last modified time</option>{% endifnotequal %}
+{% ifnotequal sortBy 'ScheduleType'%}<option value="scheduleType">ScheduleType</option>{% endifnotequal %}
+{% ifnotequal sortBy 'Status'%}<option value="state">Status</option>{% endifnotequal %}
+</select>
+    						<a href="javascript:void(0);" onclick="location.href = document.URL;" class="retryBT">Refresh</a>
+						</div>     
+
+</div>
+
+{% if show_search %}
+<div class="searchfunction">
+   
+   <input type="text" value="{{keyword}}" id="query" class="retro searchInput" name="campaign keyword" onkeydown="enterPress(event);"/>
+   
+   <input class="s cursorPointer" type="submit" value="Search" id="search_button" onclick="searchList('/post/rule/article/')"/>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block table_header %}
+    <tr>
+        <th colspan="4">
+            <div class="listHeader">
+                <div class="listHeaderCell postingRuleName">Name</div>
+                <div class="listHeaderCell postingRuleState">Status</div>
+                <div class="listHeaderCell postingRuleSchedule">Scheduled</div>
+                <div class="listHeaderCellLast postingRuleActions">Actions</div>
+            </div>
+        </th>
+    </tr>
+{% endblock%}
+
+{%block item%}
+    <tr class="listTr{% cycle 'Odd' 'Even' %}">
+        <td class="listCell textAlignLeft postingRuleName">
+            <a href="javascript:toggleDetail('{{object.className}}', '{{object.key}}')" title="Show detail">
+                <img id="img_show_{{object.key}}" src="{{MEDIA_URL}}sns/images/arrow_down.png" border="0" class="cursorPointer" alt="Show detail"/>
+            </a>
+            <a href="javascript:toggleDetail('{{object.className}}', '{{object.key}}')" title="Hide detail">
+                <img id="img_hide_{{object.key}}" src="{{MEDIA_URL}}sns/images/arrow_up.png" border="0" class="cursorPointer" style="display:none;" alt="Hide detail"/>
+            </a>
+            {{object.name}}
+        </td>
+        <td class="listCell postingRuleState" id="status_{{object.key}}">
+            {{object.state|state2str}}
+        </td>
+        <td class="listCell postingRuleSchedule"> {{object|scheduleInfo}}</td>
+        <td class="listCellLast postingRuleActions">
+            
+			<a class="action-button" href="delete/?id={{object.id}}&ret_url={{ret_url}}" title="Delete">
+				<img src="{{MEDIA_URL}}sns/images/delete.png" border="0" class="cursorPointer" alt="Delete"/>
+			</a> 
+            <a class="action-button" href="update/?id={{object.id}}&ret_url={{ret_url}}" title="Update">
+				<img src="{{MEDIA_URL}}sns/images/edit.png" border="0" class="cursorPointer" alt="Update">					
+			</a>
+			
+            {% ifequal object.state 0 %}
+			<a class="action-button" href="javascript:sns.rule.activation('{{object.className}}', '{{object.key}}')" title="Activate">
+				<img id="img_activate_{{object.key}}" src="{{MEDIA_URL}}sns/images/play.png" border="0" class="cursorPointer" alt="Activate">
+			</a>
+            <a class="action-button" href="javascript:sns.rule.activation('{{object.className}}', '{{object.key}}')" title="De-activate">
+				<img id="img_deactivate_{{object.key}}" src="{{MEDIA_URL}}sns/images/pause.png" border="0" class="cursorPointer" style="display:none;" alt="De-activate">		
+			</a>{% endifequal %}
+            {% ifequal object.state 1 %}
+			<a class="action-button" href="javascript:sns.rule.activation('{{object.className}}', '{{object.key}}')" title="Activate">
+				<img id="img_activate_{{object.key}}" src="{{MEDIA_URL}}sns/images/play.png" border="0" class="cursorPointer" style="display:none;" alt="Activate">
+					
+			</a>
+            <a class="action-button" href="javascript:sns.rule.activation('{{object.className}}', '{{object.key}}')" title="De-activate">
+				<img id="img_deactivate_{{object.key}}" src="{{MEDIA_URL}}sns/images/pause.png" border="0" class="cursorPointer" alt="De-activate">
+			</a>
+			{% endifequal %}
+            <a class="action-button" href="record/?id={{object.id}}" title="Execution records">
+				<img src="{{MEDIA_URL}}sns/images/list.png" border="0" class="cursorPointer" alt="Execution records">
+			</a>	
+        </td>
+    </tr>
+
+    <tr>
+      <td colspan="5">
+        <div id="detail_{{object.key}}"  class="ruleDetail" style="display:none"></div>
+      </td>
+    </tr> 
+{% endblock %}

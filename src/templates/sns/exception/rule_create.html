@@ -1,0 +1,16 @@
+{% extends 'sns/layout/content.html' %}
+
+{% block content %}
+<div class="content">
+    <div class="cb1">
+        <div class="fieldDetail">Sorry, you can not {{action}} without adding one {{nameTwo}}, one {{nameThree}} or one {{nameFour}} first! </div>
+        <div class="clearFloat"></div>
+        <div class="fieldDetail"><a href="/{{locationTwo}}"> Go to add a {{nameTwo}}</a></div>
+        <div class="clearFloat"></div>
+        <div class="fieldDetail"><a href="/{{locationThree}}"> Go to add a {{nameThree}}</a></div>
+        <div class="clearFloat"></div>
+        <div class="fieldDetail"><a href="/{{locationFour}}"> Go to add a {{nameFour}}</a></div>
+        <div class="clearFloat"></div>
+    </div>
+</div>
+{% endblock %}

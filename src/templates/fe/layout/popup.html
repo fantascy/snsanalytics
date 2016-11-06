@@ -1,0 +1,30 @@
+<head>
+<style type="text/css">
+.Ctable Tr{
+font-size:12px; font-family:Arial; color:#333333;
+height:28px; padding-left:3px;
+}
+.Ctable td{
+height:28px;
+}
+.Table_Input{
+width:250px;}
+</style>
+</head>
+
+<form method="POST" action="{{path}}">
+    <div class="ajaxStateBar"></div>
+    {% block form %} {% endblock %}
+    
+    <div class="clearFloat"></div>
+    {% block outbuttons %}
+    <div class="faceboxControls">
+        &nbsp;
+        {% block buttons %}
+            <a href="javascript:void(0);" class="external_close"> <div class="spriteCancel">Close</div> </a>
+        {% endblock %}
+        
+        <div class="clearFloat"></div>
+    </div>
+    {% endblock %}
+</form>

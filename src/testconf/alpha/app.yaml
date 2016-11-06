@@ -1,0 +1,15 @@
+# This app.yaml is used to update cron.yaml for alpha test servers.
+
+application: ripple-a
+version: 5
+runtime: python27
+api_version: 1
+default_expiration: '30d'
+threadsafe: true
+
+
+handlers:
+- url: /.*
+  script: dummy
+
+

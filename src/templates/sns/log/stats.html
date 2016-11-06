@@ -1,0 +1,60 @@
+<div id="system-stats">
+{% block title %}<div class="ajax_contentTitle">System Stats</div>{% endblock %}
+
+<div class="clearFloat"></div>
+
+<div class="selector">
+	Select a chart: {{form.type}}
+</div>
+
+<div class="selector-left">
+{% ifequal type -1 %}
+<input type="hidden" id="data-cmpclicks" value="{{counts.0|safe}}" />
+<input type="hidden" id="data-cmpposts" value="{{counts.1|safe}}" />
+<input type="hidden" id="data-cmpurls" value="{{counts.2|safe}}" />
+<input type="hidden" id="data-cmpfollowers" value="{{counts.3|safe}}" />
+<input type="hidden" id="data-cmpaccounts" value="{{counts.4|safe}}" />
+<input type="hidden" id="label" value="{{labels.0|safe}}" />
+<input type="hidden" id="tip-cmpclicks" value="{{tips.0|safe}}" />
+<input type="hidden" id="tip-cmpposts" value="{{tips.1|safe}}" />
+<input type="hidden" id="tip-cmpurls" value="{{tips.2|safe}}" />
+<input type="hidden" id="tip-cmpfollowers" value="{{tips.3|safe}}" />
+<input type="hidden" id="tip-cmpaccounts" value="{{tips.4|safe}}" />
+<input type="checkbox" id="check-cmpclicks" checked="checked" onchange="javascript:refreshSysChart()"/>Clicks
+<input type="checkbox" id="check-cmpposts" checked="checked" onchange="javascript:refreshSysChart()"/>Posts
+<input type="checkbox" id="check-cmpurls" checked="checked" onchange="javascript:refreshSysChart()"/>Unique URLs
+<input type="checkbox" id="check-cmpfollowers" onchange="javascript:refreshSysChart()"/>Followers
+<input type="checkbox" id="check-cmpaccounts" onchange="javascript:refreshSysChart()"/>Accounts
+{% endifequal %}
+</div>
+
+<div class="clearFloat"></div>
+
+<canvas id="myLine" width="670" height="350">[No canvas support]</canvas>
+
+<script type="text/javascript">
+	{% ifequal type -1 %}
+		refreshSysChart();
+	{% else %}
+        var line = new RGraph.Line("myLine", eval("{{counts|safe}}"));
+        line.Set('chart.linewidth', 2);
+        line.Set('chart.hmargin', 5);
+        line.Set('chart.tooltips', eval("{{tips|safe}}"));
+        line.Set('chart.tickmarks', 'filledcircle');
+		line.Set('chart.ticksize', 5);
+		var labels = eval("{{labels|safe}}");
+		for (var i = 0; i < labels.length; i++) {
+			if ((i % 3 != 0) && (i != labels.length - 1))
+				labels[i] = '';
+		}
+        line.Set('chart.labels',  labels);
+        {% ifequal type 3 %}
+        line.Set('chart.gutter', 80);
+        {% else %}
+        line.Set('chart.gutter', 50);
+        {% endifequal %}
+        line.Set('chart.colors', ['#FF9900','#8EC1DA']);
+        line.Draw();
+    {% endifequal %}
+</script>
+</div>

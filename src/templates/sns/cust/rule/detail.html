@@ -1,0 +1,45 @@
+{% load snsstringfiltertags %}
+{% load snschanneltags %}
+{% load snspostingruletags %}
+
+    <div class="cb1">
+        <div class="cb1Title">Basic Info</div>
+        <div class="cb3">
+          <div class="fieldLabel">Name</div><div class="fieldDetail">{{object.name}}</div>
+        </div>
+        <div class="cb3">
+          <div class="fieldLabel">Created Time</div><div class="fieldDetail">{{object.createdTime|toUserTz|date:view.dateFormat}}</div>
+        </div>
+        <div class="cb3">
+          <div class="fieldLabel">Clicks</div><div class="fieldDetail">{{total_clicks}} </div>
+        </div>
+        <div class="cb3">
+          <div class="fieldLabel">Modified Time</div><div class="fieldDetail">{{object.modifiedTime|toUserTz|date:view.dateFormat}}</div>
+        </div>
+    </div>
+    <div class="clearFloat"/>
+    <div class="cb1">
+        <div class="cb1Title detailSliceShort">Links</div>
+        {{links_info}}
+          {% for link in params.links_info %}
+            <div class='detailSliceShortDashed'>
+	            <div class="cb3">
+		          <div class="fieldLabel">Title</div><div class="fieldDetail">{{link.title}}</div>
+		        </div>		        
+		        <div class="cb3">
+		          <div class="fieldLabel">Short Link</div><div class="fieldDetail"><a target="_blank" href="{{link.surl}}">{{link.surl}}</a></div>
+		        </div>
+            </div>
+
+	        <div class="clearFloat"></div>
+	        <div class="cb3">
+	          <div class="fieldLabel ">Link</div><div class="fieldDetail"><a target="_blank" href="{{link.url}}">{{link.url}}</a></div>
+	        </div>
+	        <div class="clearFloat"></div>
+			<div></div>
+		  {% endfor %}
+        <!-- hidden input -->
+        <!-- <input type='hidden' id='links_info_detail' value='{{links_info}}' class='retro detailCustomCampaignLoad'> -->
+	</div>
+
+ 

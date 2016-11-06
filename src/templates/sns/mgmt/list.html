@@ -1,0 +1,48 @@
+{% extends 'sns/layout/list.html' %}
+{% load snsstringfiltertags %}
+
+{% block list_header %}
+<div class="buttonCreatesection">
+	<div class="buttonCreate">
+    	<a class="img-cursor-pointer" rel="ajaxform"  href="/#/mgmt/create/?ret_url={{ret_url}}"> Add</a>
+	</div>
+</div>
+{%endblock%}
+
+{% block table_header %}
+    <tr>
+        <th colspan="4">
+            <div class="listHeader">
+                <div class="listHeaderCell webSiteDomain">Name</div>
+                <div class="listHeaderCell webSiteInclude">Content Sources</div>
+                <div class="listHeaderCell webSiteExclude">Channels</div>
+                <div class="listHeaderCellLast webSiteAction">Actions</div>
+            </div>
+        </th>
+    </tr>
+{%endblock%}
+{% block item %}
+    <tr id="list_tr_id_{{object.id}}" class="listTr{% cycle 'Odd' 'Even' %}">
+        <td class="listCellText webSiteDomain">
+             {{object.name}} ({{object.priority}})
+        </td>
+        <td class="listCellText webSiteInclude">
+            {{object.feedSources|feedSources}}
+        </td>
+        <td class="listCellText webSiteExclude">
+         	{{object|filterDisplay}}
+         </td>
+        <td class="listCellLast webSiteAction">
+        	<a class="action-button cursorPointer" onclick="delete_obj('{{object.id}}','{{ret_url}}','/mgmt/')" title="Delete">
+            <img src="{{MEDIA_URL}}sns/images/delete.png" border="0"  class="cursorPointer" alt="Delete"/>
+	        </a>
+	        <a class="action-button cursorPointer" href="/#/mgmt/update/?id={{object.id}}" title="Update">
+	            <img src="{{MEDIA_URL}}sns/images/edit.png" border="0"  class="cursorPointer" alt="Update"/>
+	        </a>
+	        <a class="action-button cursorPointer" rel="facebox" href="/mgmt/confirm/?id={{object.id}}" title="Sync">
+            	<img src="{{MEDIA_URL}}sns/images/refresh.png" alt="Sync" border="0"  />
+       		 </a>
+        </td>
+    </tr>
+{% endblock %}
+   

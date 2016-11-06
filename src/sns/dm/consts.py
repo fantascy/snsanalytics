@@ -1,0 +1,34 @@
+DM_OLDEST_TO_LATEST = 0
+DM_LATEST_TO_OLDEST = 1
+DM_ORDER_TYPES = (DM_OLDEST_TO_LATEST,DM_LATEST_TO_OLDEST)
+
+MAX_EXECUTING_DM_RULE = 30
+
+DM_MONITOR_KEYNAME = 'dmmonitor'
+
+DM_INTERVALS = ('onetime','1Wk','1Mo','2Mo','3Mo')
+
+INTERVAL_MAP = {
+    'onetime':'One Time',
+    '1Wk':'1 week',
+    '1Mo':'1 month',
+    '2Mo':'2 month',
+    '3Mo':'3 month'             
+                }
+
+INFO_TYPES = [
+     ('hour','7 Days'),
+     ('day','Life time'),
+              ]
+
+DM_RULE_PER_PATCH = 6
+
+PROMOTE_CATEGORY_TYPE_NATION = 0
+PROMOTE_CATEGORY_TYPE_CITY = 1
+
+PROMOTE_TYPE_ACCOUNT = 0
+PROMOTE_TYPE_DEAL = 1
+
+ACCOUNT_PROMOTE_TYPE_CATEGORY = 0
+ACCOUNT_PROMOTE_TYPE_CITY_CATEGORY = 1
+ACCOUNT_PROMOTE_TYPE_CITY = 2

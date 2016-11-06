@@ -1,0 +1,24 @@
+{% load commonstringtags %}
+{% load souptags %}
+
+<div id="rating-ajax-{{object.id}}" class="rating-ajax">
+	<ul id="rating-login-user-{{object.id}}" class="rating  rating-login-user" orig="{{object.userRating}}">
+		<li>
+			<span class="sub-description"><span class="highlight">{{object.userRating|userRatingLabel:object.counter.ratingCount}}</span></span>
+		</li>
+		{% for iconId in view.const.LIST5 %}
+		<li id="rating-login-user-icon-{{iconId}}-{{object.id}}" class="rating-login-user-icon">
+			<a onclick="rateArticle('{{view.fbCookieKey}}','#rating-ajax-{{object.id}}','/{{view.ctx.app_path}}/rate/?id={{object.id}}&newscore={{iconId}}&ref=media_list');">
+				<span class="icon-16 {{object.userRating|ratingIconClass:iconId}}"></span>
+			</a>
+		</li>
+		{% endfor %}
+		{% ifnotequal object.counter.ratingCount 0 %}
+		<li>
+			<span class="sub-description"><span class="highlight">{{object.counter.rating}}/5</span> on</span> <a class="explicit hover-underline" href="/soup/{{object.globalUrl.titleKey}}">{{object.counter.ratingCount|pluralHandler:"rating"}}</a>
+		</li>
+		{% endifnotequal %}
+	</ul>
+	<script  type="text/javascript"> $("#rating-login-user-{{object.id}} .rating-login-user-icon").hover(ratingHoverIn, ratingHoverOut); </script>
+</div>
+<div class="ui-helper-clearfix"></div>

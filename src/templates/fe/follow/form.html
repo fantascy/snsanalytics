@@ -1,0 +1,28 @@
+{% extends 'fe/layout/content.html' %}
+{% load fecampaigntags %}
+
+
+{% block content %}
+
+<div class="content">
+    
+	<form method="POST" action="{{action}}">
+	    <table>
+        <div class="ruleForm">
+	    {% block form %}
+				{% block formContent %}
+				{% endblock %}
+				
+				{% block buttons %}
+				{% endblock %}
+
+	            <!-- hidden inputs -->
+	            {{form.id}}
+	            {{form.ret_url}}
+		{% endblock %}
+        </div>
+        </table>
+	</form>
+	
+</div>
+{% endblock %}

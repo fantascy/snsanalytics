@@ -1,0 +1,12 @@
+{% extends 'sns/layout/content.html' %}
+
+{% block content %}
+<div class="content">
+    <div id="addMessage" class="cb1">
+        <div class="fieldDetail">Sorry, you can not {{action}} without adding a {{name}} first! </div>
+        <div class="clearFloat"></div>
+        <div class="fieldDetail"><a rel="facebox" href="/{{location}}"> Go to add a {{name}}</a></div>
+        <div class="clearFloat"></div>
+    </div>
+</div>
+{% endblock %}

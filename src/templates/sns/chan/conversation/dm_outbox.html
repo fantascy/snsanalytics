@@ -1,0 +1,65 @@
+{% extends 'sns/chan/conversation/table.html' %}
+{% load snschanneltags %}
+
+{% block all_body %}
+<table id="channel_table_id" class="view_msgtable" border="0" cellspacing="0" cellpadding="0">
+
+{% block table_header %}
+<div class="clearFloat"></div>
+	<tr class="listHeader">
+		<td class="listHeaderCell DMRT">Recipient</td>
+    	<td class="listHeaderCell DMdetail">Direct Message</td>
+    	<td class="listHeaderCellLast DMActions">Actions</td>
+	</tr>
+{% endblock %}
+ 
+ {% for object in object_list %}
+        <tr id="channel_tr_id_{{object.id}}"  class="listTr{% cycle 'Odd' 'Even' %}">
+{% block table_count %}
+		<td class="listCell textAlignLeft DMRT">
+			<img class="iconMedium" src="{{object.sender.profile_image_url}}"/><a target="_blank" href="http://www.twitter.com/{{object.sender.screen_name}}">&nbsp;{{object.sender.screen_name}}</a>
+		</td>
+    	<td class="listCell textAlignLeft DMdetail">
+        	<div class="msgcontent">{{object.text|urlize|twitterUrlize|safe}}</div>
+        	<div class="msgdate">{{object.created_at|friendTime}}</div>
+        </td>
+    	<td class="listCellLast DMActions">
+    		<a class="action-button cursorPointer" href="javascript:void(0);" onclick="delete_dm('{{object.id}}','{{avatarUrl}}','{{uid}}','{{type}}')" title="Delete">
+            	<img src="{{MEDIA_URL}}sns/images/delete.png" alt="Delete" border="0"  />
+        	</a>
+        </td>
+{% endblock %}
+        </tr>  
+  {% empty %}
+        <tr class="listEmpty">
+            <td colspan="5">You have no data.</td>
+        </tr>
+  {% endfor %}
+  
+        <tr>
+            <td colspan="5">&nbsp;</td>
+        </tr>
+		
+{% block paganation %}        
+
+     {% if max_id %}
+        <tr id="conversation_more_tr_initial" class="Channel_Tr">
+            <td colspan="5">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="javascript:changeConversationListPage('{{ max_id }}','{{div_number}}')" class="cursorPointer paginationButton">more&gt;&gt;</a> 				
+            </td>
+        </tr>
+     {% endif %}
+{% endblock %}
+    </table>
+        <div id="his_detail_0" > 
+		</div>	
+{% endblock %}
+
+
+
+
+
+
+
+

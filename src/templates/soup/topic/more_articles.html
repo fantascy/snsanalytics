@@ -1,0 +1,11 @@
+{% load souptags %}
+{{ new_time }}|{{object_list|length}}|
+{% for object in object_list %}
+	{% ifequal view.mediaType view.const.MEDIA_TYPE_ALL_STR %}
+		{% include 'soup/topic/one_article_thumbnail.html' %}
+	{% else %}{% ifequal view.mediaType view.const.MEDIA_TYPE_IMAGE_STR %}		
+		{% include 'soup/topic/one_article_media.html' %}
+	{% else %}{% ifequal view.mediaType view.const.MEDIA_TYPE_VIDEO_STR %}		
+		{% include 'soup/topic/one_article_media.html' %}
+	{% endifequal %}{% endifequal %}{% endifequal %}  
+{% endfor %}

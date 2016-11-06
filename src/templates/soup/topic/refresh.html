@@ -1,0 +1,21 @@
+<div> 
+	<div id="article-new" onclick="javascript:showFreshArticles()" style="display:none">
+		<div id="article-new-center" class="center">
+			<span class="friends-more-text">View <span id="article-new-number">0</span> new</span>
+		</div>
+	</div>
+	<input id="last-refresh-time" type="hidden" value="{{ currentTime }}"/>
+	<input type="hidden" value="refresh" onclick="javascript:refreshNewArticles()" />
+	<input id="response-text" type="hidden" value="" />
+	<input id="time-out" type="hidden" value="60" />
+</div>
+<div id="article-more-container"></div>
+
+<script  type="text/javascript">
+	var refreshNewArticles = refreshParameterSetup('{{view.topicKey}}', '{{view.mediaType}}');
+	$("#article-new").hover(
+		function(){ $(this).addClass("article-new-hover");},
+		function(){ $(this).removeClass("article-new-hover");}
+	);
+	setInterval('countDown(60, \'refreshNewArticles\')', 1000);
+</script>

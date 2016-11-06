@@ -1,0 +1,10 @@
+{% extends 'soup/share/share.html' %}
+{% load souptags %}
+
+{% block form-title %}
+<form method="POST" action="/submit/update/confirm/" id="shareSoup">
+{% endblock %}
+
+{% block submit-button %}
+<a class="button" href="javascript:shareNewSoup();">Save</a>
+{% endblock %}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url> 
+    <loc>http://1.allnewsoup.com/</loc> 
+  </url>
+  <url> 
+    <loc>http://1.allnewsoup.com/soup/color_ceo_talks_funding_and_the_future_of_social_networking_interview</loc> 
+    <image:image>
+       <image:loc>http://7.mshcdn.com/wp-content/authors/Ben%20Parr-611.jpg</image:loc> 
+    </image:image>
+  </url>
+  <url> 
+    <loc>http://1.allnewsoup.com/soup/2010_the_year_apple_also_became_a_chip_company_|_nanotech__the_circuits_blog__cnet_news</loc> 
+    <image:image>
+       <image:loc>http://ad.doubleclick.net/ad/N2724.CNET.com/B4515718.57;abr=!ie4;abr=!ie5;sz=300x250;pc=cbs489101;ord=2011.03.25.06.44.10?</image:loc> 
+    </image:image>
+  </url>
+  <url> 
+    <loc>http://1.allnewsoup.com/soup/apple_patent_points_to_advanced_antenna_for_notebooks_tablets_|_zdnet_9436</loc> 
+    <image:image>
+       <image:loc>http://ad.doubleclick.net/ad/N5364.cbs.com/B5190596.94;abr=!ie4;abr=!ie5;sz=300x250;pc=cbs499937;ord=2011.03.25.06.12.05?</image:loc> 
+    </image:image>
+  </url>
+</urlset>

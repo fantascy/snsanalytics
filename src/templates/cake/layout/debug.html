@@ -1,0 +1,17 @@
+{% load souptags %}
+{% load caketags %}
+
+
+{% if view.isAdminUser %} 
+	<span class="debug" onclick="toggleDialog('#debug-dialog', showDebugDialog);">DEBUG</span>
+	<div id="debug-dialog" style="display:none">
+		<h3>Article Info</h3> 
+		<p>{{view.counter.createdTime|timeAgo}} </p> 
+		<p>{{view|articleCountInfo}} </p>
+		<p><a href="{{view.counter.url}}" target="_blank">{{view.counter.url}}</a></p>
+		<h3>Topic Info</h3> 
+		<p>name: '{{view.topic.name}}'; parents: {% for parent in view.topic.parentTopics %} '{{parent}}' {% endfor %}</p> 
+		<h3>Account Info</h3> 
+		<p>channel: '{{view.authorName}}'; user: '{{view.snsUserEmail}}'</p> 
+	</div>
+{% endif %}

@@ -1,0 +1,171 @@
+{% load snsstringfiltertags %}
+{% load souptags %}
+{% load caketags %}
+
+<div id="sidebar-frame">
+	<div id="header">
+		<div id="sidebar-close-button" title="Close the toolbar"><span class="ui-icon ui-icon-closethick"></span></div>
+		<div class="logo" onclick="window.location.href='/'">RippleOne</div>
+		{% comment %}
+		<div class="logo" onclick="toggleDialog('#home-dialog', showHomeDialog);">RippleOne</div>
+		<div id="home-dialog" style="display:none">
+			<p>Rats.... we're not <strong>quite</strong> finished making the home page [footsteps heard sprinting down a long corridor and a door slamming shut...]</p> 
+			<p>Please check back soon!</p> 
+		</div>
+		{% endcomment %}
+	</div>
+
+	<div class="clear">&nbsp;</div>
+	<span id="current-article-box">
+		<h3 class="firstHeading subNavTitle">Currently Viewing</h3>
+		<div id="current-article-title-box">
+			<div id="current-article-title">
+				<div class="title text-highlight">{{object.globalUrl.title|safe|slic:"0:60"}}</div>
+				{% if object.authorName %}
+				<p class="via-line">via @{{object.authorName}} </p>
+				<script type="text/javascript">
+				  twttr.anywhere(function (T) {
+				    T("#current-article-box").hovercards();
+				  });
+				</script>
+				{% endif %}
+			</div>
+			<div class="slide-button">
+				<a {% if view.nextCake %}href="/r/{{view.nextCake.titleKey}}"{%else%}onclick="toggleDialog('#no-more-article-dialog', showNoMoreArticleDialog);"{% endif %}>
+					<img src="{{MEDIA_URL}}cake/images/slide.png" />
+				</a>
+				<div id="no-more-article-dialog" style="display:none">
+					<p>Congratulations, you've seen every ripple of news that we have on the topic of: <strong>{{view.currentTopic.name}}</strong>. Please select another topic from the menu below. </p>
+				</div>
+			</div>
+		</div>
+		{% comment %}
+		<!-- SharedCount Test BEGIN -->
+		<div style="display:none;" id="sharedcount">
+			<span id="tweets">0</span> tweets, <span id="likes">0</span> likes, and <span id="plusones">0</span> +1's.
+		</div>
+		<script>
+		jQuery(document).ready(function($){
+			$.getJSON("//sharedcount.appspot.com/?url="+encodeURIComponent('{{view.globalUrl.url}}')+"&callback=?", function(data){
+				$("#tweets").text(data.Twitter);
+				$("#likes").text(data.Facebook.like_count);
+				$("#plusones").text(data.GooglePlusOne);
+				$("#sharedcount").fadeIn();
+			});
+		});
+		</script>
+		<!-- SharedCount Test END -->
+		{% endcomment %}
+
+		<div class="ui-helper-clearfix"></div>
+	
+		<div id="social-buttons">
+			<!-- AddThis Button BEGIN -->
+			<div class="addthis_toolbox addthis_default_style" addthis:url="{{view.fullUrl}}">
+				<a class="addthis_button_facebook"></a>
+			    <a class="addthis_button_twitter"></a>
+			    <a class="addthis_button_email"></a>
+			    <a class="addthis_button_stumbleupon"></a>
+				{% comment %}
+			    <a class="addthis_button_gmail"></a>
+			    <a class="addthis_button_google"></a>
+			    <a class="addthis_button_reddit"></a>
+			    <a class="addthis_button_favorites"></a>
+			    <a class="addthis_button_linkedin"></a>
+			    <a class="addthis_button_tumblr"></a>
+				{% endcomment %}
+				<a class="addthis_button_compact"></a>
+			</div>
+			<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e5554fc35d73822"></script>
+			<!-- AddThis Button END -->
+			<div id="fb-comment-button" title="Comment and share on Facebook" onclick="toggleDialog('#comment-dialog', showCommentDialog);">
+				<img src="{{MEDIA_URL}}cake/images/facebook_comment.png" alt="Comment" />
+			</div>
+			{% include 'cake/layout/debug.html' %}
+		</div>
+
+		<div class="ui-helper-clearfix"></div>
+
+		{% comment %}
+		{% include 'cake/layout/feedback.html' %}
+		{% endcomment %}
+	</span>
+	
+	<div id="comment-dialog" title="Comment on Facebook"></div>
+		
+	<div class="clear">&nbsp;</div>
+	<div class="clear">&nbsp;</div>
+	<span id="topic-box">
+		<h3 class="subNavTitle">Explore Topics</h3>
+		<div id="topic-popup-button" class="button" onclick="toggleDialog('#topic-list', showTopicDialog);">
+			<div id="current-topic">
+				<div id="topic-menu-button">
+					<img src="{{MEDIA_URL}}cake/images/topic_navigation.png"  title="Explore Topics" />
+				</div>
+				<div class="{{view.currentTopic.name|topicClass}}">
+					{{view.currentTopic.name|topicSlice}}
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		{% comment %}
+		<div id="topic-select-box">
+			{{ view.topicForm.topic }}
+		</div>
+		{% endcomment %}
+		
+		{% include 'cake/layout/topic_list.html' %}
+	
+		<div id="sidebar-ads-01">
+			<script type="text/javascript"><!--
+			google_ad_client = "ca-pub-8188638549070379";
+			/* RO 200x200-01 */
+			google_ad_slot = "9494054651";
+			google_ad_width = 200;
+			google_ad_height = 200;
+			//-->
+			</script>
+			<script type="text/javascript"
+			src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+			</script>
+		</div>
+
+		{% comment %}
+		<div id="popular-tag-cloud">
+			<div class="title">Popular Now</div>
+			<div id="popular-tags">
+			    {% for topic in view.popularTopics %}
+				<div><a href="/topic/{{topic.keyNameStrip}}/">{{topic.name|slic:"0:15"}}</a></div>
+				{% endfor %}
+			</div>
+		</div>
+		{% endcomment %}
+	</span>
+
+	<div class="clear">&nbsp;</div>
+	<div class="clear">&nbsp;</div>
+	<span id="related-story-box"  class="screen-height-delta ui-helper-hidden">
+		<h3 class="subNavTitle">{{view.relatedStoriesTitle}}</h3>
+		{% for object in view.recommendations %}
+		{% if forloop.first %}
+		<div class="first-story">
+			<div class="image-container"><a href="/r/{{object.globalUrl.titleKey}}"><img src="{{object.globalUrl.getThumbnail}}" /></a></div>
+			<a class="title text-highlight" href="/r/{{object.globalUrl.titleKey}}">{{object.globalUrl.title|safe|slic:"0:40"}}</a>
+			{% comment %} <p>{{object.globalUrl.description|textDisplay|slic:"0:256"|safe}}</p> {% endcomment %}
+		</div>
+		<div class="clear"></div>
+		{% else %}
+			{% ifequal forloop.counter 2 %}
+				<ul class="bullet-doc">
+			{% endifequal %}
+			<li> <a class="title text-highlight" href="/r/{{object.globalUrl.titleKey}}">{{object.globalUrl.title|safe|slic:"0:60"}}</a> </li>
+			{% ifequal forloop.revcounter 1 %}
+				</ul>
+			{% endifequal %}
+		{% endif %}
+		{% empty %}
+		<script type="text/javascript">	hide("#related-story-box .subNavTitle"); </script>
+		{% endfor %}
+	</span>
+</div>
+<div id="sidebar-open-margin" title="open tool bar" style="display:none"></div>

@@ -1,0 +1,11 @@
+{% extends 'sns/layout/popup_form.html' %}
+
+{% block form %} 
+Sync all content channels connected with this CMP campaign? 
+{% endblock %}
+
+{% block buttons %}
+    <div class="spriteSave">
+	   <a href="javascript:void(0);" onclick="syncContentChannel('{{id}}')">Yes</a>
+	</div>
+{% endblock %}

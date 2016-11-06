@@ -1,0 +1,124 @@
+
+
+
+
+{% extends 'sns/layout/content.html' %}
+{% load snspostingruletags %}
+{% block content %}
+<div class="content">
+	<script type="text/javascript">	
+	var twitter = document.getElementById('is_twitter_campaign');
+	var facebook = document.getElementById('is_facebook_campaign');
+	if(twitter==null){
+		facebook.checked=true;
+		choosePostTypeCampaignQuickPost(facebook);
+	}
+	if(facebook==null){
+		twitter.checked=true;
+		choosePostTypeCampaignQuickPost(twitter);
+	}
+	
+	var is_twitter = $('option[value=0]','#id_type').attr('selected');
+	var is_facebook = $('option[value=1]','#id_type').attr('selected');
+
+	if(is_twitter){
+		$('#is_twitter').attr('checked',true);
+		$('#channels_info').show();
+	} 
+
+	if(is_facebook){
+
+		$('#is_facebook').attr('checked',true);
+		
+		var info = $('#id_info').text();
+		var count = parseInt(info) + 280;
+		$('#id_info').empty();
+		$('#id_info').append(count);
+
+	    $('#fchannels_info').show();
+	    
+	    if($('#id_url').val()){
+	    	$('#link_attchment').show();
+	    }
+	    
+	    
+	}
+
+	$("input", $('#ajax_content')).keydown(function(event) {
+		  if (event.keyCode == 13) { 
+		    $('form').each(function() { 
+		      event.preventDefault(); 
+		    }); 
+		  } 
+		});
+
+	
+	</script>
+    
+	<form method="POST" action="{{action}}">
+	  <div id="postFeedForm">  
+	    <div class="clearFloat"></div>
+	    {{ form.url.errors }}
+        <div class="clearFloat"></div>
+        <div class="fieldLabel" style="width: 80px;"> <label for="id_url">URL</label><span class="required">*</span></div>
+        <div class="fieldInput"> {{form.url}} </div>
+        <div class="clearFloat"></div>
+        	
+        	<div class="clearFloat"></div>
+		<div class="cb2">
+			{{form.channels.errors}}
+	    	{{form.fbDestinations.errors}}
+			<div class='fieldLabel' style="width: 80px;"><label for="id_type_campaign">Post to<span class="required">*</span></label></div>
+		    <!-- <div id="id_type_campaign" class="fieldInput"><input id="is_twitter_campaign" onchange="choosePostTypeCampaign(this)" type="checkbox" {% ifequal form.initial.hideTwitter 'True' %}{% else %}{% ifequal form.data.hideTwitter 'True' %}{% else %}checked="checked"{% endifequal %}{% endifequal %}>Twitter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="is_facebook_campaign" onchange="choosePostTypeCampaign(this)" type="checkbox" {% if form.hideFacebook %}{% else %}checked="checked"{% endif %}>Facebook</div> -->
+			<div id="id_type_campaign" class="fieldInput">
+				{% ifnotequal twitter_count 0 %}
+			    	{{form.hideTwitter}}Twitter&nbsp;&nbsp;&nbsp;&nbsp;
+			   	{% endifnotequal %}
+				{% ifnotequal facebook_count 0 %}
+			    	{{form.hideFacebook}}Facebook
+			    {% endifnotequal %}				
+			</div>
+	    </div>
+	    <div id='channel_info_campaign' class="input_block" {% ifequal form.initial.hideTwitter 'on' %}{% else %}{% ifequal form.data.hideTwitter 'on' %}{% else %}style="display:none"{% endifequal %}{% endifequal %}>	
+	    	<div id='channel_info_campaign_error' style='display:none' class="required">You must select at least one Twitter account!</div>        
+			<div class="clearFloat"></div>
+			<div class='fieldLabel' style="width: 80px;"><label for="id_channels">Twitter Accounts<span class="required">*</span></label></div>
+	        <div class="fieldInput"> {{form.channels}} </div>
+	     </div>
+	        
+	     <div id='fchannel_info_campaign' class="input_block" {% ifequal form.initial.hideFacebook 'on' %}{% else %}{% ifequal form.data.hideFacebook 'on' %}{% else %}style="display:none"{% endifequal %}{% endifequal %}>	        
+			<div id='fchannel_info_campaign_error' style='display:none' class="required">You must select at least one Facebook wall!</div> 
+			<div class="clearFloat"></div>
+			<div class='fieldLabel' style="width: 80px;"><label for="id_fbDestinations">Facebook Walls<span class="required">*</span></label></div>
+	        <div class="fieldInput"> {{form.fbDestinations}} </div>
+	        <br>
+	        
+	        	<div class="clearFloat"></div>
+				    <div class="fieldInput" style="padding-left: 40px;">
+				    	<div class="id_mode">
+					    	{{form.fbPostStyle}}
+					    		<span>
+					    			Show feed entry links as attachment with rich info on Facebook post
+					    		</span>
+						</div>
+				</div>
+	     </div>
+       	<div class="clearFloat"></div>
+        <div class="fieldLabel" style="width: 80px;"> <label for="id_scheduleInterval">Post Frequency<span class="required">*</span></label></div>
+		<div class="fieldInput"> {{form.scheduleInterval}} </div>
+		
+		<!-- hidden input -->
+		<input id="twitter_count" type="hidden" value="{{twitter_count}}"/>
+		<input id="facebook_count" type="hidden" value="{{facebook_count}}"/>
+		
+		{{form.ret_url}}
+		
+		<div class="cb1">
+			<div class="fieldInput"> <input id="quick_post_feed_button" type="button" onclick="ajaxFormSubmitCampaignFeedQuick('/', this);" value="Post"> </div>
+			<div class="fieldInput"> <input type="button" value="cancel" onclick="history.back(-1);"> </div>
+		</div>
+	  </div>
+	</form>
+	
+</div>
+{% endblock %}

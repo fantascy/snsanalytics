@@ -1,0 +1,8 @@
+{% extends 'sns/layout/popup.html' %}
+{% block form %}
+    <div id="userLimit">
+        <div class="cb2Double" style="font-size:120%;color:red">
+            <div class="fieldLabel"> You can add at most {{number}} {{name}}s!</div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'sns/layout/nologin_layout.html' %}
+
+{% block nologin_content %}
+<div class="cb1">
+    <div class="fieldLabel" id="AjaxErrorInfo">&nbsp;{{msg}}&nbsp;, 
+    please <a href='{{url}}'>sign in</a> to view the page.
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'sns/layout/list.html' %}
+{% load snsstringfiltertags %}
+{% load snschanneltags %}
+{% load snsposttags %}
+
+{% block table_header %}
+        <tr>
+            <td colspan="5">
+                <div class="listHeader">
+                    <div class="listHeaderCell postMsg">Message</div>
+                    <div class="listHeaderCell postChannel">Account</div>
+                    <div class="listHeaderCell postStatus">Status</div>
+                    <div class="listHeaderCell postTime">Time</div>
+					<div class="listHeaderCellLast postActions">Actions</div>
+                </div>
+            </td>
+        </tr>
+{%endblock%}
+{% block item %}
+        <tr class="listTr{% cycle 'Odd' 'Even' %}">
+            <td class="listCell textAlignLeft postMsg">
+                <span>
+                    {{object.msg|urlize|twitterUrlize|safe}}
+                </span>
+            </td>
+            <td class="listCell textAlignLeft postChannel">      
+                <img src="{{object.channel.avatarUrl|displayNoneAvatar}}" class="iconMedium"/>
+                {% if object.channel.profileUrl %} 
+                	<a target="_blank" href="{{object.channel.profileUrl}}">{{object.channel.name}}</a>
+                {% else %}
+                	{% if object.channel.url %}
+                		<a target="_blank" href="{{object.channel.url}}">{{object.channel.name}}</a>
+                	{% else %}
+                        <a target="_blank" href="http://www.twitter.com/{{object.channel.name}}">{{object.channel.name}}</a>
+                	{% endif %}
+           		{% endif %}
+            </td>
+            <td class="listCellLast PostStatus">  {{object.state|state2str}}
+                {% if object.errorMsg %}
+                    <span title="{{object.errorMsg}}"><img src="{{MEDIA_URL}}sns/images/warning.png" class="cursorPointer" /></span>
+                {% endif %}
+            </td>
+            <td class="listCell PostTime">   
+                {{object.modifiedTime|toUserTz|date:"N j, Y P"}}     
+            </td>
+			<td class="listCellLast PostActions">
+				{% if object.urlHash %}
+                <a class="action-button" rel="ajaxform" href="#/graph/chart?type=1&surl={{object.urlHash}}">
+		            <img src="{{MEDIA_URL}}sns/images/chart_line.png" alt="Stats" border="0"/>
+				</a>
+                {% endif %}
+				{% if object.getTweetUrl %}    
+                <a class="action-button" href="{{object.getTweetUrl}}" target="_blank"/>
+                	{% ifequal object.channel.type 0 %}
+						<img src="{{MEDIA_URL}}sns/images/tweet_small.png" alt="Tweet" border="0"/>
+					{% else %}
+						<img src="{{MEDIA_URL}}sns/images/sns_facebook_small.png" alt="Facebook post" border="0"/>
+					{% endifequal %}
+				</a>
+				{% endif %}
+			</td>
+        </tr>
+{% endblock %}

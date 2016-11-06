@@ -1,0 +1,75 @@
+{% extends 'sns/layout/content.html' %}
+{% block content %}
+<div class="content">
+<div id="reportChart" class="reporting_viewfont" >
+    <div id="reportClickThroughFilter" class="cb1Report">
+        <div class="cb2">
+           <div class="fieldLabel">Show click-throughs of</div>
+           <div class="fieldInput">{{form.type}}</div>
+        </div>
+        <div class="clearFloat"></div>
+        <div id="top_form"></div>
+    </div>
+    <div class="clearFloat"></div>
+    
+	<div id="toggleReportInfo" class="cb2Double" style={% ifequal notShowToggle 'True' %}"display:none"{% else %}{% endifequal %}"">
+	    <ul id="dateBuckets">
+	    <div class="dateBucketsLeft">
+	        {% for key, display in infoTypes %}
+		        <li id="{{key}}"  class="cursorPointer" style={% ifequal infoType key %}"background: #8EC1DA; color:#FFFFFF"{% else %}""{% endifequal %}>
+					<a href="javascript:updateReportInfo('{{key}}','false')" >{{display}}</a>
+		        </li>
+	        {% endfor %}
+	    </div>
+	    </ul>
+	    <div class="clearFloat"></div>
+	    
+	    <div id="info_detail" class="cb1Report"></div>
+    	<div class="clearFloat"></div>
+	</div>
+
+
+	<div id="toggleReportHisDetail" class="cb2Double" style={% ifequal notShowToggle 'True' %}"display:none"{% else %}{% endifequal %}"">
+	    <ul id="dateBuckets">
+	    <div class="dateBucketsLeft">
+	        {% for key, display in timeRanges %}
+		        <li id="{{key}}"  class="cursorPointer" style={% ifequal timeRange key %}"background: #8EC1DA; color:#FFFFFF"{% else %}""{% endifequal %}>	        
+		    		<a href="javascript:updateReportHisDetailT('{{key}}')" >{{display}}</a>			
+		        </li>
+	        {% endfor %}
+	    </div>
+	    </ul>
+	    <div class="clearFloat"></div>
+    
+    	<div id="his_detail" class="cb1Report"></div>
+    	<div class="clearFloat"></div>
+	</div>
+	
+      
+    <div class="reportfooter"></div>
+</div> 
+</div>
+<!-- id="reportChart" -->
+<input id="timeRange" type="hidden" value="{{timeRange}}"/>
+<script type="text/javascript">
+    document.getElementById('timeRange').value = "{{timeRange}}";
+</script>
+
+<input id="infoType" type="hidden" value="{{infoType}}"/>
+<script type="text/javascript">
+    document.getElementById('infoType').value = "{{infoType}}";
+</script>
+
+<input id="reportType" type="hidden" value="{{reportType}}"/>
+<script type="text/javascript">
+    document.getElementById('reportType').value = "{{reportType}}";
+</script>
+
+{{form.surl_value}}
+{{form.url_value}}
+{{form.feed_value}}
+{{form.channel_value}}
+{{form.fchannel_value}} 
+{{form.campaign_value}}
+{{form.direct_value}}
+{% endblock %}

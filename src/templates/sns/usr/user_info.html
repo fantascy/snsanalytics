@@ -1,0 +1,21 @@
+{% extends 'sns/layout/content.html' %}
+
+{% block content %}
+	{% if view.ctx.is_ios %} 
+		<div class="cb2Double" style="color:red;">Flash is not supported on iPhone/iPad!</div>
+
+	{% else %}
+		<script type="text/javascript">
+	 		swfobject.embedSWF(
+	 	  		"{{MEDIA_URL}}common/flash/OFC.swf", "user_countchart", "690", "390",
+	 	  		"9.0.0","{{MEDIA_URL}}common/flash/expressInstall.swf",
+	 	  		{"data-file":"/usr/chartpath/increase/info/?type={{type}}"},
+	 	  		{"wmode":"opaque"}
+	 	  	);
+		</script>
+	
+		<div class="cb2Double" id="user_countchart">    
+		</div>
+	{% endif %}
+
+{% endblock %}

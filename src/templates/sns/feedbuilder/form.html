@@ -1,0 +1,63 @@
+{% extends 'sns/layout/content.html' %}
+{% load snspostingruletags %}
+{% block content %}
+<div class="content">
+    <a href="/feedbuilder/help/" style="float:right" rel="facebox"> Help</a>
+	<form method="POST" action="{{action}}">
+	    <table>
+	    {% block form %}
+		<div class="cb1">
+
+		    <div class="cb2Double">
+			    {{ form.name.errors }}
+			    <div class="clearFloat"></div>
+				<div class="fieldLabel feedBuilderLabel"> Feed Name <span class="required">*</span> :</div>
+				<div class="fieldInput"> {{form.name}} </div>
+			    <div class="clearFloat"></div>
+		    </div>
+		    <div class="clearFloat"></div>
+		    
+		    <div class="cb2Double">
+			    {{ form.uri.errors }}
+			    <div class="clearFloat"></div>
+				<div class="fieldLabel feedBuilderLabel"> Feed URL <span class="required">*</span> :</div>
+				 <div class="fieldInput">http://{{domain}}/rss/{{form.uri}} 
+				 &nbsp;&nbsp;(Please use only letters and digits in your feed URL)
+				 </div>
+			    <div class="clearFloat"></div>
+		    </div>
+		    <div class="clearFloat"></div>
+		
+			<div class="cb2">
+			
+			    {{form.feeds.errors}}
+		        <div class="clearFloat"></div>
+		        
+		        <div class="fieldLabel feedBuilderLabel"> Please select one or more feeds: <span class="required">*</span> </div>
+		        
+		        <div class="clearFloat"></div>
+		        <div class="fieldInput"> {{form.feeds}} </div>
+		        <div class="clearFloat"></div>
+		        
+		    </div>
+		    <div class="clearFloat"></div>
+		    
+		</div>
+		
+
+		<div class="cb1">
+            <div class="fieldInput"> <input type="button" value="save" onclick="ajaxFormSubmit('{{ret_url}}', this);"> </div>
+            <div class="fieldInput"> <input type="button" value="cancel" onclick="ajaxUpdate('ajax_content','{{ret_url}}',null,'GET');"> </div>
+		</div>
+
+        <!-- hidden inputs -->
+        {{form.id}}
+        {{form.ret_url}}
+        {{form.current_page}}
+		{% endblock %}
+        </div>
+    </table>
+	</form>
+	
+</div>
+{% endblock %}

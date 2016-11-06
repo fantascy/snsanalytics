@@ -1,0 +1,28 @@
+{% extends 'sns/layout/list.html' %}
+
+
+{% block title %}<div class="ajax_contentTitle">RippleOne Users</div>{% endblock %}
+
+{% block list_header %}
+<div class="clearFloat"></div>
+<div></div>
+<div class="buttonCreatesection">
+	<div class="buttonCreate">
+	    <a class="img-cursor-pointer" href="/log/blacklist/redirectuser/add" rel="facebox">Add User Id</a>
+	</div>
+</div>
+<div class="clearFloat"></div>
+        
+        <input id="infoType" type="hidden" value="{{botType}}" class="retro loadBotType"/>
+        <script type="text/javascript">
+            document.getElementById('infoType').value = "{{botType}}";
+        </script>        
+  
+{% endblock %}
+
+
+{% block all_table %}
+<div class="clearFloat"></div>
+<div id="his_detail" > 
+</div>    
+{% endblock %}

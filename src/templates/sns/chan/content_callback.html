@@ -1,0 +1,29 @@
+{% extends 'sns/layout/content.html' %}
+{% block title %}<div class="ajax_contentTitle">Twitter Account Topics</div>{% endblock %}
+{% block content %}
+<div class="content">
+    <div class="cb1">
+        <div class="fieldInput"><img src="{{avatarUrl}}" class="iconBig"/></div>
+        <div class="fieldLabel"><strong>{{login}}</strong></div>
+    </div>
+
+    <div class="cb1">
+ 		<div class="clearFloat"></div>
+        <div class="fieldInput"> 
+        <input type="text" class="topic-search-value" id="firstTopic" size="80" placeholder="First Topic"/>
+        </div>
+        <div class="clearFloat"></div>
+        {% ifequal topicNumber 2%}
+        <div class="fieldInput"> 
+        <input type="text" class="topic-search-value" id="secondTopic" size="80" placeholder="Second Topic"/>
+        </div>
+        <div class="clearFloat"></div>
+        {% endifequal %}
+        <div class="fieldInput"> <input type="button" onclick="updateChannelCampaign({{topicNumber}})" value="save"> </div>
+        <div class="clearFloat"></div>
+    </div>
+    
+     <input id="channel-id" type="hidden" value="{{id}}"/>
+     <script> $(function() {topicAutoComplete(".topic-search-value", {{topicNames|safe}});}); </script>
+</div>
+{% endblock %}

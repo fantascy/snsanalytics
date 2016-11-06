@@ -1,0 +1,12 @@
+{% extends 'sns/layout/content.html' %}
+{% block title %}<div class="ajax_contentTitle">Add Facebook Pages Confirmation</div>{% endblock %}
+{% block content %}
+<div class="content">
+	<div class="cb1">
+        <div class="fieldLabel">There is no more page to be added for your Facebook account <a target='_blank' href='{{profileUrl}}'>{{account}}</a>.</div>
+    </div>
+	<div class="cb1">
+        <div class="fieldLabel"><input type='button' value='OK' onclick="redirectTo('#/chan/fbpage/')"/></div>
+    </div>
+</div>
+{% endblock %}

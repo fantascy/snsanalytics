@@ -1,0 +1,153 @@
+{% extends 'sns/log/channel_stats_list_base.html' %}
+{% load snsstringfiltertags %}
+{% load snschanneltags %}
+
+{% block table_header %}
+<tr class="listHeader">
+
+	<td class="listHeaderCell list-col-stats-name">Account</td>
+	
+	<td class="listHeaderCell list-col-stats-retweets cursorPointer 
+	{% ifequal orderBy 'retweets' %}
+		{% ifequal orderType 'desc' %}
+			list-sort-desc" onclick="window.location.href='{{view.path}}?orderby=retweets&type=asc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% else %}
+			list-sort-asc" onclick="window.location.href='{{view.path}}?orderby=retweets&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% endifequal %}
+	{% else %}
+		list-sort-both" onclick="window.location.href='{{view.path}}?orderby=retweets&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+	{% endifequal %}>RTs</td>
+	
+	{% comment %}
+	<td class="listHeaderCell list-col-stats-mentions cursorPointer 
+	{% ifequal orderBy 'mentions' %}
+		{% ifequal orderType 'desc' %}
+			list-sort-desc" onclick="window.location.href='{{view.path}}?orderby=mentions&type=asc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% else %}
+			list-sort-asc" onclick="window.location.href='{{view.path}}?orderby=mentions&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% endifequal %}
+	{% else %}
+		list-sort-both" onclick="window.location.href='{{view.path}}?orderby=mentions&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+	{% endifequal %}>Mentions</td>
+	{% endcomment %}
+	
+	<td class="listHeaderCell list-col-stats-hashtags cursorPointer 
+	{% ifequal orderBy 'hashtags' %}
+		{% ifequal orderType 'desc' %}
+			list-sort-desc" onclick="window.location.href='{{view.path}}?orderby=hashtags&type=asc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% else %}
+			list-sort-asc" onclick="window.location.href='{{view.path}}?orderby=hashtags&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% endifequal %}
+	{% else %}
+		list-sort-both" onclick="window.location.href='{{view.path}}?orderby=hashtags&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+	{% endifequal %}>Hashtags</td>
+
+	<td class="listHeaderCell list-col-stats-latelyfollower cursorPointer 
+	{% ifequal orderBy 'latelyfollower' %}
+		{% ifequal orderType 'desc' %}
+			list-sort-desc" onclick="window.location.href='{{view.path}}?orderby=latelyfollower&type=asc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% else %}
+			list-sort-asc" onclick="window.location.href='{{view.path}}?orderby=latelyfollower&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% endifequal %}
+	{% else %}
+		list-sort-both" onclick="window.location.href='{{view.path}}?orderby=latelyfollower&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+	{% endifequal %}>Fo&#39;s</td>
+	
+	<td class="listHeaderCell list-col-stats-latestkloutscore cursorPointer 
+	{% ifequal orderBy 'latestkloutscore' %}
+		{% ifequal orderType 'desc' %}
+			list-sort-desc" onclick="window.location.href='{{view.path}}?orderby=latestkloutscore&type=asc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% else %}
+			list-sort-asc" onclick="window.location.href='{{view.path}}?orderby=latestkloutscore&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% endifequal %}
+	{% else %}
+		list-sort-both" onclick="window.location.href='{{view.path}}?orderby=latestkloutscore&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+	{% endifequal %}>Klout</td>
+	
+	<td class="listHeaderCell list-col-stats-searchrank cursorPointer 
+	{% ifequal orderBy 'searchrank' %}
+		{% ifequal orderType 'desc' %}
+			list-sort-desc" onclick="window.location.href='{{view.path}}?orderby=searchrank&type=asc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% else %}
+			list-sort-asc" onclick="window.location.href='{{view.path}}?orderby=searchrank&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% endifequal %}
+	{% else %}
+		list-sort-both" onclick="window.location.href='{{view.path}}?orderby=searchrank&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+	{% endifequal %}>S Rank</td>
+	
+	<td class="listHeaderCell list-col-stats-totalretweets cursorPointer 
+	{% ifequal orderBy 'totalretweets' %}
+		{% ifequal orderType 'desc' %}
+			list-sort-desc" onclick="window.location.href='{{view.path}}?orderby=totalretweets&type=asc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% else %}
+			list-sort-asc" onclick="window.location.href='{{view.path}}?orderby=totalretweets&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% endifequal %}
+	{% else %}
+		list-sort-both" onclick="window.location.href='{{view.path}}?orderby=totalretweets&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+	{% endifequal %}>T RTs</td>
+	
+	{% comment %}
+	<td class="listHeaderCellLast list-col-stats-totalmentions cursorPointer 
+	{% ifequal orderBy 'totalmentions' %}
+		{% ifequal orderType 'desc' %}
+			list-sort-desc" onclick="window.location.href='{{view.path}}?orderby=totalmentions&type=asc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% else %}
+			list-sort-asc" onclick="window.location.href='{{view.path}}?orderby=totalmentions&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% endifequal %}
+	{% else %}
+		list-sort-both" onclick="window.location.href='{{view.path}}?orderby=totalmentions&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+	{% endifequal %}>T Mtns</td>
+	{% endcomment %}
+
+	<td class="listHeaderCellLast list-col-stats-totalhashtags cursorPointer 
+	{% ifequal orderBy 'totalhashtags' %}
+		{% ifequal orderType 'desc' %}
+			list-sort-desc" onclick="window.location.href='{{view.path}}?orderby=totalhashtags&type=asc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% else %}
+			list-sort-asc" onclick="window.location.href='{{view.path}}?orderby=totalhashtags&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+		{% endifequal %}
+	{% else %}
+		list-sort-both" onclick="window.location.href='{{view.path}}?orderby=totalhashtags&type=desc&paginate_by={{pageSize}}&keyword={{keyword}}'"
+	{% endifequal %}>T Hts</td>
+</tr>
+{%endblock%}
+
+{% block item %}
+<tr class="listTr{% cycle 'Odd' 'Even' %}">
+	<td class="listCell list-col-stats-name">
+		{% comment %}<img class="iconMedium" src="{{object.key.name|avatarUrl}}" />{% endcomment %}
+		<a href="http://www.twitter.com/{{object.name}}" target="_blank">{{object.name}}</a>
+	</td>
+	<td class="listCell list-col-stats-retweets">
+		<a href="/#/log/channelchart/?id={{object.id}}&attr=retweetCounts" title="View chart">{{object.retweets}}</a>
+	</td>
+	{% comment %}
+	<td class="listCell list-col-stats-mentions">
+		<a href="/#/log/channelchart/?id={{object.id}}&attr=mentionCounts" title="View chart">{{object.mentions}}</a>
+	</td>
+	{% endcomment %}
+	<td class="listCell list-col-stats-hashtags">
+		<a href="/#/log/channelchart/?id={{object.id}}&attr=hashtagCounts" title="View chart">{{object.hashtags}}</a>
+	</td>
+	<td class="listCell list-col-stats-latelyfollower">
+		<a href="/#/log/channelchart/?id={{object.id}}&attr=followerCounts" title="View chart">{{object.latelyFollower}}</a>
+	</td>
+	<td class="listCell list-col-stats-latestkloutscore">
+		<a href="/#/log/channelchart/?id={{object.id}}&attr=kloutScores" title="View chart">{{object.realLatestKloutScore}}</a>
+	</td>
+	<td class="listCell list-col-stats-searchrank">
+		<a href="/#/log/channelchart/?id={{object.id}}&attr=searchRanks" title="View chart">{{object.searchRank}}</a>
+	</td>
+	<td class="listCell list-col-stats-totalretweets">
+		{{object.totalRetweets}}
+	</td>
+	{% comment %}
+	<td class="listCellLast list-col-stats-totalmentions">
+		{{object.totalMentions}}
+	</td>
+	{% endcomment %}
+	<td class="listCellLast list-col-stats-totalhashtags">
+		{{object.totalHashtags}}
+	</td>
+</tr>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'sns/layout/popup_form.html' %}
+{% block form %}
+<div id="addChannel" class="cb1">
+
+    <div class="fieldLabel"> <label>include</label><span class="required">*</span></div>
+    <div class="fieldInput"> {{form.include}} </div>
+    <div class="clearFloat"></div>
+    
+    <div class="fieldLabel"> <label>exclude</label></div>
+    <div class="fieldInput"> {{form.exclude}} </div>
+    <div class="clearFloat"></div>
+    
+    <div class="fieldLabel"> <label>actualRecipient</label></div>
+    <div class="fieldInput"> {{form.actualRecipient}} </div>
+    <div class="clearFloat"></div>
+    
+    
+    
+    <!-- hidden inputs -->
+    {% if form.id %} {{form.id}} {% endif %}
+    
+
+</div>
+{% endblock %}
+
+{% block buttons %}
+    <div class="spriteSave retro formsubmit">
+	   <a href="javascript:void(0);">{% block buttonName %}Send{% endblock %}</a>
+	</div>
+	<div class="spriteCancel"><a href="javascript:void(0);" class="external_close">Cancel</a></div>
+{% endblock %}

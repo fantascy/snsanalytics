@@ -1,0 +1,99 @@
+{% load snsstringfiltertags %}
+{% load snschanneltags %}
+{% load snsposttags %}
+
+<table class="view_msgtable" border="0" cellspacing="0" cellpadding="0">
+
+        <tr>
+            <td colspan="5">
+                <div class="listHeader">
+                    <div class="listHeaderCell postMsg">Message</div>
+                    <div class="listHeaderCell postChannel">Social Channel</div>
+                    <div class="listHeaderCell postStatus">Status</div>
+                    <div class="listHeaderCell postTime">Time</div>
+					<div class="listHeaderCellLast postActions">Actions</div>
+                </div>
+            </td>
+        </tr>
+
+
+        {% for object in object_list %}
+        <tr class="listTr{% cycle 'Odd' 'Even' %}">
+            <td class="listCell textAlignLeft postMsg">
+                <span title="{{object.url}}">
+                	{% ifequal object.type 'Twitter' %}
+						<img src="{{MEDIA_URL}}sns/images/tweet_small.png" alt="Tweet" border="0"/>
+					{% else %}
+						<img src="{{MEDIA_URL}}sns/images/sns_facebook_small.png" alt="Facebook post" border="0"/>
+					{% endifequal %}
+                    {{object.msg|urlize|twitterUrlize|safe}}
+                </span>
+            </td>
+            <td class="listCell textAlignLeft postChannel">  
+              {% ifequal object.type 'Twitter' %}       
+                <img src="{{object.channel.avatarUrl|displayNoneAvatar}}" class="iconMedium"/><a target="_blank" href="http://www.twitter.com/{{object.channel.name}}">{{object.channel.name}}</a>
+              {% else %}
+                <img src="{{object.channel.avatarUrl|displayNoneAvatar}}" class="iconMedium"/><a target="_blank" href="{{object.channel.profileUrl}}">{{object.channel.name}}</a>
+              {% endifequal %}
+            </td>
+            <td class="listCellLast postStatus">  {{object.state|state2str}}
+                {% if object.errorMsg %}
+                    <span title="{{object.errorMsg}}"><img src="{{MEDIA_URL}}sns/images/warning.png" class="cursorPointer" /></span>
+                {% endif %}
+            </td>
+            <td class="listCell postTime">   
+                {{object.modifiedTime|toUserTz|date:"N j, Y P"}}     
+            </td>
+			<td class="listCellLast postActions">
+				{% if object.shortUrlClickCounter %}
+                <a class="action-button" rel="ajaxform" href="#/graph/chart?type=1&surl={{object.shortUrlClickCounter.keyNameStrip}}">
+		            <img src="{{MEDIA_URL}}sns/images/chart_line.png" alt="Stats" border="0"/>
+				</a>
+                {% endif %}
+			</td>
+        </tr>
+        
+        {% empty %}
+        <tr class="listEmpty">
+            <td colspan="5">You have no data.</td>
+        </tr>
+        {% endfor %}
+        
+        <tr>
+            <td colspan="5">&nbsp;</td>
+        </tr>
+
+        {%block paganation%}
+		
+        {%if has_previous or has_next %}
+        <tr class="Channel_Tr">
+            <td colspan="8">
+            	<span class="paginatioTotal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total <label id="seed_channel_total_pages">{{pages}}</label> pages, <span id='total_items_number'>{{hits|numberDisplay}}</span> records</span>
+            	<a rel="ajaxform" href="javascript:void(0);" onclick="chooseReportFailureDetailTypePage('1','{{paginate_by}}')" class="cursorPointer paginationButton">&lt;&lt;</a>
+            	{% if has_previous %}
+            	<a rel="ajaxform" href="javascript:void(0);" onclick="chooseReportFailureDetailTypePage('{{previous}}','{{paginate_by}}')" class="cursorPointer paginationButton">&lt;</a>
+                <a rel="ajaxform" href="javascript:void(0);" onclick="chooseReportFailureDetailTypePage('{{previous}}','{{paginate_by}}')"  class="cursorPointer paginatioNext">{{previous}}</a>
+                {% endif %}
+                
+                <span class="paginationPage">{{page}}</span>
+                
+                {% if has_next %}
+                <a rel="ajaxform" href="javascript:void(0);" onclick="chooseReportFailureDetailTypePage('{{next}}','{{paginate_by}}')"  class="cursorPointer paginatioNext">{{next}}</a>
+                <a id="next" rel="ajaxform"href="javascript:void(0);" onclick="chooseReportFailureDetailTypePage('{{next}}','{{paginate_by}}')"  class="cursorPointer paginationButton">&gt;</a>
+                {% endif %}
+                
+                <a rel="ajaxform" href="javascript:void(0);" onclick="chooseReportFailureDetailTypePage('{{pages}}','{{paginate_by}}')" " class="cursorPointer paginationButton">&gt;&gt;</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;<a id="go_to_certain_page" onclick="chooseReportFailureDetailTypeCertainPage('{{paginate_by}}')" class="cursorPointer paginationButton">Go to</a><input id='id_goToPages' type="text" value='{{page}}' style="width: 30px">	 
+       		</td>
+        </tr>
+        {% else %}
+        	{% ifequal show_list_info 'True' %}
+        	<tr class="Channel_Tr">
+            	<td colspan="8">
+            		<span class="paginatioTotal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total <span id='total_items_number'>{{hits}}</span> records</span>
+				</td>
+       		</tr>
+        	{% endifequal %}
+        {% endif %}
+        {%endblock%}
+</table>

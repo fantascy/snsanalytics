@@ -1,0 +1,57 @@
+{% extends 'sns/layout/list.html' %}
+{% load snschanneltags %}
+
+{% block list_header %}
+<script>
+var mouseEnter_conversation_controlFlag = true;
+jQuery(document).ready(function($) {
+
+
+      var maxHeight = parseInt($('#conversation_submenu').css('max-height'));
+      if ($('#conversation_submenu').height() > maxHeight){
+             $('#conversation_submenu').height(maxHeight);
+      }
+      
+      $('#conversation_submenu_controler').bind('mouseenter',function(){
+         if(mouseEnter_conversation_controlFlag){
+            mouseEnter_conversation_controlFlag = false;
+            $('#conversation_submenu').slideDown('fast',function(){
+               mouseEnter_conversation_controlFlag = true;
+               document.getElementById('menu_state').value='on';
+            });
+         }        
+      });
+      $('#conversation_submenu_controler').bind('mouseleave',function(){
+         $('#conversation_submenu').slideUp('fast',function(){
+            document.getElementById('menu_state').value='off';
+         });
+      });
+});
+</script>
+		<div class="contentTitle"><a rel="ajaxform" href="#/chan" class="backtoList">&lt;&lt;Back to Twitter account list</a></div>
+                  <div class="accountTitle">  
+                  	<div id="conversation_submenu_controler" class="accountNameCurrent">
+                  		<div class="accountName" >
+                  			<img src="{{avatarUrl|displayNoneAvatar}}" class="iconMedium"/>&nbsp; <a target="_blank" href="http://www.twitter.com/{{login}}">{{login}}</a>
+                    		<!-- another kind of dropmenu<a href="" onclick="conversationDropMenu();return false;" class="more">&nbsp;</a> -->
+                    		<a href="javascript:void(0);" class="more" title="More accounts">&nbsp;</a>
+                    	</div>	    
+                    	<div id="conversation_submenu" class="accountNameListMenu" style="display: none;min-width: 168px;">{{submenu|safe}}</div>             
+	                </div> 
+                    	<div class="searchfunction">
+                    		<!-- <div class="fieldLabel">Filter by:</div> -->    					
+    						{{form.type}}
+    						<a href="javascript:void(0);" onclick="retryChannelDetailType();return false;" class="retryBT">Refresh</a>
+						</div>                 	
+                  </div>    
+    <input id="id" type="hidden" value="{{id}}"/>
+    <input id="avatarUrl" type="hidden" value="{{avatarUrl}}"/>
+    <input id="detail_type" type="hidden" value="{{detail_type}}"/>
+    <input id="his_detail_url" type="hidden" >
+    <input id="menu_state" type="hidden" >
+{% endblock %}
+
+{% block all_table %}		
+	<div id="his_detail" > 
+	</div>
+{% endblock %}

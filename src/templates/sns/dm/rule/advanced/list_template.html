@@ -1,0 +1,76 @@
+{% extends 'sns/layout/list.html' %}
+{% load snspostingruletags %}
+{% load snsstringfiltertags %}
+
+{% block table_header %}
+    <tr>
+        <th colspan="4">
+            <div class="listHeader">
+                <div class="listHeaderCell dmRuleName">Name</div>
+                <div class="listHeaderCell dmRuleState">Status</div>
+                <div class="listHeaderCell dmRuleNext">Schedule Next</div>
+                <div class="listHeaderCell dmRuleSource">Source Account</div>
+                <div class="listHeaderCellLast dmRuleAction">Actions</div>
+            </div>
+        </th>
+    </tr>
+{% endblock%}
+
+{%block item%}
+    <tr id="list_tr_id_{{object.id}}" class="listTr{% cycle 'Odd' 'Even' %}">
+        <td class="listCell textAlignLeft dmRuleName">
+            <a onclick="javascript:toggleDetail('{{object.className}}', '{{object.key}}')" title="Show detail">
+                <img id="img_show_{{object.key}}" src="{{ MEDIA_URL }}sns/images/arrow_down.png" border="0" class="cursorPointer" alt="Show detail"/>
+            </a>
+            <a onclick="javascript:toggleDetail('{{object.className}}', '{{object.key}}')" title="Hide detail">
+                <img id="img_hide_{{object.key}}" src="{{ MEDIA_URL }}sns/images/arrow_up.png" border="0" class="cursorPointer" style="display:none;" alt="Hide detail"/>
+            </a>
+            {{object.name}}({{object|dealCount}})
+        </td>
+        <td class="listCell dmRuleState" id="status_{{object.key}}">
+            {{object.state|state2str}}
+        </td>
+        <td class="listCell dmRuleNext" id="status_{{object.key}}">
+            {{object.scheduleNext|toUserTz|date:"N j, Y P"}}
+        </td>
+        <td class="listCell dmRuleSource"> {{object.sourceChannel.login}}</td>
+        <td class="listCellLast dmRuleAction">
+			<a  class="cursorPointer" href="javascript:void(0);" onclick="delete_obj('{{object.id}}','{{ret_url}}','/dm/rule/advanced/')" title="Delete">
+				<img src="{{ MEDIA_URL }}sns/images/delete.png" border="0" class="cursorPointer" alt="Delete"/>
+			</a> 
+            <a rel="ajaxform" href="#/dm/rule/advanced/update/?id={{object.id}}&ret_url={{ret_url}}&current_page={{current_page}}" title="Update">
+				<img src="{{ MEDIA_URL }}sns/images/edit.png" border="0" class="cursorPointer" alt="Update">
+				</a>
+            {% ifequal object.state 0 %}
+			<a onclick="javascript:sns.rule.activation('{{object.className}}', '{{object.key}}')" title="Activate">
+				<img id="img_activate_{{object.key}}" src="{{ MEDIA_URL }}sns/images/play.png" border="0" class="cursorPointer" alt="Activate">
+			</a>
+            <a onclick="javascript:sns.rule.activation('{{object.className}}', '{{object.key}}')" title="De-activate">
+				<img id="img_deactivate_{{object.key}}" src="{{ MEDIA_URL }}sns/images/pause.png" border="0" class="cursorPointer" style="display:none;" alt="De-activate">		
+			</a>{% endifequal %}
+            {% ifequal object.state 1 %}
+			<a onclick="javascript:sns.rule.activation('{{object.className}}', '{{object.key}}')" title="Activate">
+				<img id="img_activate_{{object.key}}" src="{{ MEDIA_URL }}sns/images/play.png" border="0" class="cursorPointer" style="display:none;" alt="Activate">
+					
+			</a>
+            <a onclick="javascript:sns.rule.activation('{{object.className}}', '{{object.key}}')" title="De-activate">
+				<img id="img_deactivate_{{object.key}}" src="{{ MEDIA_URL }}sns/images/pause.png" border="0" class="cursorPointer" alt="De-activate">
+			</a>
+			{% endifequal %}
+			
+			<a class="action-button cursorPointer" rel="facebox" href="/dm/rule/advanced/confirm/?id={{object.id}}" title="Sync">
+            	<img src="{{MEDIA_URL}}sns/images/refresh.png" alt="Sync" border="0"  />
+       		 </a>
+			
+			<a target="_blank" href="#/dm/rule/advanced/chart/?id={{object.id}}"  title="Chart">
+			   <img src="{{ MEDIA_URL }}sns/images/chart_line.png" border="0" class="cursorPointer" alt="Chart"/>
+			</a>	
+        </td>
+    </tr>
+
+    <tr>
+      <td colspan="5">
+        <div id="detail_{{object.key}}"  class="ruleDetail" style="display:none"></div>
+      </td>
+    </tr> 
+{% endblock %}

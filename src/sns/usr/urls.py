@@ -1,0 +1,22 @@
+from django.conf.urls.defaults import patterns
+
+urlpatterns = patterns('',
+    (r'^$', 'sns.usr.views.list_default'),
+    (r'^list_container_by_date/$', 'sns.usr.views.list_container_by_date'),
+    (r'^list_body_by_date/$', 'sns.usr.views.list_body_by_date'),
+    (r'^list_container_by_click/$', 'sns.usr.views.list_container_by_click'),
+    (r'^list_body_by_click/$', 'sns.usr.views.list_body_by_click'),
+    (r'^update/$', 'sns.usr.views.update'),
+    (r'^initset$', 'sns.usr.views.initset'),
+    (r'^settings$', 'sns.usr.views.settings'),
+    (r'^limit$', 'sns.usr.views.limit'),
+    (r'^detail$', 'sns.usr.views.detail'),
+    (r'^export_all$', 'sns.usr.views.export_all'),
+    (r'^export_cmp$', 'sns.usr.views.export_cmp'),
+    (r'^increase/count/$', 'sns.usr.api.syncUser'),
+    (r'^chartpath/increase/info/$', 'sns.usr.views.getUserNumberChart'),
+    (r'^increase/chart/$', 'sns.usr.views.userNumberChart'),
+    (r'^clear/proxy/$', 'sns.usr.api.clearProxyUser'),
+    (r'^islogin/$', 'sns.usr.views.isUserLogin'),
+    (r'^tag/$', 'sns.usr.views.tags'),
+)

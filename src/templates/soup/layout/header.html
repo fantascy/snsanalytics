@@ -1,0 +1,38 @@
+{% load souptags %}
+
+<form method="POST" action="/submit/" id="share-link-form">
+	<div id="header-logo">
+		<a href="/"><img src="{{MEDIR_URL}}/soup/images/soup_logo_256x64.png"></img></a>
+	</div>
+	
+	<div id="header-share">
+		<input name="link" id="share_soup" class="ui-widget" type="text" placeholder="Put a link of news, image, video, or anything...">
+		<a class="button" href="javascript:showShare('{{view.fbCookieKey}}');">Soup it up</a>
+	</div>
+	<div id="header-acct">		
+		<div id="login-button" {% ifequal view|loginStatus 0 %}{% else %}class="ui-helper-hidden"{% endifequal %}>
+			<a onclick ="soupFbLogin();"><img src="{{MEDIA_URL}}soup/images/facebook_signin.png"></img></a>
+			<!-- 
+			<a onclick="soupFbLogin()"><span class="icon-text-16 icon-16-facebook">Login with Facebook</span></a>
+			 --> 
+		</div>
+		<div id="logout-button" {% ifequal view|loginStatus 0 %}class="ui-helper-hidden"{% endifequal %}>
+		    <div id="dropdown-menu">
+				<div id="menu-head" >
+					<a href="/profile/{{view.loginUser.key.id}}" id="login-user-name">
+					<img id="login-user-avatar" src="{{view.loginUser.avatarUrl}}"/>
+					{{view.loginUser.name}}</a>
+				</div>
+		        <div id="menu-content">
+			        <ul>
+			        	<li><a href="/profile/friends/">Friends</a></li> 
+			        	<li><a href="/settings/">Settings</a></li> 
+			       		<li><a href="javascript:soupSignOut('{{view.fbCookieKey}}');">Sign out</a></li> 
+			        </ul>
+			    </div>
+		    </div> 
+		</div>
+	</div>
+	<input id="current_location" type="hidden" value=""/>
+</form>
+

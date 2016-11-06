@@ -1,0 +1,61 @@
+{% extends 'sns/layout/content.html' %}
+{% load snspostingruletags %}
+{% block content %}
+<div class="content">
+	<form method="POST" action="{{action}}">
+	    <table>
+	    {% block form %}
+		<div class="cb1">
+
+		    <div class="cb2Double">
+			    {{ form.name.errors }}
+			    <div class="clearFloat"></div>
+				<div class="fieldLabel">Name:<span class="required">*</span></div>
+				<div class="fieldInput">{{form.name}}</div>
+			    <div class="clearFloat"></div>
+		    </div>
+		    <div class="clearFloat"></div>
+		    
+		    <div class="cb2">
+			    {{form.feedSources.errors}}
+		        <div class="clearFloat"></div>				
+				<div> <label for="id_contents">Please select one or more feeds:<span class="required">*</span></label> </div>
+		        <div class="clearFloat"></div>
+		        <div class="fieldInput"> {{form.feedSources}} </div>
+		        <div class="clearFloat"></div>
+		    </div>
+		    
+		    
+		    <div class="cb2RuleSchedule">
+		        <div class="fieldLabel" style="width: 118px;text-align:right;" id="interval_id"> <label for="id_scheduleInterval">Schedule Interval:<span class="required">*</span></label></div>
+		        <div class="fieldInput"> {{form.scheduleInterval}} </div>
+		    </div>
+		    <div class="clearFloat"></div>
+		    
+		    {{form.maxMessagePerFeed.errors}}
+		    <div class="cb2Double">
+		        <div>Every time when this campaign is executed, post no more than {{form.maxMessagePerFeed}} new article(s) from each feed.</div>
+		        <div class="clearFloat"></div>
+		    </div>
+		    
+		</div>
+		
+
+		<div class="cb1">
+            <div class="fieldInput"> <input type="button" value="save" onclick="ajaxFormSubmit('{{ret_url}}', this);"> </div>
+            <div class="fieldInput"> <input type="button" value="cancel" onclick="ajaxUpdate('ajax_content','{{ret_url}}',null,'GET');"> </div>
+		</div>
+
+        <!-- hidden inputs -->
+        {% if form.id %}
+        {{form.id}}
+         {% endif %}
+        {{form.ret_url}}
+        {{form.current_page}}
+		{% endblock %}
+        </div>
+    </table>
+	</form>
+	
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% load snsstringfiltertags %}
+{% load snschanneltags %}
+{% load snspostingruletags %}
+
+    <div class="cb1">
+        <div class="cb1Title">Basic Info</div>
+        <div class="cb2Double">
+          <div class="fieldLabel">Name</div><div class="fieldDetail">{{object.name}}</div>
+        </div>
+        
+        <div class="cb2">
+          <div class="fieldLabel">Status</div><div class="fieldDetail" id="detail_stats_{{object.key}}">{{object.state|state2str}} </div>
+        </div>
+        <div class="cb2">
+          <div class="fieldLabel">Modified Time</div><div class="fieldDetail">{{object.modifiedTime|toUserTz|date:view.dateFormat}}</div>
+        </div>
+
+        
+        <div class="clearFloat"></div>
+
+        
+    </div>
+    <div class="clearFloat"/>
+    <div class="cb1">
+        <div class="cb1Title">Schedule Info</div>
+            {% ifequal object.scheduleType 0 %}
+                <div class="cb2">
+                  <div class="fieldLabel">Schedule Type</div><div class="fieldDetail">{{object.scheduleType|scheduleType2str}} </div>
+                </div>
+            {% endifequal %}
+
+            {% ifequal object.scheduleType 1 %}
+                <div class="cb2">
+                  <div class="fieldLabel">Schedule Type</div><div class="fieldDetail">{{object.scheduleType|scheduleType2str}} </div>
+                </div>
+                <div class="cb2">
+                  <div class="fieldLabel">Scheduled Time</div><div class="fieldDetail">{{object.scheduleNext|toUserTz|date:view.dateFormat|displayNone:"Not scheduled"}}</div>
+                </div>
+            {% endifequal %}
+
+            {% ifequal object.scheduleType 2 %}
+                <div class="cb2">
+                  <div class="fieldLabel">Schedule Type</div><div class="fieldDetail">{{object.scheduleType|scheduleType2str}} </div>
+                </div>
+                <div class="cb2">
+                  <div class="fieldLabel">Next Run</div><div class="fieldDetail">{{object.scheduleNext|toUserTz|date:view.dateFormat|displayNone:"Not scheduled"}}</div>
+                </div>
+                <div class="clearFloat"></div>
+                <div class="cb2">
+                  <div class="fieldLabel">Schedule Start</div><div class="fieldDetail">{{object.scheduleStart|toUserTz|date:view.dateFormat|displayNone:"Immediately"}}</div>
+                </div>
+                <div class="cb2">
+                  <div class="fieldLabel">Schedule End</div><div class="fieldDetail">{{object.scheduleEnd|toUserTz|date:view.dateFormat|displayNone:"Never"}}</div>
+                </div>
+                <div class="cb2">
+                  <div class="fieldLabel">Schedule Interval</div><div class="fieldDetail">{{object|scheduleInfo}}</div>
+                </div>
+            {% endifequal %}
+
+</div>
+    <div class="clearFloat"/>
+
+
+    

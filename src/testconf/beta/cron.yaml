@@ -1,0 +1,54 @@
+cron:
+- description: execute feed campaigns, every 1 minutes
+  url: /api/post/rule/feed/cron_execute
+  schedule: every 1 minutes
+  target: test
+- description: execute message campaigns, every 1 minutes
+  url: /api/post/rule/article/cron_execute
+  schedule: every 1 minutes
+  target: test
+- description: make posts, every 1 minute
+  url: /api/post/post/cron_execute
+  schedule: every 1 minutes
+  target: test
+- description: count clicks, every 5 minutes
+  url: /api/urlshort/cron_execute
+  schedule: every 5 minutes
+  target: test
+- description: execute feed builders, every 1 minute
+  url: /api/feedbuilder/cron_execute
+  schedule: every 1 minutes  
+  target: test
+- description: execute deal builders, every 1 minute
+  url: /api/deal/cron_execute
+  schedule: every 1 minutes
+  target: test
+#- description: execute topic campaigns, every 1 minute
+#  url: /api/mgmt/topic/cron_execute
+#  schedule: every 1 minutes
+#  target: test
+#- description: rank hot articles for each topic, every 12 hours
+#  url: /api/topicrank/cron_execute
+#  schedule: every 12 hours from 05:30 to 17:30
+#  timezone: America/Los_Angeles
+#  target: test
+#- description: submit site map to google search engine, every 1 hour
+#  url: /api/sitemap/cron_execute
+#  schedule: every 1 hours from 01:15 to 23:15
+#  timezone: America/Los_Angeles
+#  target: test
+- description: execute global stats, every 10 minutes
+  url: /api/log/globalstats/cron_execute
+  schedule: every 10 minutes  
+  target: test
+- description: update cmp twiter stats, every 12 hours
+  url: /api/log/cmptwitterstats/cron_execute
+  schedule: every 12 hours from 07:30 to 19:30
+  timezone: America/Los_Angeles
+  target: test
+- description: count unique followers 1st day every month
+  url: /api/log/cmptwitterstats/cron_execute?op=refresh_count_unique_followers
+  schedule: 1 of month 02:00
+  timezone: America/Los_Angeles
+  target: test
+  

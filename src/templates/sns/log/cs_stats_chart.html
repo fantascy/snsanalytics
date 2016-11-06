@@ -1,0 +1,60 @@
+{% load snschanneltags %}
+
+<div id="system-stats">
+{% block title %}<div class="ajax_contentTitle">Content Source Chart</div>{% endblock %}
+
+<div class="clearFloat"></div>
+
+<div class="selector-left">
+	{% ifequal view.chartType view.comparisonType %}
+	<input type="hidden" id="data-posts" value="{{counts.0|safe}}" />
+	<input type="hidden" id="data-clicks" value="{{counts.1|safe}}" />
+	<input type="hidden" id="tip-posts" value="{{tips.0|safe}}" />
+	<input type="hidden" id="tip-clicks" value="{{tips.1|safe}}" />
+	<input type="hidden" id="labels" value="{{labels|safe}}" />
+	{% endifequal %}
+	<span><a href="http://{{name}}" target="_blank">{{name}}</a></span>
+</div>
+
+<div class="selector">
+	Select a chart: {{form.type}}
+</div>
+
+<input id="id" type="hidden" value={{ id }} />
+
+<div class="clearFloat"></div>
+<div class="buttonCreatesection">
+	<div class="buttonCreate">
+		<a class="img-cursor-pointer" href="/log/csstats/export_one/?cs={{name}}">Export</a>
+	</div>
+</div>
+
+{% ifequal view.chartType view.comparisonType %}
+<input type="checkbox" id="check-posts" checked="checked" onchange="javascript:refreshContentSourceChart()"/>Posts
+<input type="checkbox" id="check-clicks" checked="checked" onchange="javascript:refreshContentSourceChart()"/>Clicks
+{% endifequal %}
+
+<canvas id="myLine" width="670" height="350">[No canvas support]</canvas>
+
+<script type="text/javascript">
+	{% ifequal view.chartType view.comparisonType %}
+		refreshContentSourceChart();
+	{% else %}
+		var line = new RGraph.Line("myLine", eval("{{counts|safe}}"));
+		line.Set('chart.linewidth', 2);
+		line.Set('chart.hmargin', 5);
+		line.Set('chart.tooltips', eval("{{tips|safe}}"));
+		line.Set('chart.colors', ['#FF9900','#8EC1DA']);
+		var labels = eval("{{labels|safe}}");
+		for (var i = 0; i < labels.length; i++) {
+			if ((i % 3 != 0) && (i != labels.length - 1))
+				labels[i] = '';
+		}
+		line.Set('chart.labels',  labels);
+		line.Set('chart.tickmarks', 'filledcircle');
+		line.Set('chart.ticksize', 5);
+		line.Set('chart.gutter', 50);
+		line.Draw();
+	{% endifequal %}
+</script>
+</div>

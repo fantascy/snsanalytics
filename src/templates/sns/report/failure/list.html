@@ -1,0 +1,28 @@
+{% extends 'sns/layout/list.html' %}
+
+{% block list_header %}
+<div class="cb1Report">
+    <div class="cb2">
+       <div class="fieldLabel">Show failures of </div>
+       <div class="fieldInput"> {{form.failureType}} </div>
+    </div>
+    <div class="clearFloat"></div>
+    <div id="top_form"></div>
+</div>
+
+<input id="his_detail_url" type="hidden" > 
+
+{% endblock %}
+
+
+{% block all_table %}
+<div class="clearFloat"></div>
+<div id="his_detail"></div>
+
+{{form.channel_failure_value}}
+{{form.article_failure_value}}
+{{form.feed_failure_value}}  
+{{form.campaign_failure_value}}
+{{form.fchannel_failure_value}}
+{% endblock %}
+

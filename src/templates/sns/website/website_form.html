@@ -1,0 +1,44 @@
+{% extends 'sns/layout/popup_form.html' %}
+{% block form %}
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+        $('title').data('reloadOnSuccess',false);
+		jQuery(".retro",$('#tweet_reply_facebox')[0]).each(function() {
+
+		var subject = jQuery(this);
+
+		if ( subject.is(".formsubmit") ) {
+			makeFormAjaxSubmit(subject);
+		}
+	});
+});
+</script>
+
+<div id="feedForm" class="cb1">
+ 	{% if form.domain %}
+    {{ form.domain.errors }}
+    <div class="clearFloat"></div>        
+    <div class="fieldLabel"> Domain</div>
+    <div class="fieldInput"> {{form.domain}} </div>
+    <div class="clearFloat"></div>
+    {% endif %}
+    
+    {{ form.includedKeys.errors }}
+    <div class="clearFloat"></div>        
+    <div class="fieldLabel"> Included Keys</div>
+    <div class="fieldInput"> {{form.includedKeys}} </div>
+    <div class="clearFloat"></div>
+    
+    {{ form.excludedKeys.errors }}
+    <div class="clearFloat"></div>        
+    <div class="fieldLabel">Excluded Keys</div>
+    <div class="fieldInput"> {{form.excludedKeys}} </div>
+    <div class="clearFloat"></div>
+    
+
+    <!-- hidden inputs -->
+     {% if form.id %}
+     {{form.id}} 
+     {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+<div class="cb2Double">
+    <ul id="dateBuckets">
+    <div class="dateBucketsLeft">
+        {% for key, display in infoTypes %}
+        <li id="{{key}}"  class="cursorPointer" style={% ifequal infoType key %}"background: #8EC1DA; color:#FFFFFF"{% else %}""{% endifequal %}>
+         <a onclick="updateFollowChart('{{key}}')" >{{display}}</a>
+        </li>
+        {% endfor %}
+    </div>
+    </ul>
+    <div class="clearFloat"></div>
+</div>
+{% if hasChart %}
+	{% if ipad %} 
+		<div class="cb2Double" style="color:red;">Flash is not supported on iPhone/iPad!</div>
+	{% else %}
+	<script type="text/javascript">
+	 		swfobject.embedSWF(
+	 	  		"/common/flash/OFC.swf", "follow_line_chart", "690", "390",
+	 	  		"9.0.0","/common/flash/expressInstall.swf",
+	 	  		{"data-file":"/follow/chartpath/account/chartdata/?info={{info}}"},
+	 	  		{"wmode":"opaque"}
+	 	  	);
+	</script>
+	<div class="cb2Double" id="follow_line_chart">    
+	</div>
+	{% endif %}
+{% else %}
+	<div class="cb2Double" style="text-align:center"> 
+		No data.   
+	</div>
+{% endif %}

@@ -1,0 +1,17 @@
+{% extends 'sns/layout/popup_form.html' %}
+{% block form %}
+<div id="addChannel" class="cb1">
+
+    <div class="fieldLabel"> <label>Name</label><span class="required">*</span></div>
+    <div class="fieldInput"> {{form.name}} </div>
+    <div class="clearFloat"></div>
+
+    <div class="fieldLabel"> <label>Type</label><span class="required">*</span></div>
+    <div class="fieldInput"> {{form.type}} </div>
+    <div class="clearFloat"></div>
+    
+    <!-- hidden inputs -->
+    {% if form.id %} {{form.id}} {% endif %}
+
+</div>
+{% endblock %}

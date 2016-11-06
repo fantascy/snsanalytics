@@ -1,0 +1,152 @@
+{% extends 'sns/layout/content.html' %}
+{% load snspostingruletags %}
+{% block content %}
+
+<div class="content">
+   	 <form method="POST" action="{{action}}">
+        <div id='customCampaign' class="ruleForm">
+				<div class="cb1">
+				  <div class="cb2">
+					<div id="rule_name_error_duplicate" class="cb2Double errorlist" style="display:none">Duplicate name.</div>
+					<div id="rule_name_error" class="cb2Double errorlist" style="display:none">You must define a custom campaign name.</div>
+				    <div class="cb2">
+				    	<div class="fieldLabel" style="width: 45px;text-align:right;"><strong>Name:</strong><span class="required">*</span></div>
+				    	<div class="fieldInput">{{form.name}}</div>
+				    </div>
+				  </div>
+				  <div class="clearFloat"></div>
+				  <div id="custom_rule_form" class="cb2DoubleCampaign campaignarea">
+				    <div style="padding-bottom:5px;">A custom campaign consists of a number of pre-shortened links. You can post these shortened links any where, e.g., web pages, emails, community forms, etc. You can then use this custom campaign to track click-throughs of your links. Please add your links below.</div>
+				    <div class='formSliceShort'></div>
+				    <div id="rule_link_error" class="cb2Double errorlist" style="display:none">You must define and verify at least one link.</div>
+				    {% for link in params.links_info %}			
+				    	{% ifnotequal link.number 1 %}
+				    		<div id='slice_div_number_{{link.number}}' class='formSliceShort'></div>
+				    	{% endifnotequal %}	    
+					    <div id="short_link_number_{{link.number}}" style='padding-bottom:5px;'>
+							<div style='padding-bottom:0px;'>
+								<div class='fieldLabel' style='width: 65px;text-align:right;'><strong>Link:</strong></div>
+								<div class='fieldInput'>
+									<span id='verify_link_input_number_{{link.number}}' style='display:-moz-inline-box;display:inline-block;width:310px;'><label autosize='false' class='fieldLabel' width='300px'><a target='_blank' class='cursorPointer' href='{{link.url}}'>{{link.url}}</a></label></span>									
+									<!-- <span id='verify_link_input_number_{{link.number}}'><input type='text' id='short_link_url_number_{{link.number}}' size='45' value='{{link.url}}' readonly style='border:0px'/>				 -->							        
+									<span id='checked_link_number_{{link.number}}'>&nbsp;
+							    		<a href="javascript:void(0);" onclick="" title="Link verified">
+							            	<img src="{{MEDIA_URL}}sns/images/link_check.png" border="0" class="cursorPointer img" alt="Link verified"/>
+							        	</a>
+							        </span>
+							        <span id='delete_link_number_{{link.number}}'>
+							    		<a class="cursorPointer" href="javascript:void(0);" onclick="deleteCurrentShortLinkUpdate('{{link.number}}',{{params.links_info_length}},'{{MEDIA_URL}}')" title="Delete this link">
+							            	<img src="{{MEDIA_URL}}sns/images/link_delete.png" border="0" class="cursorPointer img" alt="Delete this link"/>
+							        	</a>
+							        </span>
+							        {% ifequal link.number link.total_links %}
+							        	<span id='add_link_number_{{link.number}}' style='display:none'>
+							    			<a class="cursorPointer" href="javascript:void(0);" onclick="addNewShortLink('{{MEDIA_URL}}')" title="Add more link">
+							            		<img src="{{MEDIA_URL}}sns/images/link_add.png" border="0" class="cursorPointer img" alt="Add more link"/>
+							        		</a>
+							        	</span>
+							       	{% endifequal %}
+							    </div>
+							</div>
+						    <div class="clearFloat"></div>
+						    <div>
+						    	<div class='fieldLabel' style='width: 65px;text-align:right;'><strong>Short Link:</strong></div>
+						    	<div class='fieldInput'>
+						    		<label class='fieldLabel'><a target='_blank' class='cursorPointer' href='{{link.surl}}'>{{link.surl}}</a></label>
+									<!-- <input type='text' id='short_link_surl_number_{{link.number}}' size='45' value='{{link.surl}}' readonly style='border:0px'/> -->											        
+							    </div>
+						    </div>
+						    <div class="clearFloat"></div>
+							<div>
+								<div class='fieldLabel' style='width: 65px;text-align:right;'><strong>Title:</strong></div>
+								<div class='fieldInput'>
+									<input type='text' id='short_link_title_number_{{link.number}}' size='40' value='{{link.title}}'/>											        
+							    </div>
+							</div>
+							<!-- <div><input type="button" onclick="deleteCurrentShortLinkUpdate('{{link.number}}',{{params.links_info_length}})" value="Delete"></div> -->
+						    <div class="clearFloat"></div>
+						    <div><input type='hidden' id='short_link_id_number_{{link.number}}' value="{{link.id}}"/></div>
+					    </div>	
+					    <div class="clearFloat" id="short_link_clear_number_1"></div>			    
+					{% endfor %}
+					<div class="clearFloat"></div>
+					
+					
+					<div id='slice_div_number_{{params.links_info_length_next}}' class='formSliceShort'></div>
+					<div id="short_link_number_{{params.links_info_length_next}}" style="padding-bottom:5px;">				    						
+						<div style="padding-top:5px;">		
+							<div class='fieldLabel' style='width: 65px;text-align:right;'><strong>Link:</strong></div>
+							<div id='custon_campaign_link_number_{{params.links_info_length_next}}' class='fieldInput'>
+								<span id='verify_link_input_number_{{params.links_info_length_next}}' style='display:-moz-inline-box;display:inline-block;width:310px;'><input type='text' id='short_link_url_number_{{params.links_info_length_next}}' size='45'/></span>
+								<span id='verify_link_number_{{params.links_info_length_next}}'>
+						    		<a class="cursorPointer" href="javascript:void(0);" onclick="verifyLinkCustom('{{params.links_info_length_next}}','{{MEDIA_URL}}')" title="Verify this link">
+						            	<img src="{{MEDIA_URL}}sns/images/check.png" border="0" class="cursorPointer img" alt="Verify this link"/>
+						        	</a>&nbsp;
+						        </span>
+						        <span id='checked_link_number_{{params.links_info_length_next}}' style='display:none'>&nbsp;
+						    		<a href="javascript:void(0);" onclick="" title="Link verified">
+						            	<img src="{{MEDIA_URL}}sns/images/link_check.png" border="0" class="cursorPointer img" alt="Link verified"/>
+						        	</a>
+						        </span>
+						        <span id='delete_link_number_{{params.links_info_length_next}}' style='display:none'>
+						    		<a class="cursorPointer" href="javascript:void(0);" onclick="deleteCurrentShortLink({{params.links_info_length_next}},'{{MEDIA_URL}}')" title="Delete this link">
+						            	<img src="{{MEDIA_URL}}sns/images/link_delete.png" border="0" class="cursorPointer img" alt="Delete this link"/>
+						        	</a>
+						        </span>
+						        <span id='add_link_number_{{params.links_info_length_next}}' style='display:none'>
+						    		<a class="cursorPointer" href="javascript:void(0);" onclick="addNewShortLink('{{MEDIA_URL}}')" title="Add more link">
+						            	<img src="{{MEDIA_URL}}sns/images/link_add.png" border="0" class="cursorPointer img" alt="Add more link"/>
+						        	</a>
+						        </span>
+						        <span><label id='verify_error_blank_number_{{params.links_info_length_next}}' style='display:none' class='errorlist'>Need a link</label>
+						        <span><label id='verify_error_invalid_number_{{params.links_info_length_next}}' style='display:none' class='errorlist'>Invalid link</label>
+						        <span><label id='verify_error_add_new_number_{{params.links_info_length_next}}' style='display:none' class='errorlist'>Verify this link before you add a new one</label>
+						        </span>
+						    </div>
+				        </div>			        
+					    <div class="clearFloat"></div>
+					    
+					    <div id='title_div_number_{{params.links_info_length_next}}' style='display:none;'>
+							<div class='fieldLabel' style='width:65px;text-align:right;'><strong>Title:</strong></div>
+							<div class="fieldInput"><input type='text' id='short_link_title_number_{{params.links_info_length_next}}' size='40'/></div>
+						</div>
+						<!-- <input type="button" onclick="deleteCurrentShortLink('1')" value="Delete"/> -->
+					    <div class="clearFloat"></div>
+					    <!-- <div id='slice_div_number_1' class='formSliceShort'></div> -->
+				    </div>	
+					
+					<div id='short_link_add_cursor'></div>
+				    <!-- <div class="fieldInput" id='short_link_add_button'> <input type="button" onclick="addNewShortLink('{{MEDIA_URL}}')" value="Create one more link"> </div> -->
+					<div class="clearFloat"></div>
+	
+				  </div>
+				</div>
+        </div>
+        
+	  	<div class="cb1"> 
+		    <div class="cb2Double">
+				<div>{{form.gaOn}} Enable Google Analytics integration</div>
+				<div class="clearFloat"></div>
+			</div>
+			
+			<div id='analytics_info'>
+		    {% include 'sns/post/rule/google_analytics.html' %}
+		    </div>		    
+		</div>
+		
+		<div class="clearFloat"></div>
+	    <div class="cb1">
+            <div class="fieldInput"> <input type="button" onclick="ajaxFormSubmitCustom('{{ret_url}}', this,{{params.links_info_length}},'links_to_be_created','update');" value="save"> </div>
+            <div class="fieldInput"> <input type="button" value="cancel" onclick="javascript:history.back(-1);"> </div>
+		</div>
+    				
+					<!-- hidden inputs -->
+	            	<input type='hidden' id='current_link_number' value='{{params.links_info_length_next}}}}'>
+	            	<input type='hidden' id='current_rule_name' value='{{form.initial.name}}'>
+	            	{{form.id}}
+	            	{{form.links}}
+	            	{{form.create_links}}
+	            	{{form.delete_links}}
+	</form>
+</div>
+{% endblock %}

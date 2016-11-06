@@ -1,0 +1,38 @@
+{% load googletags %}
+{% load snsstringfiltertags %}
+<div id="header">
+	<div class="Logo_Div">
+		<!-- <div class="Logo_Image"><a href="/"> <img src="{{ MEDIA_URL }}fe/images/logo.gif"  border="0"  /> </a></div>-->
+		<div id="TopRightDiv">
+			{% if view.ctx.has_login %}
+			<div class="TopQuicklinkdivFont">
+				<span id="account_board" class="headerMenu">
+					<strong>
+						{% if view.ctx.get_user.name %}
+						{{ view.ctx.get_user.name|slic:"0:40" }}
+						{% else %}
+						{{ user.email }}
+						{% endif %}
+					</strong>
+				</span>
+				<a rel="ajaxform" href="#/home/" class="headerMenu">Home</a>
+				<a rel="ajaxform" href="#/user/settings" class="headerMenu">Settings</a>
+				<a href="{% google_logout_url "/" %}" class="headerMenuEnd" id="home_sign_out">Sign Out</a>
+			</div>
+			{% endif %}
+			
+		</div>
+		
+		{% if not view.ctx.has_login %}
+		<div class="TopQuicklinkdivFont">
+			<span style="color:#676767;">Use your existing <span class="google_ico">&nbsp;</span> account to</span> 
+			<a class="headerMenuLast" href="{% google_login_url request.get_full_path %}">
+				<strong>Sign In</strong>
+			</a>
+		</div>
+		{% endif %}
+		
+	</div>
+	<input id="current_location" type="hidden" value=""/>
+
+</div>

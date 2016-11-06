@@ -1,0 +1,67 @@
+
+/***  Skin Styles  ***/
+/*
+	This file is setup for quick skinning. If you need more control of specific attributes 
+	use another skin CSS file with the full skinning style code.
+*/
+
+
+/* PRIMARY ACCENT COLOR */
+
+	/* on backgrounds */
+	.littleDivider span, 
+	a.boxLink:link, a.boxLink:visited,
+	#SlideInfo,
+	#GalleryGrid .gridBtn,
+	.postInfo, #fancybox-title, #fancybox-left-ico, #fancybox-right-ico
+		{ background-color: #c00; }
+	
+	/* on text */	
+	a:link, a:visited, 
+	.mainMenu li.currentPage a:link, .mainMenu li.currentPage a:visited, .listMenuli.currentPage a:link, .listMenu li.currentPage a:visited,
+	h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong, .headline strong
+		{ color: #c00; }
+	
+	/* on borders */
+	#GalleryGrid ul li a.gridThumb:hover,
+	.slideItem.activeSlide a.slideImg
+	 { border-color: #c00; }
+	
+		/* slightly darker accent (for shadows and buttons) */
+		a.postReadMore:link, a.postReadMore:visited, #Fancybox-CustomClose a:link, #Fancybox-CustomClose a:visited
+			{ background: #B10000; }
+		.postInfo
+			{ border-color: #B10000; }
+		button.btn span	
+			{ text-shadow: #B10000 1px 1px 0px; }
+	
+		/* even darker accent (shadow and button hover effects) */
+		a.postReadMore:hover, a.postReadMore:active, #Fancybox-CustomClose a:hover, #Fancybox-CustomClose a:active
+			{ background: #930000; }
+		button.btn:hover span, button.btnHover span 
+			{ text-shadow: #930000 1px 1px 0px; }
+
+
+/* PRIMARY BG COLOR */
+
+	/* on backgrounds */
+	body, 
+	.bigDivider span
+		{ background-color: #000; }
+	
+	/* on text */	
+	a:hover, a:active, 
+	.mainMenu a:link, .mainMenu a:visited, .listMenu a:link, .listMenu a:visited, .mainMenu a:hover, .mainMenu a:active, .listMenu a:hover, .listMenu a:active,
+	ul.subMenu li a:hover, ul.subMenu li a:active, ul.subMenu li.currentPage a:link, ul.subMenu li.currentPage a:visited,
+	h1 a:link, h1 a:visited, h2 a:link, h2 a:visited, h3 a:link, h3 a:visited, h4 a:link, h4 a:visited, h5 a:link, h5 a:visited, h6 a:link, h6 a:visited,
+	h1, h2, h3, h4, h5, h6, .headline, .title, #fancybox-title-main
+		{ color: #000; }
+
+
+/* images, etc. (these usually don't need to be changed) */
+body	{ background-image: url("../../images/skins/skin-1/Bg.gif");  color: #424242; }
+#Logo a { background-image: url('../../images/skins/skin-1/logo.gif'); }
+button.btn		{ background-image: url("../../images/skins/skin-1/button-sprite.gif"); }
+button.btn span	{ background-image: url("../../images/skins/skin-1/button-sprite.gif"); }
+
+
